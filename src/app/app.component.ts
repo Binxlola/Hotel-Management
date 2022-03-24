@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StatusService} from "./shared/status.service";
+import {StatusService} from "./modules/shared/status.service";
 
 export interface StatusResponse {
   status: string
