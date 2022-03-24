@@ -1,6 +1,7 @@
 {
   "name": "hotel-management",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "launch": "ng serve & npm start",
@@ -22,6 +23,7 @@
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "mongoose": "^6.2.8",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
