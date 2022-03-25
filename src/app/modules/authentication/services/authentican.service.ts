@@ -16,6 +16,7 @@ export class AuthService {
 
   private readonly JWT_TOKEN: string = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
+  private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`
   private loggedUser: string | undefined;
 
   constructor(private http: HttpClient) {}
@@ -27,7 +28,7 @@ export class AuthService {
    * @return Observable<boolean> should be the return type, but for nom it is void.
    */
   login(user: { email: string, password: string }): Observable<boolean> {
-    return this.http.post<any>(`${environment.API_URL}/users/login`, user)
+    return this.http.post<any>(`${this.AUTHENTICATION_URL}/login`, user)
       .pipe(
         tap(tokens => this.doLoginUser(user.email, tokens)),
         mapTo(true),
@@ -41,10 +42,13 @@ export class AuthService {
     this.loggedUser = undefined;
     this.removeTokens();
 
-    // return this.http.post<any>(`${config.apiUrl}/logout`, {
+    // return this.http.post<any>(`${this.AUTHENTICATION_URL}/logout`, {
     //   'refreshToken': this.getRefreshToken()
     // }).pipe(
-    //   tap(() => this.doLogoutUser()),
+    //   tap(() => {
+    //     this.loggedUser = undefined;
+    //     this.removeTokens();
+    //   }),
     //   mapTo(true),
     //   catchError(error => {
     //     alert(error.error);
@@ -57,7 +61,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.http.post<any>(`${environment.API_URL}/refresh`, {
+    return this.http.post<any>(`${this.AUTHENTICATION_URL}/refresh`, {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: Tokens) => {
       this.storeJwtToken(tokens.token);
