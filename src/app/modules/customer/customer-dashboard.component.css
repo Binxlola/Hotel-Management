@@ -1,0 +1,91 @@
+mat-toolbar {
+ background-color: var(--primary);
+}
+
+#toolbar-left {
+  width: var(--side-nav-width);
+  background: var(--glassmorphism-dark-med);
+}
+
+.toolbar-center button {
+  padding-right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 64px); /* single row toolbar defaults to 64px, we account for this */
+  background-color: transparent;
+}
+
+mat-sidenav {
+  background-color: var(--glassmorphism-accent-high);
+  -webkit-backdrop-filter: var(--glassmorphism-blur);
+  backdrop-filter: var(--glassmorphism-blur);
+  width: var(--side-nav-width);
+}
+
+.nav-button {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  left: 0;
+  padding: 10px 0;
+  margin: 0;
+  transition: .5s ease-in;
+}
+
+.nav-button div {
+  font-size: 1rem;
+  display: flex;
+  margin-left: 10px;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s ease;
+}
+
+.nav-button.active:before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 100%;
+  background-color: var(--secondary1);
+}
+
+.nav-button:hover div{
+  color: var(--secondary1);
+  margin-left: 20px;
+}
+
+.nav-button.active div {
+  color: var(--secondary1);
+  margin-left: 20px;
+}
+
+mat-sidenav button:last-child {
+  position: absolute;
+  bottom: 2rem;
+}
+
+.nav-button mat-icon {
+  margin-right: 8px;
+}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.mat-sidenav-content {
+  background-image: url("/assets/images/city-skyline.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-size: 2rem;
+  color: lightgray;
+}
