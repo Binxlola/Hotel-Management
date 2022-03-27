@@ -1,10 +1,10 @@
 mat-toolbar {
-  background: linear-gradient(-90deg, var(--dark), var(--secondary2), var(--dark));
+  background: linear-gradient(90deg, var(--dark), var(--secondary2));
 }
 
 #toolbar-left {
   width: var(--side-nav-width);
-  background: var(--dark);
+  background: var(--glassmorphism-dark-high);
 }
 
 .toolbar-center button {
@@ -81,7 +81,7 @@ mat-divider {
 }
 
 .mat-sidenav-content {
-  /*background-image: url("/assets/images/shanghai.jpg");*/
+  background-image: url("/assets/images/shanghai.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
