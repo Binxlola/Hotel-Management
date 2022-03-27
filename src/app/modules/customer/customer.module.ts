@@ -9,13 +9,17 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import { BookingManagementComponent } from './components/booking-management/booking-management.component';
+import {MatCardModule} from "@angular/material/card";
+import {SwiperModule} from "swiper/angular";
 
 
 
 
 @NgModule({
   declarations: [
-    CustomerDashboardComponent
+    CustomerDashboardComponent,
+    BookingManagementComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,8 @@ import {MatInputModule} from "@angular/material/input";
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule,
+    SwiperModule,
   ],
   exports: [
     CustomerDashboardComponent

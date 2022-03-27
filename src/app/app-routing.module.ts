@@ -6,7 +6,7 @@ import {CustomerModule} from "./modules/customer/customer.module";
 import {CustomerDashboardComponent} from "./modules/customer/customer-dashboard.component";
 
 const routes: Routes = [
-  // {path: '', pathMatch: 'full', redirectTo: '/login'},
+  {path: '', pathMatch: 'full', redirectTo: 'login'},
   {
     path: 'login',
     component: AuthenticationComponent
