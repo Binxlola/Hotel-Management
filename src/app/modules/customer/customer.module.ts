@@ -15,9 +15,11 @@ import {SwiperModule} from "swiper/angular";
 import {MatChipsModule} from "@angular/material/chips";
 import { BookingFormComponent } from './components/booking-management/booking-form/booking-form.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import {FormsModule} from "@angular/forms";
-
-
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatStepperModule} from "@angular/material/stepper";
 
 
 @NgModule({
@@ -41,6 +43,11 @@ import {FormsModule} from "@angular/forms";
     MatChipsModule,
     MatDialogModule,
     FormsModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatStepperModule
   ],
   exports: [
     CustomerDashboardComponent
