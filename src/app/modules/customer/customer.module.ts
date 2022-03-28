@@ -12,6 +12,10 @@ import {MatInputModule} from "@angular/material/input";
 import { BookingManagementComponent } from './components/booking-management/booking-management.component';
 import {MatCardModule} from "@angular/material/card";
 import {SwiperModule} from "swiper/angular";
+import {MatChipsModule} from "@angular/material/chips";
+import { BookingFormComponent } from './components/booking-management/booking-form/booking-form.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -19,7 +23,8 @@ import {SwiperModule} from "swiper/angular";
 @NgModule({
   declarations: [
     CustomerDashboardComponent,
-    BookingManagementComponent
+    BookingManagementComponent,
+    BookingFormComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,9 @@ import {SwiperModule} from "swiper/angular";
     MatInputModule,
     MatCardModule,
     SwiperModule,
+    MatChipsModule,
+    MatDialogModule,
+    FormsModule,
   ],
   exports: [
     CustomerDashboardComponent

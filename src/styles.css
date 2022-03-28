@@ -26,6 +26,7 @@
 
   /* Customer module variables */
   --side-nav-width: 10rem;
+  --booking-card-transition: all 1s ease-in;
 }
 
 * {
