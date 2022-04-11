@@ -40,3 +40,13 @@ html, body {
   width: 100vw;
   overflow: hidden;
 }
+
+.mat-dialog-container {
+  background-color: var(--glassmorphism-accent-high);
+  -webkit-backdrop-filter: var(--glassmorphism-blur);
+  backdrop-filter: var(--glassmorphism-blur);
+}
+
+mat-form-field {
+  color: white;
+}

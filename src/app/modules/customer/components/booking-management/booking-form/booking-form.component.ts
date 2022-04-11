@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {faCcVisa, faCcMastercard, faCcPaypal, faCcApplePay} from "@fortawesome/free-brands-svg-icons";
 
 export interface DialogData {
   animal: string;
@@ -20,6 +21,11 @@ export interface DialogData {
   ],
 })
 export class BookingFormComponent implements OnInit {
+
+  visa = faCcVisa;
+  master = faCcMastercard
+  payPal = faCcPaypal;
+  apple = faCcApplePay;
 
   range = new FormGroup({
     start: new FormControl(),

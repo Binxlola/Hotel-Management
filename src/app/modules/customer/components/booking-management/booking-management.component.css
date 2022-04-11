@@ -60,11 +60,6 @@ swiper {
   transform: rotateY( 180deg );
 }
 
-/*.flip-card-inner:hover,*/
-/*.flip-card-back {*/
-/*  transform: rotateY( 180deg );*/
-/*}*/
-
 mat-card img {
   border-radius: .175rem;
   width: 100%;

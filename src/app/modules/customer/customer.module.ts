@@ -20,6 +20,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatRadioModule} from "@angular/material/radio";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import {MatStepperModule} from "@angular/material/stepper";
     ReactiveFormsModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatRadioModule,
+    FontAwesomeModule
   ],
   exports: [
     CustomerDashboardComponent

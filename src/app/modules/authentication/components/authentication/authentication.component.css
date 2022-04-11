@@ -67,9 +67,6 @@ form button[type="submit"],
   text-transform: capitalize;
   transform: scale(1.2);
 }
-mat-form-field {
-  color: white;
-}
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{
   color: white !important;
@@ -97,7 +94,6 @@ button {
 }
 
 a.social-icon {
-  transform: scale(1.5);
   color: white;
 }
 
