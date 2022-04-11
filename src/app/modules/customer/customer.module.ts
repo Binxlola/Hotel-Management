@@ -22,6 +22,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatRadioModule} from "@angular/material/radio";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 
 @NgModule({
@@ -56,6 +57,11 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
   exports: [
     CustomerDashboardComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
 })
 export class CustomerModule { }

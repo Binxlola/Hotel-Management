@@ -5,8 +5,3 @@ mat-stepper {
 mat-step form {
   margin: 10px 0 10px 0;
 }
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{
-  color: white !important;
-  opacity: 1 !important;
-}

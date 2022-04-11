@@ -50,3 +50,12 @@ html, body {
 mat-form-field {
   color: white;
 }
+
+/*::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{*/
+/*  color: white !important;*/
+/*  opacity: 1 !important;*/
+/*}*/
+
+/*::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {*/
+/*  color: var(--secondary2) !important;*/
+/*}*/

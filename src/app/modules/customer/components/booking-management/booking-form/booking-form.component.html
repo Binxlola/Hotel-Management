@@ -1,63 +1,69 @@
 <h1 mat-dialog-title>Book a room</h1>
 <div mat-dialog-content>
   <mat-stepper #stepper orientation="horizontal" linear>
-    <mat-step label="Booking Details" state="room-details">
-      <form>
+
+    <!--  Booking Details Step  -->
+    <mat-step label="Booking Details" [stepControl]="bookingDetails" editable="false" state="room-details">
+
+      <!--   Booking Details Form   -->
+      <form [formGroup]="bookingDetails">
         <div class="container">
           <div class="row">
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Adults</mat-label>
-                <mat-select>
-                  <mat-option>1</mat-option>
-                  <mat-option>2</mat-option>
-                  <mat-option>3</mat-option>
+                <mat-select formControlName="numAdults">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let num of occupantsArray" [value]="num">
+                    {{num}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Children</mat-label>
-                <mat-select>
-                  <mat-option>1</mat-option>
-                  <mat-option>2</mat-option>
-                  <mat-option>3</mat-option>
+                <mat-select formControlName="numChildren">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let num of occupantsArray" [value]="num">
+                    {{num}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Reservation name</mat-label>
-                <input matInput type="text"/>
+                <input matInput type="text" formControlName="resName"/>
               </mat-form-field>
             </div>
           </div>
 
           <div class="row">
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                  <input matStartDate formControlName="start" placeholder="Start date">
-                  <input matEndDate formControlName="end" placeholder="End date">
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="startDate" placeholder="Start date">
+                  <input matEndDate formControlName="endDate" placeholder="End date">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
 
-                <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                <mat-error *ngIf="bookingDetails.controls['startDate'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="bookingDetails.controls['endDate'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Check-in Time</mat-label>
-                <input matInput type="time" min="09:00" max="18:00"/>
+                <input matInput type="time" min="09:00" max="18:00" formControlName="inTime"/>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Check-out Time</mat-label>
-                <input matInput type="time" min="09:00" max="18:00"/>
+                <input matInput type="time" min="09:00" max="18:00" formControlName="outTime"/>
               </mat-form-field>
             </div>
           </div>
@@ -66,101 +72,71 @@
             <div class="col">
               <mat-form-field appearance="outline">
                 <mat-label>Additional comments</mat-label>
-                <textarea matInput cdkTextareaAutosize></textarea>
+                <textarea matInput cdkTextareaAutosize formControlName="comments"></textarea>
               </mat-form-field>
             </div>
           </div>
         </div>
       </form>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
+
     </mat-step>
 
-    <mat-step label="Payment Details" state="card-details">
-      <form>
+    <!--  Payment Details Step  -->
+    <mat-step label="Payment Details" [stepControl]="paymentDetails" editable="false" state="card-details">
+
+      <!--  Payment Details Form    -->
+      <form [formGroup]="paymentDetails">
         <div class="container">
           <div class="row">
             <div class="col">
-              <div id="payment-types" class="mat-form-field-wrapper d-flex justify-content-start align-items-center">
-                <mat-radio-group >
-                  <mat-radio-button class="mx-5" value="1">
-                    <fa-icon [icon]="visa" size="4x"></fa-icon>
-                  </mat-radio-button>
-                  <mat-radio-button class="mx-5" value="2">
-                    <fa-icon [icon]="master" size="4x"></fa-icon>
-                  </mat-radio-button>
-                  <mat-radio-button class="mx-5" value="3">
-                    <fa-icon [icon]="payPal" size="4x"></fa-icon>
-                  </mat-radio-button>
-                  <mat-radio-button class="mx-5" value="4">
-                    <fa-icon [icon]="apple" size="4x"></fa-icon>
-                  </mat-radio-button>
-                </mat-radio-group>
+              <div id="payment-types" class="mat-form-field-wrapper">
+                <div class="d-flex  justify-content-start align-items-center">
+                  <mat-radio-group formControlName="paymentMethod">
+                    <mat-radio-button *ngFor="let method of paymentMethods" [value]="method.value" class="mx-5">
+                      <fa-icon [icon]="method.icon" size="3x"></fa-icon>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="row">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" hideRequiredMarker="true">
               <mat-label>Card number</mat-label>
-              <input matInput type="text" placeholder="Bnk - Brch - Account - Sfx"/>
+              <input matInput formControlName="bnkAcct" type="text" placeholder="Bank - Branch - Account - Suffix"/>
             </mat-form-field>
           </div>
 
           <div class="row">
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Name on card</mat-label>
-                <input matInput type="text"/>
+                <input matInput formControlName="cardName" type="text"/>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Expiry date</mat-label>
-                <input matInput type="text"/>
+                <input matInput formControlName="cardExpiry" type="text"/>
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Security code</mat-label>
-                <input matInput type="text"/>
+                <input matInput formControlName="cvv" type="text"/>
               </mat-form-field>
             </div>
           </div>
         </div>
       </form>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
+
     </mat-step>
 
-    <mat-step label="Review" state="review">
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Book now</button>
-      </div>
+    <mat-step label="Review" editable="false" state="review">
     </mat-step>
 
-    <mat-step label="Summary" state="summary">
-      <form>
-        <div class="container">
-          <div class="row">
-            <mat-radio-group aria-label="Select an option">
-              <mat-radio-button value="1">Option 1</mat-radio-button>
-              <mat-radio-button value="2">Option 2</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div class="row">
-            <mat-form-field appearance="fill">
-              <mat-label>Reservation name</mat-label>
-              <input matInput type="text"/>
-            </mat-form-field>
-          </div>
-        </div>
-      </form>
+    <mat-step label="Summary" editable="false" state="summary">
     </mat-step>
 
     <!-- Icon overrides   -->
@@ -178,7 +154,10 @@
     </ng-template>
   </mat-stepper>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="d-flex justify-content-between align-items-center">
   <button mat-button (click)="onNoClick()">Close</button>
-<!--  <button mat-button [mat-dialog-close]="data.animal">Ok</button>-->
+  <div id="stepper_nav">
+    <button mat-button (click)="formNavigate(false)">Back</button>
+    <button mat-button (click)="formNavigate(true)">{{stepNextLabel}}</button>
+  </div>
 </div>
