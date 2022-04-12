@@ -30,6 +30,7 @@ export class BookingFormComponent implements OnInit {
 
   private _datePipe: DatePipe = new DatePipe('en-NZ');
   private _onSummary = false;
+  private _onReview = false;
   private _stepNextLabel: string = "next";
   private _occupantsArray: number[] = [0, 1, 2, 3];
   private _paymentMethods: {value: string, icon: IconDefinition}[] = [
@@ -120,6 +121,11 @@ export class BookingFormComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  private makeBooking(): boolean {
+    console.log(this.bookingDetails.value);
+    return false;
+  }
+
 
   /**
    * Helper method to navigate the forms in the Material Stepper.
@@ -127,26 +133,32 @@ export class BookingFormComponent implements OnInit {
    * @param isForward Boolean stating if the stepper is moving forwards
    */
   public formNavigate(isForward: boolean) {
-
-    // Change Step
     isForward? this.myStepper?.next() : this.myStepper?.previous();
-    let currentStep: number | undefined = this.myStepper?.selectedIndex;
     let numStep: number | undefined = this.myStepper?.steps.length;
+    let currentStep: number | undefined;
 
-    // On final step (can close now)
-    if(isForward && this._onSummary) this.dialogRef.close();
+    // Check if on final stage and handle
+    if(isForward && this._onReview) this.makeBooking();
+    else if(isForward && this._onSummary) this.dialogRef.close();
 
-    // Change dynamic stepper label (update current step as step was changed)
+    // Change dynamic stepper label
     currentStep = this.myStepper?.selectedIndex;
-    if(currentStep == numStep! - 1) {
-      this.stepNextLabel = "Book";
+    if(currentStep == numStep! - 1) { // Last step
+      this.stepNextLabel = "confirm";
       this._onSummary = true;
+      this._onReview = false;
+
+      // Disable edit of prior forms
       this.bookingDetails.disable();
       this.paymentDetails.disable();
-    } else if (currentStep == numStep! - 2) {
-      this.stepNextLabel = "confirm";
-    } else {
+    } else if (currentStep == numStep! - 2) { // Second-last step
+      this.stepNextLabel = "book";
+      this._onReview = true;
+      this._onSummary = false;
+    } else if(currentStep != numStep! - 1 && currentStep != numStep! - 2) { // All other steps
       this.stepNextLabel = "next";
+      this._onSummary = false;
+      this._onReview = false;
     }
 
   }

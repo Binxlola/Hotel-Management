@@ -23,22 +23,28 @@ swiper {
   backface-visibility: hidden;
 }
 
+.cost-notification {
+  justify-self: flex-start;
+}
+
+.hover-notification {
+  color: var(--primary);
+}
+
 /* Set starting styles for card side based on animation requirements */
 .flip-card-front {
   opacity: 1;
   max-height: 100vh;
 }
-/*.flip-card-back {*/
-/*  opacity: 0;*/
-/*  max-height: 0;*/
-/*}*/
+.flip-card-back {
+  opacity: 0;
+  max-height: 0;
+}
 
 /* Consistent background across card section */
 .flip-card,
 .flip-card mat-card {
-  background-color: var(--glassmorphism-accent-low);
-  -webkit-backdrop-filter: var(--glassmorphism-blur);
-  backdrop-filter: var(--glassmorphism-blur);
+  background-color: var(--accent);
 }
 
 /* Animation timing for all card animations */

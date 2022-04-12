@@ -81,7 +81,8 @@ mat-divider {
 }
 
 .mat-sidenav-content {
-  background-image: url("/assets/images/city-skyline.jpg");
+  background-color: var(--dark);
+  /*background-image: url("/assets/images/city-skyline.jpg");*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

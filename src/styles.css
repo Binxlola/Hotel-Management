@@ -19,6 +19,7 @@
   --glassmorphism-primary-low: rgba(233, 30, 99, var(--transparency-low));
   --glassmorphism-accent-high: rgba(176, 190, 197, var(--transparency-high));
   --glassmorphism-accent-low: rgba(176, 190, 197, var(--transparency-low));
+  --glassmorphism-dark-low: rgba(48, 48, 48, var(--transparency-low));
   --glassmorphism-dark-med: rgba(48, 48, 48, var(--transparency-med));
   --glassmorphism-dark-high: rgba(48, 48, 48, var(--transparency-high));
 

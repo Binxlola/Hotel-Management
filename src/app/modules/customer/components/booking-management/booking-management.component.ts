@@ -24,7 +24,6 @@ export interface AnimationElements {
 export class BookingManagementComponent implements OnInit {
 
  public swiperConfig: SwiperOptions = {
-   cssMode: true,
    direction: "vertical",
    slidesPerView: 3,
    loop: true,
