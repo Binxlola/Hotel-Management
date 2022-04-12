@@ -9,27 +9,24 @@
                 <mat-card-subtitle>For the solo wanderer</mat-card-subtitle>
               </mat-card-header>
               <img mat-card-lg-image src="assets/images/classic-single-room.jpg"/>
-              <mat-card-content>
-                <p>
-                  The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.
-                </p>
-              </mat-card-content>
               <mat-card-actions align="end">
                 <button mat-flat-button color="primary" (click)="openBooking()">Book Room</button>
               </mat-card-actions>
             </mat-card>
 
             <mat-card class="flip-card-back flipped" (mouseleave)="flipCard($event, false)">
-              <mat-card-header>
-                <mat-card-title>Amenities</mat-card-title>
-              </mat-card-header>
               <mat-card-content>
-                <mat-chip-list aria-label="Fish selection" [selectable]="false">
-                  <mat-chip color="warn" selected>Wifi</mat-chip>
-                  <mat-chip color="warn" selected>Mini Bar</mat-chip>
-                  <mat-chip color="warn" selected>Parking</mat-chip>
-                  <mat-chip color="warn" selected>Gym Access</mat-chip>
-                </mat-chip-list>
+                <div class="flip-card-details-section container">
+                  <mat-label>
+                    The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.
+                  </mat-label>
+                  <mat-chip-list aria-label="Fish selection" [selectable]="false">
+                    <mat-chip color="warn" selected>Wifi</mat-chip>
+                    <mat-chip color="warn" selected>Mini Bar</mat-chip>
+                    <mat-chip color="warn" selected>Parking</mat-chip>
+                    <mat-chip color="warn" selected>Gym Access</mat-chip>
+                  </mat-chip-list>
+                </div>
               </mat-card-content>
               <mat-card-actions align="end">
                 <button mat-flat-button color="primary" (click)="openBooking()">Book Room</button>

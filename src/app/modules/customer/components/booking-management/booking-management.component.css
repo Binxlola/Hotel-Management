@@ -28,15 +28,15 @@ swiper {
   opacity: 1;
   max-height: 100vh;
 }
-.flip-card-back {
-  opacity: 0;
-  max-height: 0;
-}
+/*.flip-card-back {*/
+/*  opacity: 0;*/
+/*  max-height: 0;*/
+/*}*/
 
 /* Consistent background across card section */
 .flip-card,
 .flip-card mat-card {
-  background-color: var(--glassmorphism-accent-high);
+  background-color: var(--glassmorphism-accent-low);
   -webkit-backdrop-filter: var(--glassmorphism-blur);
   backdrop-filter: var(--glassmorphism-blur);
 }

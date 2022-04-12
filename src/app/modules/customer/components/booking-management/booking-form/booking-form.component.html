@@ -134,6 +134,93 @@
     </mat-step>
 
     <mat-step label="Review" editable="false" state="review">
+      <div id="booking-review-wrapper d-flex flex-column">
+
+        <!--   Container for booking details review     -->
+        <mat-list class="container">
+          <h1>Booking Details</h1>
+          <div class="review-pair">
+            <mat-label>Adults:</mat-label>
+            <mat-label>{{bookingDetails.get('numAdults')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Children:</mat-label>
+            <mat-label>{{bookingDetails.get('numChildren')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Reservation name:</mat-label>
+            <mat-label>{{bookingDetails.get('resName')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-in date:</mat-label>
+            <mat-label>
+              {{
+                datePipe.transform(bookingDetails.get('startDate')?.value, 'dd/MM/yyyy')
+              }}
+            </mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-out date:</mat-label>
+            <mat-label>
+              {{
+                datePipe.transform(bookingDetails.get('endDate')?.value, 'dd/MM/yyyy')
+              }}
+            </mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-in Time:</mat-label>
+            <mat-label>{{bookingDetails.get('inTime')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-out Time:</mat-label>
+            <mat-label>{{bookingDetails.get('outTime')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+              <mat-label>Comments:</mat-label>
+              <textarea matInput cdkTextareaAutosize readonly>{{bookingDetails.get('comments')?.value}}</textarea>
+          </div>
+        </mat-list>
+
+        <!--   Container for payment details review     -->
+        <mat-list class="container">
+          <h1>Payment Details</h1>
+          <div class="review-pair">
+            <mat-label>Payment method:</mat-label>
+            <mat-label>{{paymentDetails.get('paymentMethod')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card No:</mat-label>
+            <mat-label>{{paymentDetails.get('bnkAcct')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card name::</mat-label>
+            <mat-label>{{paymentDetails.get('cardName')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card expiry:</mat-label>
+            <mat-label>{{paymentDetails.get('cardExpiry')?.value}}</mat-label>
+          </div>
+        </mat-list>
+
+        <!--   Cost details     -->
+        <mat-list class="container mt-3">
+          <div class="review-pair fs-6">
+            <mat-label>Total:</mat-label>
+            <mat-label>$230.59</mat-label>
+          </div>
+        </mat-list>
+
+      </div>
     </mat-step>
 
     <mat-step label="Summary" editable="false" state="summary">

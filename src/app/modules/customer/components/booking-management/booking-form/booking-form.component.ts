@@ -1,10 +1,12 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {faCcVisa, faCcMastercard, faCcPaypal, faCcApplePay} from "@fortawesome/free-brands-svg-icons";
 import {MatStepper} from "@angular/material/stepper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {group} from "@angular/animations";
+import {DatePipe} from "@angular/common";
 
 export interface DialogData {
   animal: string;
@@ -26,8 +28,8 @@ export class BookingFormComponent implements OnInit {
 
   @ViewChild('stepper') private myStepper: MatStepper | undefined;
 
+  private _datePipe: DatePipe = new DatePipe('en-NZ');
   private _onSummary = false;
-
   private _stepNextLabel: string = "next";
   private _occupantsArray: number[] = [0, 1, 2, 3];
   private _paymentMethods: {value: string, icon: IconDefinition}[] = [
@@ -139,6 +141,8 @@ export class BookingFormComponent implements OnInit {
     if(currentStep == numStep! - 1) {
       this.stepNextLabel = "Book";
       this._onSummary = true;
+      this.bookingDetails.disable();
+      this.paymentDetails.disable();
     } else if (currentStep == numStep! - 2) {
       this.stepNextLabel = "confirm";
     } else {
@@ -150,7 +154,7 @@ export class BookingFormComponent implements OnInit {
   get stepNextLabel(): string {return this._stepNextLabel;}
   set stepNextLabel(label: string) {this._stepNextLabel = label;}
 
-
+  get datePipe(): DatePipe {return  this._datePipe;}
   get occupantsArray(): number[] {return this._occupantsArray;}
   get paymentMethods(): {value: string, icon: IconDefinition}[] {
     return this._paymentMethods;

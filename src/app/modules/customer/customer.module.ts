@@ -23,6 +23,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {MatRadioModule} from "@angular/material/radio";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -31,29 +32,30 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     BookingManagementComponent,
     BookingFormComponent
   ],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatBadgeModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    SwiperModule,
-    MatChipsModule,
-    MatDialogModule,
-    FormsModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatStepperModule,
-    MatRadioModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        CommonModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatBadgeModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        SwiperModule,
+        MatChipsModule,
+        MatDialogModule,
+        FormsModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatStepperModule,
+        MatRadioModule,
+        FontAwesomeModule,
+        MatListModule
+    ],
   exports: [
     CustomerDashboardComponent
   ],

@@ -25,19 +25,8 @@ export class BookingManagementComponent implements OnInit {
 
  public swiperConfig: SwiperOptions = {
    cssMode: true,
-   direction: "horizontal",
-   slidesPerView: 1,
-   breakpoints: {
-     '@.45': {
-       slidesPerView: 2,
-       direction: "vertical",
-       spaceBetween: 10
-     },
-     '@1.95': {
-       slidesPerView: 3,
-       direction: "vertical"
-     },
-   },
+   direction: "vertical",
+   slidesPerView: 3,
    loop: true,
    loopFillGroupWithBlank: true,
    autoplay: {
