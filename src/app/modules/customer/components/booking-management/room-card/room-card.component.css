@@ -1,0 +1,73 @@
+.card {
+  position: relative;
+  width: 300px;
+  height: max-content;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: absolute;
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+.card-inner mat-card {
+  display: block;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.cost-notification {
+  justify-self: flex-start;
+}
+
+.hover-notification {
+  color: var(--primary);
+}
+
+/* Set starting styles for card side based on animation requirements */
+.card-front {
+  opacity: 1;
+  max-height: 100vh;
+}
+.card-back {
+  opacity: 0;
+  max-height: 0;
+}
+
+/* Consistent background across card section */
+.card,
+.card mat-card {
+  background-color: var(--accent);
+}
+
+/* Animation timing for all card animations */
+.card-inner,
+.card-front,
+.card-back,
+.card mat-card-header,
+.card mat-card-content,
+.card mat-card-actions,
+.card img {
+  -webkit-transition: var(--booking-card-transition);
+  -moz-transition: var(--booking-card-transition);
+  -ms-transition: var(--booking-card-transition);
+  -o-transition: var(--booking-card-transition);
+  transition: var(--booking-card-transition);
+}
+
+.flipped {
+  transform: rotateY( 180deg );
+}
+
+mat-card img {
+  border-radius: .175rem;
+  width: 100%;
+}
+
+mat-card-content p {
+  margin-top: .5rem;
+  max-width: 45ch;
+  max-height: 4.7rem;
+  overflow: hidden;
+}

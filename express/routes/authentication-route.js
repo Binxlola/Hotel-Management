@@ -1,5 +1,5 @@
 import express from "express";
-import {saveCustomer} from "../services/customers.js";
+import {saveCustomer} from "../services/customer-service.js";
 
 // Create Router
 const router = express.Router();

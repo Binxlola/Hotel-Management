@@ -1,45 +1,7 @@
 <main class="mw-100 mh-100 vw-100 h-100">
     <swiper [config]="swiperConfig" class="h-100 px-3">
-      <ng-template swiperSlide>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <mat-card class="flip-card-front" (mouseenter)="flipCard($event, true)">
-              <mat-card-header>
-                <mat-card-title>Single Room</mat-card-title>
-                <mat-card-subtitle>Solo Wanderer</mat-card-subtitle>
-              </mat-card-header>
-              <img mat-card-lg-image src="assets/images/classic-single-room.jpg"/>
-              <mat-card-actions align="end">
-                <div class="flip-card-front-footer w-100 d-flex justify-content-between align-items-center">
-                  <mat-label class="fs-6">$230.69</mat-label>
-                  <div class="hover-notification d-flex justify-content-center align-items-center">
-                    <mat-label class="fs-6">Hover me</mat-label>
-                    <mat-icon>arrow_forward</mat-icon>
-                  </div>
-                </div>
-              </mat-card-actions>
-            </mat-card>
-
-            <mat-card class="flip-card-back flipped" (mouseleave)="flipCard($event, false)">
-              <mat-card-content>
-                <mat-card-header>
-                  <mat-card-subtitle>
-                    The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-chip-list [selectable]="false">
-                  <mat-chip color="secondary" selected>Wifi</mat-chip>
-                  <mat-chip color="secondary" selected>Mini Bar</mat-chip>
-                  <mat-chip color="secondary" selected>Parking</mat-chip>
-                  <mat-chip color="secondary" selected>Gym Access</mat-chip>
-                </mat-chip-list>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                <button mat-flat-button color="primary" (click)="openBooking()">Book Room</button>
-              </mat-card-actions>
-            </mat-card>
-          </div>
-        </div>
+      <ng-template *ngFor="let room of rooms" swiperSlide>
+        <room-card [room]="room" [bookingFunction]="openBookingFunction"></room-card>
       </ng-template>
     </swiper>
 </main>

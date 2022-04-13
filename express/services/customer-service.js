@@ -1,6 +1,6 @@
-import {CustomerModel} from "../models/customer.js";
+import {Customer} from "../models/customer.js";
 
-let newCustomer = new CustomerModel({
+let newCustomer = new Customer({
   username: "Jason01",
   password: "test",
   first_name: "Jason",

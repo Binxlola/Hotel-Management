@@ -24,13 +24,15 @@ import {MatRadioModule} from "@angular/material/radio";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatListModule} from "@angular/material/list";
+import { RoomCardComponent } from './components/booking-management/room-card/room-card.component';
 
 
 @NgModule({
   declarations: [
     CustomerDashboardComponent,
     BookingManagementComponent,
-    BookingFormComponent
+    BookingFormComponent,
+    RoomCardComponent
   ],
     imports: [
         CommonModule,
