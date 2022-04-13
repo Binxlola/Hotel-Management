@@ -5,12 +5,11 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {faCcVisa, faCcMastercard, faCcPaypal, faCcApplePay} from "@fortawesome/free-brands-svg-icons";
 import {MatStepper} from "@angular/material/stepper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import {group} from "@angular/animations";
 import {DatePipe} from "@angular/common";
+import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
 
 export interface DialogData {
-  animal: string;
-  name: string;
+  room: Room;
 }
 
 @Component({
@@ -32,7 +31,8 @@ export class BookingFormComponent implements OnInit {
   private _onSummary = false;
   private _onReview = false;
   private _stepNextLabel: string = "next";
-  private _occupantsArray: number[] = [0, 1, 2, 3];
+  private readonly _numAdults: number[];
+  private readonly _numChildren: number[];
   private _paymentMethods: {value: string, icon: IconDefinition}[] = [
     {value: "visa", icon: faCcVisa},
     {value: "master", icon: faCcMastercard},
@@ -65,7 +65,15 @@ export class BookingFormComponent implements OnInit {
     ],
   });
 
-  constructor(public dialogRef: MatDialogRef<BookingFormComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder) { }
+  constructor(
+    public dialogRef: MatDialogRef<BookingFormComponent>,
+    @Inject(MAT_DIALOG_DATA) private _data: DialogData,
+    private fb: FormBuilder,
+    private _bookingService: BookingService
+  ) {
+    this._numAdults = [...Array(_data.room.max_adults + 1).keys()];
+    this._numChildren = [...Array(_data.room.max_adults + 1).keys()];
+  }
 
   ngOnInit(): void {
 
@@ -163,21 +171,18 @@ export class BookingFormComponent implements OnInit {
 
   }
 
+  // ==== SIMPLE GETTERS AND SETTERS
   get stepNextLabel(): string {return this._stepNextLabel;}
   set stepNextLabel(label: string) {this._stepNextLabel = label;}
 
   get datePipe(): DatePipe {return  this._datePipe;}
-  get occupantsArray(): number[] {return this._occupantsArray;}
+  get numAdults(): number[] {return this._numAdults;}
+  get numChildren(): number[] {return this._numChildren;}
   get paymentMethods(): {value: string, icon: IconDefinition}[] {
     return this._paymentMethods;
   }
-
-  get bookingDetails(): FormGroup {
-    return this._bookingDetails;
-  }
-
-  get paymentDetails(): FormGroup {
-    return this._paymentDetails;
-  }
+  get bookingDetails(): FormGroup {return this._bookingDetails;}
+  get paymentDetails(): FormGroup {return this._paymentDetails;}
+  get roomData(): Room {return this._data.room;}
 
 }

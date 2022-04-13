@@ -11,8 +11,9 @@ import {BookingService, Room} from "../../../shared/services/booking/booking-ser
 })
 export class BookingManagementComponent implements OnInit {
 
-  public _openBookingFunction:  (room: Room) => void;
+  private _openBookingFunction:  (room: Room) => void;
   public swiperConfig: SwiperOptions = {
+    cssMode: true,
     direction: "vertical",
     slidesPerView: 3,
     loop: true,
@@ -34,9 +35,9 @@ export class BookingManagementComponent implements OnInit {
 
   private openBooking(room: Room) {
     const dialogRef = this._bookingDialog.open(BookingFormComponent, {
-      disableClose: true,
+      disableClose: false,
       hasBackdrop: true,
-      data: {name: "test", animal: "test"},
+      data: {room: room},
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

@@ -7,6 +7,11 @@ const r1 = new Room({
   max_adults: 1,
   max_children: 1,
   num_available: 10,
+  minCheckIn: "09:00",
+  maxCheckIn: "11:00",
+  minCheckOut: "10:00",
+  maxCheckOut: "12:00",
+  checkInOutInterval: 30,
   base_price: 50,
 });
 
@@ -17,6 +22,11 @@ const r2 = new Room({
   max_adults: 2,
   max_children: 1,
   num_available: 10,
+  minCheckIn: "09:00",
+  maxCheckIn: "11:00",
+  minCheckOut: "10:00",
+  maxCheckOut: "12:00",
+  checkInOutInterval: 30,
   base_price: 60,
 });
 
@@ -27,6 +37,11 @@ const r3 = new Room({
   max_adults: 2,
   max_children: 2,
   num_available: 10,
+  minCheckIn: "09:00",
+  maxCheckIn: "11:00",
+  minCheckOut: "10:00",
+  maxCheckOut: "12:00",
+  checkInOutInterval: 30,
   base_price: 80,
 });
 

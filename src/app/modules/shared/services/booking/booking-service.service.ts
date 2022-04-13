@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {catchError, mapTo, Observable, of, tap} from "rxjs";
+import {catchError, mapTo, of, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
-import {Schema} from "mongoose";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class BookingService {
       })
   }
 
-  public saveRoom() {
+  public saveRoom(booking: Booking) {
     return this.http.post<any>(`${this.BOOKING_URL}/room/save`, {test: "test"})
       .pipe(
         tap(rooms => console.log(rooms)),
@@ -50,4 +49,23 @@ export interface Room {
   max_children: number,
   num_available: number,
   base_price: number,
+  minCheckIn: string,
+  maxCheckIn: string,
+  minCheckOut: string,
+  maxCheckOut: string,
+  checkInOutInterval: number
+}
+
+export interface Booking {
+  _id: string,
+  roomID: string,
+  bookingName: string,
+  checkInDate: Date,
+  checkOutDate: Date,
+  checkInTime: string,
+  checkOutTime: string,
+  adultGuests: number,
+  childGuests: number,
+  comments: string,
+  totalCost: number
 }

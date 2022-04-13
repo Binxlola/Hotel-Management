@@ -1,12 +1,10 @@
-.card {
-  position: relative;
+.flip-card {
   width: 300px;
   height: max-content;
   perspective: 1000px;
 }
 
 .card-inner {
-  position: absolute;
   width: 100%;
   transform-style: preserve-3d;
 }
@@ -36,8 +34,8 @@
 }
 
 /* Consistent background across card section */
-.card,
-.card mat-card {
+.flip-card,
+.flip-card mat-card {
   background-color: var(--accent);
 }
 
@@ -45,10 +43,10 @@
 .card-inner,
 .card-front,
 .card-back,
-.card mat-card-header,
-.card mat-card-content,
-.card mat-card-actions,
-.card img {
+.flip-card mat-card-header,
+.flip-card mat-card-content,
+.flip-card mat-card-actions,
+.flip-card img {
   -webkit-transition: var(--booking-card-transition);
   -moz-transition: var(--booking-card-transition);
   -ms-transition: var(--booking-card-transition);
@@ -63,11 +61,4 @@
 mat-card img {
   border-radius: .175rem;
   width: 100%;
-}
-
-mat-card-content p {
-  margin-top: .5rem;
-  max-width: 45ch;
-  max-height: 4.7rem;
-  overflow: hidden;
 }

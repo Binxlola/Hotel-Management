@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Book a room</h1>
+<h1 mat-dialog-title>Booking for {{roomData.type}}</h1>
 <div mat-dialog-content>
   <mat-stepper #stepper orientation="horizontal" linear>
 
@@ -14,7 +14,7 @@
                 <mat-label>Adults</mat-label>
                 <mat-select formControlName="numAdults">
                   <mat-option>--</mat-option>
-                  <mat-option *ngFor="let num of occupantsArray" [value]="num">
+                  <mat-option *ngFor="let num of numAdults" [value]="num">
                     {{num}}
                   </mat-option>
                 </mat-select>
@@ -25,7 +25,7 @@
                 <mat-label>Children</mat-label>
                 <mat-select formControlName="numChildren">
                   <mat-option>--</mat-option>
-                  <mat-option *ngFor="let num of occupantsArray" [value]="num">
+                  <mat-option *ngFor="let num of numChildren" [value]="num">
                     {{num}}
                   </mat-option>
                 </mat-select>
@@ -57,13 +57,13 @@
             <div class="col">
               <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Check-in Time</mat-label>
-                <input matInput type="time" min="09:00" max="18:00" formControlName="inTime"/>
+                <input matInput type="time" min="{{roomData.minCheckIn}}" max="{{roomData.maxCheckIn}}" step="{{roomData.checkInOutInterval * 60}}" formControlName="inTime"/>
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field appearance="outline" hideRequiredMarker="true">
                 <mat-label>Check-out Time</mat-label>
-                <input matInput type="time" min="09:00" max="18:00" formControlName="outTime"/>
+                <input matInput type="time" min="{{roomData.minCheckOut}}" max="{{roomData.maxCheckOut}}" step="{{roomData.checkInOutInterval * 60}}" formControlName="outTime"/>
               </mat-form-field>
             </div>
           </div>
@@ -216,7 +216,7 @@
         <mat-list class="container mt-3">
           <div class="review-pair fs-6">
             <mat-label>Total:</mat-label>
-            <mat-label>$230.59</mat-label>
+            <mat-label>${{roomData.base_price}}</mat-label>
           </div>
         </mat-list>
 
