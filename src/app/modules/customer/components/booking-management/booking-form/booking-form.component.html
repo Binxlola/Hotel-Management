@@ -224,6 +224,19 @@
     </mat-step>
 
     <mat-step label="Summary" editable="false" state="summary">
+      <div id="booking-summary-wrapper d-flex flex-column">
+
+        <!--   Container for booking details review     -->
+        <mat-list class="container">
+          <h1>Booking Summary</h1>
+          <div class="review-pair">
+            <mat-label>Reference:</mat-label>
+            <mat-label>{{roomData._id}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list>
+
+      </div>
     </mat-step>
 
     <!-- Icon overrides   -->

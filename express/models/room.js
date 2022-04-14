@@ -53,7 +53,7 @@ const RoomModel = new mongoose.Schema({
 });
 
 function intervalValidation(v) {
-  return (v >= 5) && (v <= 60) &&  (v % 5 == 0);
+  return (v >= 5) && (v <= 60) &&  (v % 5 === 0);
 }
 
 function timeFormat(v) {

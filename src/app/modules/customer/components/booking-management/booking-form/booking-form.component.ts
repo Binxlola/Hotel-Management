@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {faCcVisa, faCcMastercard, faCcPaypal, faCcApplePay} from "@fortawesome/free-brands-svg-icons";
 import {MatStepper} from "@angular/material/stepper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {DatePipe} from "@angular/common";
-import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {Booking, BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
 
 export interface DialogData {
   room: Room;
@@ -27,6 +27,7 @@ export class BookingFormComponent implements OnInit {
 
   @ViewChild('stepper') private myStepper: MatStepper | undefined;
 
+  private _booking: Booking;
   private _datePipe: DatePipe = new DatePipe('en-NZ');
   private _onSummary = false;
   private _onReview = false;
@@ -71,6 +72,23 @@ export class BookingFormComponent implements OnInit {
     private fb: FormBuilder,
     private _bookingService: BookingService
   ) {
+
+    // define empty booking for binding purposes
+    this._booking = {
+      bookingName: "",
+      checkInDate: "",
+      checkInTime: "",
+      checkOutDate: "",
+      checkOutTime: "",
+      comments: "",
+      numAdults: 0,
+      numChildren: 0,
+      room: "",
+      totalPaid: 0
+
+    }
+
+    // Build guest number options array from room limits
     this._numAdults = [...Array(_data.room.max_adults + 1).keys()];
     this._numChildren = [...Array(_data.room.max_adults + 1).keys()];
   }
@@ -129,9 +147,22 @@ export class BookingFormComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  private makeBooking(): boolean {
-    console.log(this.bookingDetails.value);
-    return false;
+  private makeBooking(): void {
+    let booking: Booking = {
+      bookingName: this.bookingDetails.get("resName")?.value,
+      room: this.roomData._id,
+      totalPaid: this.roomData.base_price,
+      checkInDate: this.bookingDetails.get("startDate")?.value,
+      checkOutDate: this.bookingDetails.get("endDate")?.value,
+      checkInTime: this.bookingDetails.get("inTime")?.value,
+      checkOutTime: this.bookingDetails.get("outTime")?.value,
+      numAdults: this.bookingDetails.get("numAdults")?.value,
+      numChildren: this.bookingDetails.get("numChildren")?.value,
+      comments: this.bookingDetails.get("comments")?.value,
+    }
+
+    this._bookingService.makeBooking(booking)
+      .then(res => this._booking = res);
   }
 
 
@@ -175,6 +206,7 @@ export class BookingFormComponent implements OnInit {
   get stepNextLabel(): string {return this._stepNextLabel;}
   set stepNextLabel(label: string) {this._stepNextLabel = label;}
 
+  get booking(): Booking {return <Booking>this._booking;}
   get datePipe(): DatePipe {return  this._datePipe;}
   get numAdults(): number[] {return this._numAdults;}
   get numChildren(): number[] {return this._numChildren;}

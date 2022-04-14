@@ -1,4 +1,7 @@
 import {Room} from "../models/room.js";
+import mongoose from "mongoose";
+import {v4 as uuidv4} from "uuid";
+import {Booking} from "../models/booking.js";
 
 const r1 = new Room({
   type: "Single Room",
@@ -51,8 +54,29 @@ function saveRoom() {
   r3.save().then(r => console.log(r));
 }
 
+/**
+ * Create new mongoose booking object and save to collection.
+ * @param booking A request body containing the booking information
+ * @returns {*} The saved booking
+ */
+function saveBooking(booking) {
+  return new Booking({
+    bookingName: booking.bookingName,
+    room: mongoose.Types.ObjectId(booking.room),
+    uuid: uuidv4(),
+    totalPaid: booking.totalPaid,
+    checkInDate: Date.parse(booking.checkInDate),
+    checkOutDate: Date.parse(booking.checkOutDate),
+    checkInTime: booking.checkInTime,
+    checkOutTime: booking.checkOutTime,
+    numAdults: booking.numAdults,
+    numChildren: booking.numChildren,
+    comments: booking.comments
+  }).save();
+}
+
 function getAllRooms() {
   return Room.find();
 }
 
-export {saveRoom, getAllRooms}
+export {saveRoom, getAllRooms, saveBooking}
