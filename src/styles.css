@@ -8,8 +8,11 @@
   --transparency-med: .5;
   --transparency-low: .7;
 
-  --primary: #E91E63;
-  --secondary1: #C2185B;
+  --admin-primary: #FF5722;
+  --admin-secondary: #E64A19;
+  --admin-ternary: #D84315;
+  --customer-primary: #E91E63;
+  --customer-secondary: #C2185B;
   --secondary2: #AD1457;
   --accent: #B0BEC5;
   --dark: #303030;

@@ -20,7 +20,7 @@
 }
 
 .hover-notification {
-  color: var(--primary);
+  color: var(--customer-primary);
 }
 
 /* Set starting styles for card side based on animation requirements */

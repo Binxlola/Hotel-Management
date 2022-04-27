@@ -1,5 +1,5 @@
 mat-toolbar {
-  background: linear-gradient(90deg, var(--dark), var(--secondary2));
+  background: linear-gradient(90deg, var(--dark), var(--customer-ternary));
 }
 
 #toolbar-left {
@@ -52,16 +52,16 @@ mat-sidenav {
   content: "";
   width: 6px;
   height: 100%;
-  background-color: var(--secondary1);
+  background-color: var(--customer-secondary);
 }
 
 .nav-button:hover div{
-  color: var(--secondary1);
+  color: var(--customer-secondary);
   margin-left: 20px;
 }
 
 .nav-button.active div {
-  color: var(--secondary1);
+  color: var(--customer-secondary);
   margin-left: 20px;
 }
 
@@ -77,7 +77,7 @@ mat-sidenav button:last-child {
 mat-divider {
   margin-top: 16px;
   margin-bottom: 16px;
-  background-color: var(--secondary1);
+  background-color: var(--customer-secondary);
 }
 
 .mat-sidenav-content {
