@@ -1,6 +1,16 @@
-<main [id]="this.isCustomer ? 'customer-login' : 'staff-login'" class="d-flex justify-content-start align-items-center vh-100 vw-100">
-  <div [id]="this.isCustomer ? 'login-customer-container' : 'login-staff-container'" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container p-0 position-relative d-flex rounded shadow-lg">
-    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-start'" class="wrapper top-0 left-0 position-absolute w-100 h-100 d-flex align-items-center">
+<main [id]="this.isCustomer ? 'customer-login' : 'staff-login'">
+  <div [id]="this.isCustomer ? 'login-customer-container' : 'login-staff-container'" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container">
+    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-start'" class="wrapper">
+
+      <!--
+        LOGIN FORM
+
+        The following change based on isCustomer flag:
+          - Submit function redirect path
+          - Social icons header
+          - Social Icons
+          - Panel image
+      -->
       <form class="sign-in-form" [formGroup]="loginForm" (ngSubmit)="authService.login(
       {
       username: this.loginForm.get('username')?.value,
@@ -47,6 +57,7 @@
         </div>
       </form>
 
+      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->
       <form *ngIf="this.isCustomer" class="sign-up-form">
         <h2 class="title">Sign up</h2>
         <mat-form-field appearance="outline">
@@ -91,7 +102,9 @@
       </form>
     </div>
 
-    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-end'" class="container panels-container position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center">
+    <div id="panels-container" [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-end'" class="container">
+
+      <!--   LOGIN FORM COVER PANEL (LEFT) - Entire panel is rendered based on isCustomer flag   -->
       <div *ngIf="this.isCustomer" class="panel left-panel">
         <div class="content">
           <h2>Member of Brand?</h2>
@@ -103,6 +116,15 @@
         <img class="mt-5" src="assets/images/travel.svg" alt=""/>
       </div>
 
+      <!--
+        REGISTRATION FORM COVER PANEL (RIGHT)
+
+        The following change based on isCustomer flag:
+          - Title
+          - Paragraph text
+          - Signup button (visibility)
+          - Panel image
+      -->
       <div class="panel right-panel">
         <div class="content">
           <h2>{{this.isCustomer ?  "New to Brand?" : "Company Policy"}}</h2>
