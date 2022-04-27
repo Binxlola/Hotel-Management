@@ -4,7 +4,7 @@ mat-toolbar {
 
 #toolbar-left {
   width: var(--side-nav-width);
-  background: var(--glassmorphism-dark-high);
+  background: var(--glass-dark-high);
 }
 
 .toolbar-center button {
@@ -20,7 +20,7 @@ mat-sidenav-container {
 }
 
 mat-sidenav {
-  background-color: var(--glassmorphism-dark-high);
+  background-color: var(--glass-dark-high);
   -webkit-backdrop-filter: var(--glassmorphism-blur);
   backdrop-filter: var(--glassmorphism-blur);
   width: var(--side-nav-width);

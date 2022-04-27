@@ -31,7 +31,7 @@ main {
   overflow: hidden;
   border-radius: .25rem;
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
-  background-color: var(--glassmorphism-accent-high);
+  background-color: var(--glass-accent-high);
   -webkit-backdrop-filter: var(--glassmorphism-blur);
   backdrop-filter: var(--glassmorphism-blur);
 }
@@ -50,7 +50,11 @@ main {
 }
 
 #login-customer-container::before {
-  background: linear-gradient(80deg, var(--glassmorphism-accent-low), var(--glassmorphism-primary-low), var(--glassmorphism-accent-low));
+  background: linear-gradient(80deg, var(--glass-accent-low), var(--glass-customer-primary-low), var(--glass-accent-low));
+}
+
+#login-staff-container::before {
+  background: linear-gradient(80deg, var(--glass-accent-low), var(--glass-staff-primary-low), var(--glass-accent-low));
 }
 
 .wrapper {

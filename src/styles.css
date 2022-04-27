@@ -8,24 +8,27 @@
   --transparency-med: .5;
   --transparency-low: .7;
 
-  --admin-primary: #FF5722;
-  --admin-secondary: #E64A19;
-  --admin-ternary: #D84315;
+  /* STAFF MODULE COLOURS */
+  --staff-primary: #FF5722;
+  --staff-secondary: #E64A19;
+  --staff-ternary: #D84315;
+  --glass-staff-primary-high: rgba(255, 87, 34, var(--transparency-high));
+  --glass-staff-primary-low: rgba(255, 87, 34, var(--transparency-low));
+
+  /* CUSTOMER MODULE COLOURS */
   --customer-primary: #E91E63;
   --customer-secondary: #C2185B;
-  --secondary2: #AD1457;
+  --customer-ternary: #AD1457;
+  --glass-customer-primary-high: rgba(233, 30, 99, var(--transparency-high));
+  --glass-customer-primary-low: rgba(233, 30, 99, var(--transparency-low));
 
   --accent: #B0BEC5;
   --dark: #303030;
-
-  /* GLASS-MORPHISM */
-  --glassmorphism-primary-high: rgba(233, 30, 99, var(--transparency-high));
-  --glassmorphism-primary-low: rgba(233, 30, 99, var(--transparency-low));
-  --glassmorphism-accent-high: rgba(176, 190, 197, var(--transparency-high));
-  --glassmorphism-accent-low: rgba(176, 190, 197, var(--transparency-low));
-  --glassmorphism-dark-low: rgba(48, 48, 48, var(--transparency-low));
-  --glassmorphism-dark-med: rgba(48, 48, 48, var(--transparency-med));
-  --glassmorphism-dark-high: rgba(48, 48, 48, var(--transparency-high));
+  --glass-accent-high: rgba(176, 190, 197, var(--transparency-high));
+  --glass-accent-low: rgba(176, 190, 197, var(--transparency-low));
+  --glass-dark-low: rgba(48, 48, 48, var(--transparency-low));
+  --glass-dark-med: rgba(48, 48, 48, var(--transparency-med));
+  --glass-dark-high: rgba(48, 48, 48, var(--transparency-high));
 
   --glassmorphism-blur: blur(12px);
 
@@ -47,7 +50,7 @@ html, body {
 }
 
 .mat-dialog-container {
-  background-color: var(--glassmorphism-accent-high);
+  background-color: var(--glass-accent-high);
   -webkit-backdrop-filter: var(--glassmorphism-blur);
   backdrop-filter: var(--glassmorphism-blur);
 }
