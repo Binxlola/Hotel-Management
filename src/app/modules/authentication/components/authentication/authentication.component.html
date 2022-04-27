@@ -1,16 +1,27 @@
 <main class="d-flex justify-content-start align-items-center vh-100 vw-100">
   <div id="login-container" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container p-0 position-relative d-flex rounded shadow-lg">
     <div class="wrapper top-0 left-0 position-absolute w-100 h-100 d-flex align-items-center justify-content-around">
-      <form action="" class="sign-in-form">
-        <h1 class="title">Sign in</h1>
+<!--      <form action="" class="sign-in-form">-->
+      <form action="" class="sign-in-form" [formGroup]="customerLogin" (ngSubmit)="authService.login(
+      {
+      username: this.customerLogin.get('username')?.value,
+      password: this.customerLogin.get('password')?.value,
+      isStaff: false
+      },
+       '/dashboard',
+       handleLoginResponseFunction
+       )">
+      <h1 class="title">Sign in</h1>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-          <input matInput>
+<!--          <input matInput>-->
+          <input matInput type="text" formControlName="username">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'">
+<!--          <input matInput [type]="hide ? 'password' : 'text'">-->
+          <input matInput formControlName="password" type="password">
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
         <button mat-flat-button type="submit" value="login">Sign in</button>

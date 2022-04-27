@@ -6,7 +6,7 @@ import mongoose from "mongoose"
 
 // Import routers
 import {router as authenticationRouter} from "./routes/authentication-route.js";
-import {router as bookingRouter} from "./routes/booking-route.js"
+import {router as bookingRouter} from "./routes/booking-route.js";
 import path from "path";
 import {fileURLToPath} from "url";
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(express.static(distDir));
 
 // Add server routes
-app.use("/authenticate", authenticationRouter);
+app.use("/authentication", authenticationRouter);
 app.use("/booking", bookingRouter);
 
 // Make connection to DB
@@ -46,4 +46,8 @@ const server = app.listen(process.env.PORT || 8080, () => {
 app.get("/api/status", (req, res) => {
   res.status(200).json({status: "UP"});
 });
+
+
+
+
 
