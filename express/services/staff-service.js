@@ -19,25 +19,4 @@ function saveStaff() {
   newStaffThree.save();
 }
 
-async function findStaff(staff){
-  let returnedData = {
-    error: null,
-    user: null
-  }
-
-  // **CB Seeing if staff username and password exists in query
-  let user = await Staff.findOne({username: staff.username});
-  console.log(user);
-
-  if(!user){
-    returnedData.error = "Username does not exist";
-  } else if(user.password !== staff.password){
-    returnedData.error = "Password does not match";
-  } else{
-    returnedData.user = user;
-  }
-
-  return returnedData;
-}
-
-export {saveStaff, findStaff}
+export {saveStaff}

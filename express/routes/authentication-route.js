@@ -1,7 +1,5 @@
 import express from "express";
-import {findCustomer, saveCustomer} from "../services/customer-service.js";
-import {findStaff, saveStaff} from "../services/staff-service.js";
-//import {findCustomer} from "../services/customer-service.js";
+import {login} from "../services/authentication-service.js";
 
 
 // Create Router
@@ -9,8 +7,9 @@ const router = express.Router();
 
 router.post("/login", async (req, res) => {
   //saveStaff();
-  let data = req.body.isStaff ? await findStaff(req.body) : await findCustomer(req.body);
-  res.status(data.user ? 200 : 401).json(data);
+  await login(req.body.username, req.body.password, req.body.isCustomer)
+    .then(userData => res.status(201).json(userData))
+    .catch(err => res.status(401).send(err));
 })
 
 export {router}

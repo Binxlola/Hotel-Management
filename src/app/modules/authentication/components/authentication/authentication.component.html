@@ -1,32 +1,29 @@
-<main class="d-flex justify-content-start align-items-center vh-100 vw-100">
-  <div id="login-container" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container p-0 position-relative d-flex rounded shadow-lg">
-    <div class="wrapper top-0 left-0 position-absolute w-100 h-100 d-flex align-items-center justify-content-around">
-<!--      <form action="" class="sign-in-form">-->
-      <form action="" class="sign-in-form" [formGroup]="customerLogin" (ngSubmit)="authService.login(
+<main [id]="this.isCustomer ? 'customer-login' : 'staff-login'" class="d-flex justify-content-start align-items-center vh-100 vw-100">
+  <div [id]="this.isCustomer ? 'login-customer-container' : 'login-staff-container'" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container p-0 position-relative d-flex rounded shadow-lg">
+    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-start'" class="wrapper top-0 left-0 position-absolute w-100 h-100 d-flex align-items-center">
+      <form class="sign-in-form" [formGroup]="loginForm" (ngSubmit)="authService.login(
       {
-      username: this.customerLogin.get('username')?.value,
-      password: this.customerLogin.get('password')?.value,
-      isStaff: false
+      username: this.loginForm.get('username')?.value,
+      password: this.loginForm.get('password')?.value,
+      isCustomer
       },
-       '/dashboard',
-       handleLoginResponseFunction
+       this.isCustomer ? '/customer' : '/staff',
+       this.handleErrorResponse
        )">
       <h1 class="title">Sign in</h1>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-<!--          <input matInput>-->
           <input matInput type="text" formControlName="username">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-<!--          <input matInput [type]="hide ? 'password' : 'text'">-->
           <input matInput formControlName="password" type="password">
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
         <button mat-flat-button type="submit" value="login">Sign in</button>
-        <p class="social-text">Or sign in with social platform</p>
-        <div class="social-media">
+        <p *ngIf="this.isCustomer" class="social-text">Or sign in with social platform</p>
+        <div *ngIf="this.isCustomer" class="social-media">
           <a href="#" class="social-icon">
             <button mat-icon-button>
               <fa-icon [icon]="faFacebook" size="lg"></fa-icon>
@@ -50,7 +47,7 @@
         </div>
       </form>
 
-      <form action="" class="sign-up-form">
+      <form *ngIf="this.isCustomer" class="sign-up-form">
         <h2 class="title">Sign up</h2>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -94,8 +91,8 @@
       </form>
     </div>
 
-    <div class="container panels-container position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center justify-content-around">
-      <div class="panel left-panel">
+    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-end'" class="container panels-container position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center">
+      <div *ngIf="this.isCustomer" class="panel left-panel">
         <div class="content">
           <h2>Member of Brand?</h2>
           <p>
@@ -108,13 +105,25 @@
 
       <div class="panel right-panel">
         <div class="content">
-          <h2>New to Brand?</h2>
+          <h2>{{this.isCustomer ?  "New to Brand?" : "Company Policy"}}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor. Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id turpis in dui lacinia euismod dignissim ut risus.
+            {{
+            this.isCustomer ?
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, " +
+              "quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus " +
+              "vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. " +
+              "Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum" +
+              " lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor." +
+              " Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id" +
+              " turpis in dui lacinia euismod dignissim ut risus."
+            :
+              "We value our employees and customers and endeavour to provide excellent service."+
+              " Our mission is to provide secure and luxurious rooms while also delivering excellent customer service."
+            }}
           </p>
-          <button mat-flat-button (click)="toggleMode(true)">Sign up</button>
+          <button *ngIf="this.isCustomer" mat-flat-button (click)="toggleMode(true)">Sign up</button>
         </div>
-        <img class="mt-5" src="assets/images/registration.svg" alt=""/>
+        <img class="mt-5" [srcset]="this.isCustomer ? 'assets/images/registration.svg' : 'assets/images/team-colab.svg'" alt=""/>
       </div>
     </div>
   </div>

@@ -13,14 +13,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { StaffAuthenticationComponent } from './modules/authentication/components/staff-authentication/staff-authentication.component';
 import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    StaffAuthenticationComponent
   ],
   imports: [
     BrowserModule,

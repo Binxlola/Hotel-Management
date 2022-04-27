@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons";
-import {AuthService, LoginRes} from "../../services/authentican.service";
+import {AuthService} from "../../services/authentican.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-authentication',
@@ -10,9 +12,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AuthenticationComponent implements OnInit {
 
-  private readonly _handleLoginResponseFunction: ((error: string | null) => void) = this.handleLoginResponse;
+  public readonly isCustomer: boolean;
 
-  private _customerLogin: FormGroup = this.fb.group({
+  private _loginForm: FormGroup = this.fb.group({
     username: ["", Validators.required],
     password: ["", Validators.required],
   });
@@ -23,11 +25,13 @@ export class AuthenticationComponent implements OnInit {
   faGoogle = faGoogle;
   faLinkedin = faLinkedin;
   signupMode: boolean = false;
-  modeClass = "sign-up-mode";
 
   hide = true;
 
-  constructor( private _authenticationService: AuthService, private fb: FormBuilder){}
+  constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder){
+    this.isCustomer = this._router.url === "/login";
+    console.log(this.isCustomer);
+  }
 
   ngOnInit(): void {}
 
@@ -35,19 +39,15 @@ export class AuthenticationComponent implements OnInit {
     this.signupMode = toggleSignup;
   }
 
-  private handleLoginResponse( error: string | null ){
+  public handleErrorResponse(error: HttpErrorResponse): void {
     console.log(error);
-  }
-
-  get handleLoginResponseFunction(): (error: string | null) => void{
-    return this._handleLoginResponseFunction;
   }
 
   get authService(){
     return this._authenticationService;
   }
 
-  get customerLogin(): FormGroup {
-    return this._customerLogin;
+  get loginForm(): FormGroup {
+    return this._loginForm;
   }
 }

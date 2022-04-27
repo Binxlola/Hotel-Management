@@ -2,31 +2,16 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
-import {Booking} from "../../shared/services/booking/booking-service.service";
 import {Router} from "@angular/router";
 
-export interface Tokens {
-  email: string,
+export interface Token {
   token: string,
-  refreshToken: string
+  expiresIn: number
 }
 
-export interface Customer {
-  username: string,
-  password: string,
-  first_name: string,
-  last_name: string,
-  email: string
-}
-
-export interface Staff {
-  username: string,
-  password: string
-}
-
-export interface LoginRes {
-  error: null | string;
-  user: null | Staff | Customer;
+export interface User {
+  _id: string,
+  jwt: Token
 }
 
 @Injectable({
@@ -34,15 +19,13 @@ export interface LoginRes {
 })
 export class AuthService {
 
-  private readonly JWT_TOKEN: string = 'JWT_TOKEN';
-  private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
-  private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`
-  private loggedUser: string | undefined;
+  private readonly TOKEN_KEY = "Token";
 
-  constructor(
-    private http: HttpClient,
-    private _router: Router
-    ) {}
+  private USER: User | undefined;
+  private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
+  private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`;
+
+  constructor(private http: HttpClient, private _router: Router) {}
 
   /**
    * Send user login information via a request, and expects a response with a JWT token and refresh token.
@@ -52,32 +35,27 @@ export class AuthService {
    * @param callback
    * @return Observable<boolean> should be the return type, but for nom it is void.
    */
-  // login(user: { username: string, password: string, isStaff: boolean }): Observable<boolean> {
-  //   return this.http.post<any>(`${this.AUTHENTICATION_URL}/login`, user)
-  //     .pipe(
-  //       tap(tokens => this.doLoginUser(user.username, tokens)),
-  //       mapTo(true),
-  //       catchError(error => {
-  //         alert(error.error);
-  //         return of(false);
-  //       }));
-  // }
-
-  async login(user: { username: string, password: string, isStaff: boolean }, redirectPath: string, callback: ((error: string | null) => void)): Promise<LoginRes> {
+  public async login(user: { username: string, password: string, isCustomer: boolean }, redirectPath: string, callback: ((error: HttpErrorResponse) => void)): Promise<boolean> {
     return await lastValueFrom(
-      this.http.post<LoginRes>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
-        tap((response: LoginRes) => {
-          if (!response.user) callback(response.error);
-          else this.redirectTo(redirectPath);
+      this.http.post<User>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
+        tap((response: User) => {
+          this.USER = response;
+          localStorage.setItem(this.TOKEN_KEY, response.jwt.token);
+          this.redirectTo(redirectPath);
         }),
-        catchError(this.handleError)
+        mapTo(true),
+        catchError(error => {
+          callback(error);
+          return of(false);
+        })
       )
     );
   }
 
-  logout() {
-    this.loggedUser = undefined;
-    this.removeTokens();
+  public logout() {
+    this.USER = undefined;
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.REFRESH_TOKEN);
     this.redirectTo("/login");
     // return this.http.post<any>(`${this.AUTHENTICATION_URL}/logout`, {
     //   'refreshToken': this.getRefreshToken()
@@ -93,48 +71,22 @@ export class AuthService {
     //   }));
   }
 
-  isLoggedIn() {
-    return !!this.getJwtToken();
+  public isLoggedIn(): boolean {
+    console.log(localStorage.getItem(this.TOKEN_KEY));
+    return localStorage.getItem(this.TOKEN_KEY) != undefined;
   }
 
-  public redirectTo(route: string){
+  public redirectTo(route: string) {
     this._router.navigate([route]);
   }
 
-  refreshToken() {
-    return this.http.post<any>(`${this.AUTHENTICATION_URL}/refresh`, {
-      'refreshToken': this.getRefreshToken()
-    }).pipe(tap((tokens: Tokens) => {
-      this.storeJwtToken(tokens.token);
-    }));
-  }
-
-  getJwtToken() {
-    return localStorage.getItem(this.JWT_TOKEN);
-  }
-
-  private doLoginUser(email: string, tokens: Tokens) {
-    this.loggedUser = email;
-    this.storeTokens(tokens);
-  }
-
-  private getRefreshToken() {
-    return localStorage.getItem(this.REFRESH_TOKEN);
-  }
-
-  private storeJwtToken(jwt: string) {
-    localStorage.setItem(this.JWT_TOKEN, jwt);
-  }
-
-  private storeTokens(tokens: Tokens) {
-    localStorage.setItem(this.JWT_TOKEN, tokens.token);
-    // localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
-  }
-
-  private removeTokens() {
-    localStorage.removeItem(this.JWT_TOKEN);
-    localStorage.removeItem(this.REFRESH_TOKEN);
-  }
+  // refreshToken() {
+  //   return this.http.post<any>(`${this.AUTHENTICATION_URL}/refresh`, {
+  //     'refreshToken': this.getRefreshToken()
+  //   }).pipe(tap((tokens: Tokens) => {
+  //     this.storeJwtToken(tokens.token);
+  //   }));
+  // }
 
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {
     if (error.status === 0) {

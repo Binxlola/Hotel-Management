@@ -25,6 +25,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatListModule} from "@angular/material/list";
 import { RoomCardComponent } from './components/booking-management/room-card/room-card.component';
+import {CustomerRoutingModule} from "./customer-routing.module";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { RoomCardComponent } from './components/booking-management/room-card/roo
         MatListModule
     ],
   exports: [
-    CustomerDashboardComponent
+    CustomerDashboardComponent,
+    CustomerRoutingModule
   ],
   providers: [
     {
