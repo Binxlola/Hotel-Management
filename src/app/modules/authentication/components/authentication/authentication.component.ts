@@ -30,7 +30,6 @@ export class AuthenticationComponent implements OnInit {
 
   constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder){
     this.isCustomer = this._router.url === "/login";
-    console.log(this.isCustomer);
   }
 
   ngOnInit(): void {}

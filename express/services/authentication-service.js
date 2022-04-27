@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import {Staff} from "../models/staff.js";
 import {Customer} from "../models/customer.js";
-import {throwError} from "rxjs";
 
 async function login(username, password, isCustomer) {
   const filter = {username: username};
