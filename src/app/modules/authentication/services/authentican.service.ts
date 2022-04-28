@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
+import {ElementRef, Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
+import {FormGroupDirective} from "@angular/forms";
 
 export interface Token {
   token: string,
@@ -33,23 +34,52 @@ export class AuthService {
    * @param user The user object, containing a user name and password
    * @param redirectPath
    * @param callback
+   * @param view
    * @return Observable<boolean> should be the return type, but for nom it is void.
    */
-  public async login(user: { username: string, password: string, isCustomer: boolean }, redirectPath: string, callback: ((error: HttpErrorResponse) => void)): Promise<boolean> {
-    return await lastValueFrom(
-      this.http.post<User>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
-        tap((response: User) => {
-          this.USER = response;
-          localStorage.setItem(this.TOKEN_KEY, response.jwt.token);
-          this.redirectTo(redirectPath);
-        }),
-        mapTo(true),
-        catchError(error => {
-          callback(error);
-          return of(false);
-        })
-      )
-    );
+  public login = async (
+    user: { username: string, password: string, isCustomer: boolean },
+    redirectPath: string,
+    callback: ((error: HttpErrorResponse, view: HTMLDivElement) => void),
+    view: HTMLDivElement): Promise<boolean> => await lastValueFrom(
+    this.http.post<User>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
+      tap((response: User) => this.logUserIn(response, redirectPath)),
+      mapTo(true),
+      catchError(error => {
+        callback(error, view);
+        return of(false);
+      })
+    )
+  );
+
+  /**
+   * Send user login information via a request, and expects a response with a JWT token and refresh token.
+   * Assuming no errors the respective user login method will be called.
+   * @param user The user object, containing a user name, password, first name, last name, email
+   * @param redirectPath
+   * @param callback
+   * @param view
+   * @return Observable<boolean> should be the return type, but for nom it is void.
+   */
+  public signup = async (
+    user: { username: string; password: string; firstName: string; lastName: string; email: string },
+    redirectPath: string,
+    callback: OmitThisParameter<(error: HttpErrorResponse, view: HTMLDivElement) => void>,
+    view: HTMLDivElement): Promise<boolean> => await lastValueFrom(
+    this.http.post<User>(`${this.AUTHENTICATION_URL}/signup`, user).pipe(
+      tap((response: User) => this.logUserIn(response, redirectPath)),
+      mapTo(true),
+      catchError(error => {
+        callback(error, view);
+        return of(false);
+      })
+    )
+  );
+
+  private logUserIn(user: User, redirectPath: string): void{
+    this.USER = user;
+    localStorage.setItem(this.TOKEN_KEY, user.jwt.token);
+    this.redirectTo(redirectPath);
   }
 
   public logout() {
@@ -72,7 +102,6 @@ export class AuthService {
   }
 
   public isLoggedIn(): boolean {
-    console.log(localStorage.getItem(this.TOKEN_KEY));
     return localStorage.getItem(this.TOKEN_KEY) != undefined;
   }
 

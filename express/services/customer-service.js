@@ -1,16 +1,40 @@
 import {Customer} from "../models/customer.js";
-import {Staff} from "../models/staff.js";
+import {getToken} from "./authentication-service.js";
 
-let newCustomer = new Customer({
-  username: "Jason01",
-  password: "test",
-  first_name: "Jason",
-  last_name: "Smit",
-  email: "qnf1170@autuni.ac.nz",
-})
+/**
+ * This function checks if the user is a customer, then will compare against the correct database
+ * Username and email will be checked,If there is no match, then proceed to store data into database and enter dashboard
+ * else if there is a match for anyone of them, error occurs, fails to store to database
+ * @param username
+ * @param password
+ * @param firstName
+ * @param lastName
+ * @param email
+ * @returns {Promise<{jwt: {expiresIn: number, token: (*)}, _id}>}
+ */
+async function signup(username, password, firstName, lastName, email) {
+  const filter = {username: username};
+  let user = await Customer.findOne(filter);
 
-function saveCustomer() {
-  return newCustomer.save();
+  if (user) throw "This username already exists";
+  else if (user != null && user.email === email) throw "This email already exists";
+  else {
+    user = await new Customer({
+      username: username,
+      password: password,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+    }).save();
+  }
+
+  return {
+    jwt: {
+      token: getToken(user.username, user._id),
+      expiresIn: 3600
+    },
+    _id: user._id
+  }
 }
 
-export {saveCustomer}
+export {signup}

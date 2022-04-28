@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons";
 import {AuthService} from "../../services/authentican.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -16,8 +16,17 @@ export class AuthenticationComponent implements OnInit {
 
   private _loginForm: FormGroup = this.fb.group({
     username: ["", Validators.required],
-    password: ["", Validators.required],
+    password: ["", Validators.required]
   });
+
+  private _signupForm: FormGroup = this.fb.group({
+    username: ["", Validators.required],
+    password: ["", Validators.required],
+    first_name: ["", Validators.required],
+    last_name: ["", Validators.required],
+    email: ["", Validators.required]
+
+  })
 
   // Font Awesome icons
   faFacebook = faFacebook;
@@ -28,8 +37,12 @@ export class AuthenticationComponent implements OnInit {
 
   hide = true;
 
-  constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder){
+  @ViewChild('signUpError' ) public signUpError!: ElementRef;
+  @ViewChild('signInError') public signInError!: ElementRef;
+
+  constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
     this.isCustomer = this._router.url === "/login";
+
   }
 
   ngOnInit(): void {}
@@ -38,8 +51,11 @@ export class AuthenticationComponent implements OnInit {
     this.signupMode = toggleSignup;
   }
 
-  public handleErrorResponse(error: HttpErrorResponse): void {
-    console.log(error);
+  public handleErrorResponse(error: HttpErrorResponse, view : HTMLDivElement): void {
+    let child = document.createElement('div');
+    child.style.color = "red";
+    child.innerText = error.error;
+    view.appendChild(child);
   }
 
   get authService(){
@@ -48,5 +64,9 @@ export class AuthenticationComponent implements OnInit {
 
   get loginForm(): FormGroup {
     return this._loginForm;
+  }
+
+  get signupForm(): FormGroup {
+    return this._signupForm;
   }
 }

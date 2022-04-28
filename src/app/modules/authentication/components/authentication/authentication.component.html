@@ -18,7 +18,8 @@
       isCustomer
       },
        this.isCustomer ? '/customer' : '/staff',
-       this.handleErrorResponse
+        this.handleErrorResponse.bind(this),
+        this.signInError
        )">
       <h1 class="title">Sign in</h1>
         <mat-form-field appearance="outline">
@@ -55,24 +56,54 @@
               </button>
             </a>
         </div>
+        <div #signInError></div>
       </form>
 
-      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->
-      <form *ngIf="this.isCustomer" class="sign-up-form">
+
+      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->]
+      <!--CB line 63-71 -->
+
+      <form *ngIf="this.isCustomer" class="sign-up-form" [formGroup]="signupForm" (ngSubmit)="authService.signup(
+      {
+      username: this.signupForm.get('username')?.value,
+      password: this.signupForm.get('password')?.value,
+      firstName: this.signupForm.get('first_name')?.value,
+      lastName: this.signupForm.get('last_name')?.value,
+      email: this.signupForm.get('password')?.value
+      },
+       this.isCustomer ? '/customer' : '/staff',
+       this.handleErrorResponse.bind(this),
+       this.signUpError
+       )">
         <h2 class="title">Sign up</h2>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-          <input matInput>
+<!--          <input matInput> -->
+          <input matInput type="text" formControlName="username">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <!--          <input matInput> -->
+          <input matInput type="text" formControlName="first_name">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <!--          <input matInput> -->
+          <input matInput type="text" formControlName="last_name">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput type="password">
+<!--          <input matInput type="password">-->
+          <input matInput type="text" formControlName="password">
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput>
+<!--          <input matInput>-->
+          <input matInput type="text" formControlName="email">
           <mat-icon matPrefix>email</mat-icon>
         </mat-form-field>
         <button mat-flat-button type="submit" value="register">Sign up</button>
@@ -99,6 +130,7 @@
               </button>
             </a>
         </div>
+        <div #signUpError></div>
       </form>
     </div>
 

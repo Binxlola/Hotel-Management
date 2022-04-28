@@ -2,6 +2,17 @@ import jwt from "jsonwebtoken";
 import {Staff} from "../models/staff.js";
 import {Customer} from "../models/customer.js";
 
+
+/**
+ * This function checks if the user is a staff, then will compare against the correct database
+ * username and password will be checked, if there is a match, then proceed to login
+ * else if there is no match, proceed to error codes.
+ * @param username
+ * @param password
+ * @param isCustomer
+ * @returns {Promise<{jwt: {expiresIn: number, token: (*)}, _id: *}>}
+ */
+
 async function login(username, password, isCustomer) {
   const filter = {username: username};
   let user = isCustomer ? await Customer.findOne(filter) : await Staff.findOne(filter);
@@ -31,23 +42,4 @@ function getToken(username, id) {
     })
 }
 
-// const authenticateJWT = (req, res, next) => {
-//   const authHeader = req.headers.authorization;
-//
-//   if (authHeader) {
-//     const token = authHeader.split(' ')[1];
-//
-//     jwt.verify(token, accessTokenSecret, (err, user) => {
-//       if (err) {
-//         return res.sendStatus(403);
-//       }
-//
-//       req.user = user;
-//       next();
-//     });
-//   } else {
-//     res.sendStatus(401);
-//   }
-// };
-
-export {login}
+export {login, getToken}
