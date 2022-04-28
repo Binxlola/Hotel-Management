@@ -79,4 +79,8 @@ function getAllRooms() {
   return Room.find();
 }
 
-export {saveRoom, getAllRooms, saveBooking}
+function getAllBookings() {
+  return Booking.find();
+}
+
+export {saveRoom, getAllRooms, saveBooking, getAllBookings}

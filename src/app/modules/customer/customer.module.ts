@@ -26,6 +26,9 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatListModule} from "@angular/material/list";
 import { RoomCardComponent } from './components/booking-management/room-card/room-card.component';
 import {CustomerRoutingModule} from "./customer-routing.module";
+import { BookingHistoryComponent } from './components/booking-management/booking-history/booking-history.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -33,32 +36,35 @@ import {CustomerRoutingModule} from "./customer-routing.module";
     CustomerDashboardComponent,
     BookingManagementComponent,
     BookingFormComponent,
-    RoomCardComponent
+    RoomCardComponent,
+    BookingHistoryComponent
   ],
-    imports: [
-        CommonModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatBadgeModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCardModule,
-        SwiperModule,
-        MatChipsModule,
-        MatDialogModule,
-        FormsModule,
-        MatDatepickerModule,
-        ReactiveFormsModule,
-        MatNativeDateModule,
-        MatSelectModule,
-        MatStepperModule,
-        MatRadioModule,
-        FontAwesomeModule,
-        MatListModule
-    ],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatBadgeModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    SwiperModule,
+    MatChipsModule,
+    MatDialogModule,
+    FormsModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatRadioModule,
+    FontAwesomeModule,
+    MatListModule,
+    MatTableModule,
+    MatProgressSpinnerModule
+  ],
   exports: [
     CustomerDashboardComponent,
     CustomerRoutingModule
