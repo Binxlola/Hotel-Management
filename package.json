@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
+    "expressDev": "nodemon ./express/server.js",
     "launch": "ng serve & npm start",
     "start": "node express/server.js",
     "build": "ng build",
@@ -33,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.8",
     "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16",
     "rxjs": "~7.4.0",
     "swiper": "^8.0.7",
     "tslib": "^2.3.0",

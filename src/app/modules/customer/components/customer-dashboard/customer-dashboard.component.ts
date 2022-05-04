@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "../authentication/services/authentican.service";
+import {AuthService} from "../../../authentication/services/authentican.service";
 import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({

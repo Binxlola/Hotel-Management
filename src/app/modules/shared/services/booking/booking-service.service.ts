@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import {ElementRef, Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 
 export interface Room {
-  _id: string,
+  _id?: string,
   type: string,
   description_short: string,
   description_full: string,
@@ -47,6 +47,19 @@ export class BookingService {
     this.loadRooms();
   }
 
+  /**
+   * Make a post request to the backend, providing a validated Room object
+   * @param room The room to be created and saved
+   */
+  public createRoom = (room: Room): Observable<boolean> =>
+    this.http.post<any>(`${this.BOOKING_URL}/save-room`, room).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
+
   get rooms(): Room[] {return this._rooms;}
 
   /**
@@ -54,7 +67,7 @@ export class BookingService {
    * @private
    */
   private loadRooms(): void {
-    this.http.get<Room[]>(`${this.BOOKING_URL}/all-room`)
+    this.http.get<Room[]>(`${this.BOOKING_URL}/all-rooms`)
       .subscribe({
         next: (data: Room[]) => {
           this._rooms = [...data];

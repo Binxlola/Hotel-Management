@@ -4,12 +4,19 @@ import {saveRoom, getAllRooms, saveBooking, getAllBookings} from "../services/bo
 // Create Router
 const router = express.Router();
 
-router.get("/room/save", (req, res) => {
-  console.log("we got here");
-  saveRoom();
+router.post("/save-room", async (req, res) => {
+  await saveRoom(req.body)
+    .then(isSaved => res.status(201).json(isSaved))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: "There was an error saving booking",
+        err: err
+      })
+    });
 });
 
-router.get("/all-room", (req, res) => {
+router.get("/all-rooms", (req, res) => {
   getAllRooms()
     .then(rooms => res.json(rooms))
     .catch(err => res.status(404).json({error: "There was an error retrieving rooms"}));

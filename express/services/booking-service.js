@@ -50,10 +50,23 @@ const r3 = new Room({
   base_price: 80,
 });
 
-function saveRoom() {
-  r1.save().then(r => console.log(r));
-  r2.save().then(r => console.log(r));
-  r3.save().then(r => console.log(r));
+async function saveRoom(room) {
+  const newRoom = await new Room({
+    type: room.type,
+    num_available: room.num_available,
+    description_short: room.description_short,
+    description_full: room.description_full,
+    max_adults: room.max_adults,
+    max_children: room.max_children,
+    minCheckIn: room.minCheckIn,
+    maxCheckIn: room.maxCheckIn,
+    minCheckOut: room.minCheckOut,
+    maxCheckOut: room.maxCheckOut,
+    checkInOutInterval: room.checkInOutInterval,
+    base_price: room.base_price,
+  }).save()
+
+  return newRoom != null;
 }
 
 /**

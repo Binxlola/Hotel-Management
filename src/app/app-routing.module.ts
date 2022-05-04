@@ -13,6 +13,11 @@ const routes: Routes = [
     path: "customer",
     loadChildren: () => import('./modules/customer/customer.module').then(m => m.CustomerModule),
     canLoad: [ModulesGuard]
+  },
+  {
+    path: "staff",
+    loadChildren: () => import('./modules/staff/staff.module').then(m => m.StaffModule),
+    canLoad: [ModulesGuard]
   }
 ];
 

@@ -1,6 +1,7 @@
 import express from "express";
 import {login} from "../services/authentication-service.js";
 import {signup} from "../services/customer-service.js";
+import {saveStaff} from "../services/staff-service.js";
 
 
 // Create Router
@@ -19,6 +20,10 @@ router.post("/signup", async (req, res) => {
     .then(userData => res.status(201).json(userData))
     .catch(err => res.status(401).send(err));
 
+})
+
+router.get("/saveStaff", async (req, res) => {
+  saveStaff();
 })
 
 //CB -- here//

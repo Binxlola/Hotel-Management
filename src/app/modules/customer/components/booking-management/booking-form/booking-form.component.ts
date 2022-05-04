@@ -153,7 +153,7 @@ export class BookingFormComponent implements OnInit {
     let booking: Booking = {
       user: this._authService.user?._id,
       bookingName: this.bookingDetails.get("resName")?.value,
-      room: this.roomData._id,
+      room: this.roomData._id!,
       totalPaid: this.roomData.base_price,
       checkInDate: this.bookingDetails.get("startDate")?.value,
       checkOutDate: this.bookingDetails.get("endDate")?.value,
