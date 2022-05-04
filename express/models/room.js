@@ -60,5 +60,5 @@ function timeFormat(v) {
   return /^([0-1]\d|2[0-3]):([0-5]\d)$/.test(v);
 }
 
-export const Room = mongoose.model("RoomModel", RoomModel);
+export const Room = mongoose.model("Rooms", RoomModel);
 

@@ -112,7 +112,7 @@ export class AuthenticationComponent implements OnInit {
           password: this._signupFormGroup.get('password')?.value,
           firstName: this._signupFormGroup.get('first_name')?.value,
           lastName: this._signupFormGroup.get('last_name')?.value,
-          email: this._signupFormGroup.get('password')?.value
+          email: this._signupFormGroup.get('email')?.value
         },
         this.isCustomer ? '/customer' : '/staff',
         this.handleErrorResponse.bind(this),

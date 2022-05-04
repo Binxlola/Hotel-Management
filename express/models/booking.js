@@ -3,6 +3,11 @@ import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
 
 const bookingModel = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "customers",
+    required: false
+  },
   bookingName: {
     type: String,
     required: [true, 'Booking requires a reservation name'],
@@ -47,4 +52,4 @@ const bookingModel = new mongoose.Schema({
   comments: String
 });
 
-export const Booking = mongoose.model("booking", bookingModel);
+export const Booking = mongoose.model("Bookings", bookingModel);

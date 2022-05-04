@@ -7,6 +7,7 @@ import {MatStepper} from "@angular/material/stepper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {DatePipe} from "@angular/common";
 import {Booking, BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {AuthService} from "../../../../authentication/services/authentican.service";
 
 export interface DialogData {
   room: Room;
@@ -70,7 +71,8 @@ export class BookingFormComponent implements OnInit {
     public dialogRef: MatDialogRef<BookingFormComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: DialogData,
     private fb: FormBuilder,
-    private _bookingService: BookingService
+    private _bookingService: BookingService,
+    private _authService: AuthService
   ) {
 
     // define empty booking for binding purposes
@@ -149,6 +151,7 @@ export class BookingFormComponent implements OnInit {
 
   private makeBooking(): void {
     let booking: Booking = {
+      user: this._authService.user?._id,
       bookingName: this.bookingDetails.get("resName")?.value,
       room: this.roomData._id,
       totalPaid: this.roomData.base_price,

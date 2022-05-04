@@ -22,7 +22,7 @@ export class AuthService {
 
   private readonly TOKEN_KEY = "Token";
 
-  private USER: User | undefined;
+  private _user: User | undefined;
   private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
   private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`;
 
@@ -75,13 +75,13 @@ export class AuthService {
     );
 
   private logUserIn(user: User, redirectPath: string): void{
-    this.USER = user;
+    this._user = user;
     localStorage.setItem(this.TOKEN_KEY, user.jwt.token);
     this.redirectTo(redirectPath);
   }
 
   public logout() {
-    this.USER = undefined;
+    this._user = undefined;
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.REFRESH_TOKEN);
     this.redirectTo("/login");
@@ -127,5 +127,9 @@ export class AuthService {
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  get user(): User | undefined {
+    return this._user;
   }
 }

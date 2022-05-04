@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/room/save", (req, res) => {
   console.log("we got here");
-  // saveRoom();
+  saveRoom();
 });
 
 router.get("/all-room", (req, res) => {

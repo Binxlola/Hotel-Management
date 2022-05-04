@@ -7,7 +7,6 @@ import {signup} from "../services/customer-service.js";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-  //saveStaff();
   let body = req.body;
   await login(body.username, body.password, body.isCustomer)
     .then(userData => res.status(201).json(userData))

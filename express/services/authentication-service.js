@@ -22,12 +22,12 @@ async function login(username, password, isCustomer) {
 
   // Should only be reached if no errors were thrown
   return {
-      jwt: {
-        token: getToken(user.username, user._id),
-        expiresIn: 3600
-      },
-      _id: user._id
-    }
+    jwt: {
+      token: getToken(user.username, user._id),
+      expiresIn: 3600
+    },
+    _id: user._id,
+  }
 }
 
 function getToken(username, id) {

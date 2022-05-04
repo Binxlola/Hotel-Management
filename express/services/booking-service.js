@@ -2,6 +2,8 @@ import {Room} from "../models/room.js";
 import mongoose from "mongoose";
 import {v4 as uuidv4} from "uuid";
 import {Booking} from "../models/booking.js";
+import {sendBookingConfirmation} from "./utility-service.js";
+import {Customer} from "../models/customer.js";
 
 const r1 = new Room({
   type: "Single Room",
@@ -59,8 +61,9 @@ function saveRoom() {
  * @param booking A request body containing the booking information
  * @returns {*} The saved booking
  */
-function saveBooking(booking) {
-  return new Booking({
+async function saveBooking(booking) {
+  const newBooking = await new Booking({
+    user: mongoose.Types.ObjectId(booking.user),
     bookingName: booking.bookingName,
     room: mongoose.Types.ObjectId(booking.room),
     uuid: uuidv4(),
@@ -72,7 +75,14 @@ function saveBooking(booking) {
     numAdults: booking.numAdults,
     numChildren: booking.numChildren,
     comments: booking.comments
-  }).save();
+  }).save()
+
+  if (newBooking) {
+    const user = await Customer.findById(booking.user);
+    sendBookingConfirmation(user.email, newBooking.uuid);
+  }
+
+  return newBooking;
 }
 
 function getAllRooms() {

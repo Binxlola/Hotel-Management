@@ -21,6 +21,7 @@ export interface Room {
 
 export interface Booking {
   _id?: string,
+  user?: string,
   bookingName: string,
   room: string,
   uuid?: string | undefined,

@@ -6,5 +6,5 @@ const StaffModel = new mongoose.Schema({
   password: String
 });
 
-export const Staff = mongoose.model("staffModel", StaffModel);
+export const Staff = mongoose.model("Staff", StaffModel);
 
