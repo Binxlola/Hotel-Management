@@ -37,11 +37,11 @@ export class AuthService {
    * @param view
    * @return Observable<boolean> should be the return type, but for nom it is void.
    */
-  public login = async (
+  public login = (
     user: { username: string, password: string, isCustomer: boolean },
     redirectPath: string,
-    callback: ((error: HttpErrorResponse, view: HTMLDivElement) => void),
-    view: HTMLDivElement): Promise<boolean> => await lastValueFrom(
+    callback: ((error: HttpErrorResponse, view: ElementRef) => void),
+    view: ElementRef): Observable<boolean> =>
     this.http.post<User>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
       tap((response: User) => this.logUserIn(response, redirectPath)),
       mapTo(true),
@@ -49,8 +49,7 @@ export class AuthService {
         callback(error, view);
         return of(false);
       })
-    )
-  );
+    );
 
   /**
    * Send user login information via a request, and expects a response with a JWT token and refresh token.
@@ -61,11 +60,11 @@ export class AuthService {
    * @param view
    * @return Observable<boolean> should be the return type, but for nom it is void.
    */
-  public signup = async (
+  public signup = (
     user: { username: string; password: string; firstName: string; lastName: string; email: string },
     redirectPath: string,
-    callback: OmitThisParameter<(error: HttpErrorResponse, view: HTMLDivElement) => void>,
-    view: HTMLDivElement): Promise<boolean> => await lastValueFrom(
+    callback: OmitThisParameter<(error: HttpErrorResponse, view: ElementRef) => void>,
+    view: ElementRef): Observable<boolean> =>
     this.http.post<User>(`${this.AUTHENTICATION_URL}/signup`, user).pipe(
       tap((response: User) => this.logUserIn(response, redirectPath)),
       mapTo(true),
@@ -73,8 +72,7 @@ export class AuthService {
         callback(error, view);
         return of(false);
       })
-    )
-  );
+    );
 
   private logUserIn(user: User, redirectPath: string): void{
     this.USER = user;

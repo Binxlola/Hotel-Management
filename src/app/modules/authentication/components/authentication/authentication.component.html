@@ -11,16 +11,7 @@
           - Social Icons
           - Panel image
       -->
-      <form class="sign-in-form" [formGroup]="loginForm" (ngSubmit)="authService.login(
-      {
-      username: this.loginForm.get('username')?.value,
-      password: this.loginForm.get('password')?.value,
-      isCustomer
-      },
-       this.isCustomer ? '/customer' : '/staff',
-        this.handleErrorResponse.bind(this),
-        this.signInError
-       )">
+      <form class="sign-in-form" [formGroup]="loginForm" (ngSubmit)="login($event)">
       <h1 class="title">Sign in</h1>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -56,25 +47,14 @@
               </button>
             </a>
         </div>
-        <div #signInError></div>
+        <div #signInError class="error-box"></div>
       </form>
 
 
       <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->]
       <!--CB line 63-71 -->
 
-      <form *ngIf="this.isCustomer" class="sign-up-form" [formGroup]="signupForm" (ngSubmit)="authService.signup(
-      {
-      username: this.signupForm.get('username')?.value,
-      password: this.signupForm.get('password')?.value,
-      firstName: this.signupForm.get('first_name')?.value,
-      lastName: this.signupForm.get('last_name')?.value,
-      email: this.signupForm.get('password')?.value
-      },
-       this.isCustomer ? '/customer' : '/staff',
-       this.handleErrorResponse.bind(this),
-       this.signUpError
-       )">
+      <form *ngIf="this.isCustomer" class="sign-up-form" [formGroup]="signupForm" (ngSubmit)="signup($event)">
         <h2 class="title">Sign up</h2>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -130,7 +110,7 @@
               </button>
             </a>
         </div>
-        <div #signUpError></div>
+        <div #signUpError class="error-box"></div>
       </form>
     </div>
 

@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons";
 import {AuthService} from "../../services/authentican.service";
-import {FormBuilder, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
+import {FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -12,14 +12,14 @@ import {Router} from "@angular/router";
 })
 export class AuthenticationComponent implements OnInit {
 
-  public readonly isCustomer: boolean;
+  public readonly _isCustomer: boolean;
 
-  private _loginForm: FormGroup = this.fb.group({
+  private _loginFormGroup: FormGroup = this.fb.group({
     username: ["", Validators.required],
     password: ["", Validators.required]
   });
 
-  private _signupForm: FormGroup = this.fb.group({
+  private _signupFormGroup: FormGroup = this.fb.group({
     username: ["", Validators.required],
     password: ["", Validators.required],
     first_name: ["", Validators.required],
@@ -37,11 +37,11 @@ export class AuthenticationComponent implements OnInit {
 
   hide = true;
 
-  @ViewChild('signUpError' ) public signUpError!: ElementRef;
-  @ViewChild('signInError') public signInError!: ElementRef;
+  @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
+  @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
 
   constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
-    this.isCustomer = this._router.url === "/login";
+    this._isCustomer = this._router.url === "/login";
 
   }
 
@@ -51,11 +51,80 @@ export class AuthenticationComponent implements OnInit {
     this.signupMode = toggleSignup;
   }
 
-  public handleErrorResponse(error: HttpErrorResponse, view : HTMLDivElement): void {
-    let child = document.createElement('div');
-    child.style.color = "red";
-    child.innerText = error.error;
-    view.appendChild(child);
+  /**
+   * Given an error box element reference, will render a container around the error
+   * message and append it as a child the provided error box
+   * @param error The error to be displayed to the user
+   * @param view The view for which the error should be appended to
+   */
+  public handleErrorResponse(error: HttpErrorResponse, view : ElementRef): void {
+    Array.from(view.nativeElement.children).forEach((child: any) => {
+      this._renderer.removeChild(view.nativeElement, child);
+    });
+
+    // Create the error container and append
+    let child = this._renderer.createElement("div");
+    this._renderer.setProperty(child, "innerText", error.error);
+    this._renderer.setStyle(view.nativeElement, "display", "block");
+    this._renderer.appendChild(view.nativeElement, child);
+  }
+
+  /**
+   * Handles the login submit logic, will manually call a post request to the back for login
+   * given that the login form group is valid.
+   * Will always return false to prevent default form submission logic
+   */
+  public login(event: SubmitEvent): boolean {
+    event.preventDefault();
+
+    if(this._loginFormGroup.valid) {
+
+      // Call login and subscribe to being post request
+      this._authenticationService.login(
+        {
+          username: this._loginFormGroup.get('username')?.value,
+          password: this._loginFormGroup.get('password')?.value,
+          isCustomer: this._isCustomer
+        },
+        this._isCustomer ? '/customer' : '/staff',
+        this.handleErrorResponse.bind(this),
+        this.signInError
+      ).subscribe();
+    }
+
+    return false;
+  }
+
+  /**
+   * Handles the signup submit logic, will manually call a post request to the back for signup
+   * given that the signup form group is valid.
+   * Will always return false to prevent default form submission logic
+   */
+  public signup(event: SubmitEvent): boolean {
+    event.preventDefault();
+
+    if(this._signupFormGroup.valid) {
+
+      // Call signup and subscribe to being post request
+      this._authenticationService.signup(
+        {
+          username: this._signupFormGroup.get('username')?.value,
+          password: this._signupFormGroup.get('password')?.value,
+          firstName: this._signupFormGroup.get('first_name')?.value,
+          lastName: this._signupFormGroup.get('last_name')?.value,
+          email: this._signupFormGroup.get('password')?.value
+        },
+        this.isCustomer ? '/customer' : '/staff',
+        this.handleErrorResponse.bind(this),
+        this.signUpError
+      ).subscribe();
+    }
+
+    return false
+  }
+
+  get isCustomer(): boolean {
+    return this._isCustomer;
   }
 
   get authService(){
@@ -63,10 +132,10 @@ export class AuthenticationComponent implements OnInit {
   }
 
   get loginForm(): FormGroup {
-    return this._loginForm;
+    return this._loginFormGroup;
   }
 
   get signupForm(): FormGroup {
-    return this._signupForm;
+    return this._signupFormGroup;
   }
 }

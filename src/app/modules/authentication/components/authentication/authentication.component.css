@@ -78,6 +78,15 @@ form {
   padding: 0 10px;
 }
 
+.error-box {
+  display: none;
+  color: red;
+  background-color: white;
+  padding: .3rem;
+  border-radius: .2rem;
+  border: 1px solid red;
+}
+
 form.sign-in-form {
   opacity: 1;
   transition: 0.5s ease-in-out;
