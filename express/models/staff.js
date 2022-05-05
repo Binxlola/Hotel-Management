@@ -1,10 +1,8 @@
-"use strict"
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const StaffModel = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
 });
 
-export const Staff = mongoose.model("Staff", StaffModel);
-
+export default mongoose.model('Staff', StaffModel);

@@ -1,19 +1,18 @@
-"use strict"
 const config = {
   emails: {
     bookingEmail: {
-      service: "outlook",
+      service: 'outlook',
       auth: {
-        user: "aut.hotel.bookings@outlook.com",
-        pass: "#Jason01#"
-      }
-    }
+        user: 'aut.hotel.bookings@outlook.com',
+        pass: '#Jason01#',
+      },
+    },
   },
   db: {
     host: 'localhost',
     port: 27017,
-    name: 'db'
-  }
+    name: 'db',
+  },
 };
 
-export const emails = config.emails;
+export default config;

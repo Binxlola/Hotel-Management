@@ -1,5 +1,4 @@
-"use strict"
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const CustomerModel = new mongoose.Schema({
   username: String,
@@ -10,9 +9,8 @@ const CustomerModel = new mongoose.Schema({
   last_logon: Date,
   registration_date: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
-export const Customer = mongoose.model("Customers", CustomerModel);
-
+export default mongoose.model('Customers', CustomerModel);

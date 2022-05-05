@@ -1,55 +1,9 @@
-import {Room} from "../models/room.js";
-import mongoose from "mongoose";
-import {v4 as uuidv4} from "uuid";
-import {Booking} from "../models/booking.js";
-import {sendBookingConfirmation} from "./utility-service.js";
-import {Customer} from "../models/customer.js";
-import * as Types from "mongoose";
-
-const r1 = new Room({
-  type: "Single Room",
-  description_short: "For the solo wanderer",
-  description_full: "The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.",
-  max_adults: 1,
-  max_children: 1,
-  num_available: 10,
-  minCheckIn: "09:00",
-  maxCheckIn: "11:00",
-  minCheckOut: "10:00",
-  maxCheckOut: "12:00",
-  checkInOutInterval: 30,
-  base_price: 50,
-});
-
-const r2 = new Room({
-  type: "Double Room",
-  description_short: "For a sweet couple",
-  description_full: "The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.",
-  max_adults: 2,
-  max_children: 1,
-  num_available: 10,
-  minCheckIn: "09:00",
-  maxCheckIn: "11:00",
-  minCheckOut: "10:00",
-  maxCheckOut: "12:00",
-  checkInOutInterval: 30,
-  base_price: 60,
-});
-
-const r3 = new Room({
-  type: "Deluxe Double Room",
-  description_short: "The honeymoon favourite",
-  description_full: "The perfect option for those travelers who'd prefer a simple place to stay, so they can hold on to more money to better enjoy their trip. If you feel the need to do some work there is a desk and chair in each room.",
-  max_adults: 2,
-  max_children: 2,
-  num_available: 10,
-  minCheckIn: "09:00",
-  maxCheckIn: "11:00",
-  minCheckOut: "10:00",
-  maxCheckOut: "12:00",
-  checkInOutInterval: 30,
-  base_price: 80,
-});
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
+import Room from '../models/room';
+import Booking from '../models/booking';
+import { sendBookingConfirmation } from './utility-service';
+import Customer from '../models/customer';
 
 async function saveRoom(room) {
   const newRoom = await new Room({
@@ -65,13 +19,13 @@ async function saveRoom(room) {
     maxCheckOut: room.maxCheckOut,
     checkInOutInterval: room.checkInOutInterval,
     base_price: room.base_price,
-  }).save()
+  }).save();
 
   return newRoom != null;
 }
 
 async function updateRoom(room) {
-  const filter = {_id: mongoose.Types.ObjectId(room._id)}
+  const filter = { _id: mongoose.Types.ObjectId(room._id) };
   const updatedRoom = await Room.findOneAndUpdate(
     filter,
     {
@@ -84,14 +38,14 @@ async function updateRoom(room) {
       maxCheckOut: room.maxCheckOut,
       checkInOutInterval: room.checkInOutInterval,
       base_price: room.base_price,
-    }
-  )
+    },
+  );
 
   return updatedRoom != null;
 }
 
 async function deleteRoom(room) {
-  const deletedRoom = await Room.findByIdAndDelete(mongoose.Types.ObjectId(room._id))
+  const deletedRoom = await Room.findByIdAndDelete(mongoose.Types.ObjectId(room._id));
 
   return deletedRoom != null;
 }
@@ -114,8 +68,8 @@ async function saveBooking(booking) {
     checkOutTime: booking.checkOutTime,
     numAdults: booking.numAdults,
     numChildren: booking.numChildren,
-    comments: booking.comments
-  }).save()
+    comments: booking.comments,
+  }).save();
 
   if (newBooking) {
     const user = await Customer.findById(booking.user);
@@ -133,4 +87,6 @@ function getAllBookings() {
   return Booking.find();
 }
 
-export {saveRoom, updateRoom, deleteRoom, getAllRooms, saveBooking, getAllBookings}
+export {
+  saveRoom, updateRoom, deleteRoom, getAllRooms, saveBooking, getAllBookings,
+};

@@ -1,12 +1,11 @@
-import mongoose from "mongoose";
-import { version as uuidVersion } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
+import mongoose from 'mongoose';
+import { version as uuidVersion, validate as uuidValidate } from 'uuid';
 
 const bookingModel = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "customers",
-    required: false
+    ref: 'customers',
+    required: false,
   },
   bookingName: {
     type: String,
@@ -14,16 +13,14 @@ const bookingModel = new mongoose.Schema({
   },
   room: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "RoomModel",
+    ref: 'RoomModel',
     required: [true, 'Booking requires the ID for the room being booked.'],
   },
   uuid: {
     type: String,
     validate: {
-      validator: (value) => {
-        return uuidValidate(value) && uuidVersion(value) === 4;
-      },
-      message: props => `${props.value} the UUID is either invalid or not version 4.`,
+      validator: (value) => uuidValidate(value) && uuidVersion(value) === 4,
+      message: (props) => `${props.value} the UUID is either invalid or not version 4.`,
     },
     required: [true, 'Booking requires a UUID'],
   },
@@ -49,7 +46,7 @@ const bookingModel = new mongoose.Schema({
     type: Number,
     required: [true, 'Booking requires a stated number of child guests.'],
   },
-  comments: String
+  comments: String,
 });
 
-export const Booking = mongoose.model("Bookings", bookingModel);
+export default mongoose.model('Bookings', bookingModel);
