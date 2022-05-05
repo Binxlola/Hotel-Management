@@ -14,11 +14,13 @@ export class AuthenticationComponent implements OnInit {
 
   public readonly _isCustomer: boolean;
 
+  // loginFormGroup requires username and password
   private _loginFormGroup: FormGroup = this.fb.group({
     username: ["", Validators.required],
     password: ["", Validators.required]
   });
 
+  // signUpFormGroup requires customer object
   private _signupFormGroup: FormGroup = this.fb.group({
     username: ["", Validators.required],
     password: ["", Validators.required],
@@ -36,6 +38,7 @@ export class AuthenticationComponent implements OnInit {
   signupMode: boolean = false;
 
   hide = true;
+
 
   @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
   @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
@@ -123,6 +126,7 @@ export class AuthenticationComponent implements OnInit {
     return false
   }
 
+  // Encapsulation
   get isCustomer(): boolean {
     return this._isCustomer;
   }

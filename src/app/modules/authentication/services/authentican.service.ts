@@ -1,9 +1,8 @@
 import {ElementRef, Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
+import {catchError, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
-import {FormGroupDirective} from "@angular/forms";
 
 export interface Token {
   token: string,
@@ -21,7 +20,6 @@ export interface User {
 export class AuthService {
 
   private readonly TOKEN_KEY = "Token";
-
   private _user: User | undefined;
   private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
   private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`;
@@ -80,6 +78,9 @@ export class AuthService {
     this.redirectTo(redirectPath);
   }
 
+  /**
+   * It removes username and password from the webpage
+   */
   public logout() {
     this._user = undefined;
     localStorage.removeItem(this.TOKEN_KEY);

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { version as uuidVersion, validate as uuidValidate } from 'uuid';
 
+// This is creating collection for booking information
 const bookingModel = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,

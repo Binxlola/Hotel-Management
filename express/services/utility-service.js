@@ -1,6 +1,11 @@
 import nodemailer from 'nodemailer';
 import emails from '../config.js';
 
+/**
+ * This is sending information to a users email from the master email.
+ * @param userMail this takes in user email.
+ * @param bookingReference this takes the reference code generated from booking.
+ */
 function sendBookingConfirmation(userMail, bookingReference) {
   const transporter = nodemailer.createTransport(emails.bookingEmail);
   const mailOptions = {

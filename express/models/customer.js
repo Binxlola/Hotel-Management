@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// This is creating the customer collection
 const CustomerModel = new mongoose.Schema({
   username: String,
   password: String,
