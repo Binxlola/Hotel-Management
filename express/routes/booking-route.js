@@ -1,5 +1,12 @@
 import express from "express";
-import {saveRoom, getAllRooms, saveBooking, getAllBookings} from "../services/booking-service.js";
+import {
+  saveRoom,
+  getAllRooms,
+  saveBooking,
+  getAllBookings,
+  updateRoom,
+  deleteRoom
+} from "../services/booking-service.js";
 
 // Create Router
 const router = express.Router();
@@ -11,6 +18,30 @@ router.post("/save-room", async (req, res) => {
       console.log(err);
       res.status(500).json({
         message: "There was an error saving booking",
+        err: err
+      })
+    });
+});
+
+router.post("/update-room", async (req, res) => {
+  await updateRoom(req.body)
+    .then(isUpdated => res.status(201).json(isUpdated))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: "There was an error updating room",
+        err: err
+      })
+    });
+});
+
+router.post("/delete-room", async (req, res) => {
+  await deleteRoom(req.body)
+    .then(isDeleted => res.status(201).json(isDeleted))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: "There was an error deleting room",
         err: err
       })
     });

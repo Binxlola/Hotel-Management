@@ -4,6 +4,7 @@ import {v4 as uuidv4} from "uuid";
 import {Booking} from "../models/booking.js";
 import {sendBookingConfirmation} from "./utility-service.js";
 import {Customer} from "../models/customer.js";
+import * as Types from "mongoose";
 
 const r1 = new Room({
   type: "Single Room",
@@ -69,6 +70,32 @@ async function saveRoom(room) {
   return newRoom != null;
 }
 
+async function updateRoom(room) {
+  const filter = {_id: mongoose.Types.ObjectId(room._id)}
+  const updatedRoom = await Room.findOneAndUpdate(
+    filter,
+    {
+      num_available: room.num_available,
+      description_short: room.description_short,
+      description_full: room.description_full,
+      minCheckIn: room.minCheckIn,
+      maxCheckIn: room.maxCheckIn,
+      minCheckOut: room.minCheckOut,
+      maxCheckOut: room.maxCheckOut,
+      checkInOutInterval: room.checkInOutInterval,
+      base_price: room.base_price,
+    }
+  )
+
+  return updatedRoom != null;
+}
+
+async function deleteRoom(room) {
+  const deletedRoom = await Room.findByIdAndDelete(mongoose.Types.ObjectId(room._id))
+
+  return deletedRoom != null;
+}
+
 /**
  * Create new mongoose booking object and save to collection.
  * @param booking A request body containing the booking information
@@ -106,4 +133,4 @@ function getAllBookings() {
   return Booking.find();
 }
 
-export {saveRoom, getAllRooms, saveBooking, getAllBookings}
+export {saveRoom, updateRoom, deleteRoom, getAllRooms, saveBooking, getAllBookings}

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Create new room</h1>
+<h1 mat-dialog-title>{{this.room ? "Edit " + room.type : "Create new room"}}</h1>
 <div mat-dialog-content>
   <form id="create-room-form" [formGroup]="roomFormGroup">
     <mat-grid-list cols="2" rowHeight="3:1" gutterSize="5">
@@ -74,6 +74,6 @@
   </form>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-between align-items-center">
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="createRoom()">Submit</button>
+  <button mat-button (click)="dialogRef.close()">Close</button>
+  <button mat-button (click)="this.room ? updateRoom() : createRoom()">Submit</button>
 </div>

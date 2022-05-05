@@ -1,5 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {Autoplay, Pagination, Swiper, SwiperOptions} from "swiper";
+import {Autoplay, Swiper, SwiperOptions} from "swiper";
 import {MatDialog} from "@angular/material/dialog";
 import {BookingFormComponent} from "./booking-form/booking-form.component";
 import {BookingService, Room} from "../../../shared/services/booking/booking-service.service";
@@ -11,7 +11,7 @@ import {BookingService, Room} from "../../../shared/services/booking/booking-ser
 })
 export class BookingManagementComponent implements OnInit {
 
-  private _openBookingFunction:  (room: Room) => void;
+  private _rooms: Room[] = [];
   public swiperConfig: SwiperOptions = {
     cssMode: true,
     direction: "vertical",
@@ -26,14 +26,15 @@ export class BookingManagementComponent implements OnInit {
   }
 
   constructor(private renderer: Renderer2, private _bookingService: BookingService, private _bookingDialog: MatDialog) {
-   this._openBookingFunction = this.openBooking;
+    this._bookingService.getAllRooms()
+      .then(rooms => this._rooms = [...rooms]);
   }
 
   ngOnInit(): void {
     Swiper.use([Autoplay]);
   }
 
-  private openBooking(room: Room) {
+  public openBooking(room: Room) {
     const dialogRef = this._bookingDialog.open(BookingFormComponent, {
       disableClose: false,
       hasBackdrop: true,
@@ -46,6 +47,6 @@ export class BookingManagementComponent implements OnInit {
     });
   }
 
-  get openBookingFunction(): (room: Room) => void {return this._openBookingFunction.bind(this);}
-  get rooms(): Room[] {return this._bookingService.rooms;}
+  //    ==== GETTERS && SETTERS ====
+  get rooms(): Room[] {return this._rooms;}
 }

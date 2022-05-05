@@ -1,4 +1,4 @@
-import {ElementRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
@@ -43,16 +43,14 @@ export class BookingService {
   private readonly BOOKING_URL: string = `${environment.API_URL}/booking`;
   private _rooms: Room[] = []
 
-  constructor(private http: HttpClient) {
-    this.loadRooms();
-  }
+  constructor(private http: HttpClient) {}
 
   /**
    * Make a post request to the backend, providing a validated Room object
    * @param room The room to be created and saved
    */
   public createRoom = (room: Room): Observable<boolean> =>
-    this.http.post<any>(`${this.BOOKING_URL}/save-room`, room).pipe(
+    this.http.post<boolean>(`${this.BOOKING_URL}/save-room`, room).pipe(
       mapTo(true),
       catchError((error, caught) => {
         this.handleError(error, caught);
@@ -60,21 +58,38 @@ export class BookingService {
       })
     );
 
-  get rooms(): Room[] {return this._rooms;}
+  /**
+   * Make a post request to the backend, providing a validated Room object to update
+   * @param room The room to be updated
+   */
+  public updateRoom = (room: Room): Observable<boolean> =>
+    this.http.post<boolean>(`${this.BOOKING_URL}/update-room`, room).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
+
+  public deleteRoom = (roomID: string): Observable<boolean> =>
+    this.http.post<boolean>(`${this.BOOKING_URL}/delete-room`, {_id: roomID}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
 
   /**
-   * Retrieve all stored rooms using get request to backend
-   * @private
+   * Make a get request to the backend to retrieve all stored rooms.
+   * Unpack the returned array and store against this service
    */
-  private loadRooms(): void {
-    this.http.get<Room[]>(`${this.BOOKING_URL}/all-rooms`)
-      .subscribe({
-        next: (data: Room[]) => {
-          this._rooms = [...data];
-        },
-        error: err => console.log(err)
-      })
-  }
+  public getAllRooms = async (): Promise<Room[]> =>
+    await lastValueFrom(
+      this.http.get<Room[]>(`${this.BOOKING_URL}/all-rooms`).pipe(
+        catchError(this.handleError)
+      )
+    );
 
   public async makeBooking(booking: Booking): Promise<Booking> {
     return await lastValueFrom(
@@ -92,17 +107,6 @@ export class BookingService {
     );
   }
 
-  public saveRoom() {
-    return this.http.post<any>(`${this.BOOKING_URL}/room/save`, {test: "test"})
-      .pipe(
-        tap(rooms => console.log(rooms)),
-        mapTo(true),
-        catchError(error => {
-          alert(error.error);
-          return of(false);
-        }));
-  }
-
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -115,5 +119,10 @@ export class BookingService {
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  //    ==== GETTERS && SETTERS ====
+  get rooms(): Room[] {
+    return this._rooms;
   }
 }

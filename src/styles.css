@@ -49,6 +49,17 @@ html, body {
   overflow: hidden;
 }
 
+staff {
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+  min-width: 100vw;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  background-color: var(--accent);
+}
+
 .mat-dialog-container {
   background-color: var(--glass-accent-high);
   -webkit-backdrop-filter: var(--glassmorphism-blur);

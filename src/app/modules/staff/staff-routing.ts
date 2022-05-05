@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ModulesGuard} from "../authentication/guards/modules.guard";
-import {StaffDashboardComponent} from "./staff-dashboard/staff-dashboard.component";
+import {StaffComponent} from "./staff.component";
 
 
 const routes: Routes = [
-  {path: '', component: StaffDashboardComponent, canActivate: [ModulesGuard]},
+  {path: '', component: StaffComponent, canActivate: [ModulesGuard]},
 ];
 
 @NgModule({
