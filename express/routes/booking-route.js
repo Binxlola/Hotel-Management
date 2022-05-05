@@ -5,8 +5,8 @@ import {
   saveBooking,
   getAllBookings,
   updateRoom,
-  deleteRoom,
-} from '../services/booking-service';
+  deleteRoom, cancelBooking,
+} from '../services/booking-service.js';
 
 // Create Router
 const router = express.Router();
@@ -53,12 +53,6 @@ router.get('/all-rooms', (req, res) => {
     .catch(() => res.status(404).json({ error: 'There was an error retrieving rooms' }));
 });
 
-router.get('/all-bookings', (req, res) => {
-  getAllBookings()
-    .then((bookings) => res.json(bookings))
-    .catch(() => res.status(404).json({ error: 'There was an error retrieving bookings' }));
-});
-
 router.post('/save-booking', async (req, res) => {
   await saveBooking(req.body)
     .then((booking) => res.status(201).json(booking))
@@ -66,6 +60,24 @@ router.post('/save-booking', async (req, res) => {
       message: 'There was an error saving booking',
       err,
     }));
+});
+
+router.post('/cancel-booking', async (req, res) => {
+  await cancelBooking(req.body)
+    .then((isCanceled) => res.status(201).json(isCanceled))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: 'There was an error deleting room',
+        err,
+      });
+    });
+});
+
+router.get('/all-bookings', (req, res) => {
+  getAllBookings()
+    .then((bookings) => res.json(bookings))
+    .catch(() => res.status(404).json({ error: 'There was an error retrieving bookings' }));
 });
 
 export default router;

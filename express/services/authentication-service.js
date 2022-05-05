@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import Staff from '../models/staff';
-import Customer from '../models/customer';
+import Staff from '../models/staff.js';
+import Customer from '../models/customer.js';
 
 function getToken(username, id) {
   return jwt.sign(

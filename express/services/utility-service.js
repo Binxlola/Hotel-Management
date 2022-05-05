@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import emails from '../config';
+import emails from '../config.js';
 
 function sendBookingConfirmation(userMail, bookingReference) {
   const transporter = nodemailer.createTransport(emails.bookingEmail);

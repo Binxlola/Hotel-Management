@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
 // Import routers
 import path from 'path';
 import { fileURLToPath } from 'url';
-import authenticationRouter from './routes/authentication-route';
-import bookingRouter from './routes/booking-route';
+import authenticationRouter from './routes/authentication-route.js';
+import bookingRouter from './routes/booking-route.js';
 
 // Create app and set distribution path
 const __filename = fileURLToPath(import.meta.url);

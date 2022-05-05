@@ -1,7 +1,7 @@
 import express from 'express';
-import { login } from '../services/authentication-service';
-import signup from '../services/customer-service';
-import saveStaff from '../services/staff-service';
+import { login } from '../services/authentication-service.js';
+import signup from '../services/customer-service.js';
+import saveStaff from '../services/staff-service.js';
 
 // Create Router
 const router = express.Router();

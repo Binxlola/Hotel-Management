@@ -1,4 +1,4 @@
-import Staff from '../models/staff';
+import Staff from '../models/staff.js';
 
 const newStaff = new Staff({
   username: 'Chris',

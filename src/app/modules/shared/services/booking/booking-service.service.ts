@@ -99,6 +99,15 @@ export class BookingService {
     );
   }
 
+  public cancelBooking = (bookingID: string): Observable<boolean> =>
+    this.http.post<boolean>(`${this.BOOKING_URL}/cancel-booking`, {_id: bookingID}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
+
   public async getAllBookings(): Promise<Booking[]> {
     return await lastValueFrom(
       this.http.get<Booking[]>(`${this.BOOKING_URL}/all-bookings`).pipe(

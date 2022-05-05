@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
-import Room from '../models/room';
-import Booking from '../models/booking';
-import { sendBookingConfirmation } from './utility-service';
-import Customer from '../models/customer';
+import Room from '../models/room.js';
+import Booking from '../models/booking.js';
+import {sendBookingCancellation, sendBookingConfirmation} from './utility-service.js';
+import Customer from '../models/customer.js';
 
 async function saveRoom(room) {
   const newRoom = await new Room({
@@ -50,6 +50,17 @@ async function deleteRoom(room) {
   return deletedRoom != null;
 }
 
+async function cancelBooking(booking) {
+  const canceledBooking = await Booking.findByIdAndDelete(mongoose.Types.ObjectId(booking._id));
+
+  if (canceledBooking) {
+    const user = Customer.findById(canceledBooking.user);
+    sendBookingCancellation(user.email, canceledBooking.uuid);
+  }
+
+  return canceledBooking != null;
+}
+
 /**
  * Create new mongoose booking object and save to collection.
  * @param booking A request body containing the booking information
@@ -88,5 +99,5 @@ function getAllBookings() {
 }
 
 export {
-  saveRoom, updateRoom, deleteRoom, getAllRooms, saveBooking, getAllBookings,
+  saveRoom, updateRoom, deleteRoom, getAllRooms, saveBooking, getAllBookings, cancelBooking,
 };

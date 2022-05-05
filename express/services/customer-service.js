@@ -1,5 +1,5 @@
-import Customer from '../models/customer';
-import { getToken } from './authentication-service';
+import Customer from '../models/customer.js';
+import { getToken } from './authentication-service.js';
 
 /**
  * This function checks if the user is a customer, then will compare against the correct database

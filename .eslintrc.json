@@ -15,10 +15,11 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "ignorePatterns": ["karma.conf.js"],
+    "ignorePatterns": ["karma.conf.js", "*.ts"],
     "rules": {
       "no-console": "off",
       "no-underscore-dangle": "off",
-      "no-throw-literal": "off"
+      "no-throw-literal": "off",
+      "import/extensions": "off"
     }
 }
