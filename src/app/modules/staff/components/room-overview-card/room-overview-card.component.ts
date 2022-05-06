@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Room} from "../../../shared/services/booking/booking-service.service";
 import {RoomFormComponent} from "../room-form/room-form.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatStepper} from "@angular/material/stepper";
+import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
 
 @Component({
   selector: 'room-overview-card',
@@ -9,6 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./room-overview-card.component.css']
 })
 export class RoomOverviewCardComponent implements OnInit {
+
+  @ViewChild('roomsTableComponent') private _roomsTable: RoomsTableComponent | undefined
 
   constructor(private _bookingDialog: MatDialog) { }
 
@@ -24,8 +28,7 @@ export class RoomOverviewCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('The dialog was closed');
-      console.log("result");
+      this._roomsTable?.updateRooms();
     });
   }
 

@@ -24,7 +24,7 @@ export class RoomsTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private updateRooms(): void {
+  public updateRooms(): void {
     this._bookingService.getAllRooms()
       .then(rooms => this._rooms = [...rooms]);
   }
