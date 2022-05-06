@@ -63,7 +63,14 @@ export class RoomFormComponent {
       }
 
       this._bookingService.createRoom(roomToSave).subscribe(
-        res => console.log(res)
+        res => {
+
+          // If the response was true (meaning room was created)
+          if(res) {
+            alert("Room Created");
+            this._dialogRef.close();
+          }
+        }
       )
     }
   }
