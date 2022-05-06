@@ -31,7 +31,7 @@ export class RoomFormComponent {
       numRooms: [this._room ? this._room?.num_available : "", Validators.required],
       descShort: [this._room ? this._room?.description_short : "", Validators.required],
       descFull: [this._room ? this._room?.description_full : "", Validators.required],
-      maxAdults: [{value: this._room ? this._room?.type : "", disabled: this._isEdit}, Validators.required],
+      maxAdults: [{value: this._room ? this._room?.max_adults : "", disabled: this._isEdit}, Validators.required],
       maxChildren: [{value: this._room ? this._room?.max_children : "", disabled: this._isEdit}, Validators.required],
       minCheckIn: [this._room ? this._room?.minCheckIn : "", Validators.required],
       maxCheckIn: [this._room ? this._room?.maxCheckIn : "", Validators.required],
