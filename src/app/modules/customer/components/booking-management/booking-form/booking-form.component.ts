@@ -6,7 +6,7 @@ import {faCcVisa, faCcMastercard, faCcPaypal, faCcApplePay} from "@fortawesome/f
 import {MatStepper} from "@angular/material/stepper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {DatePipe} from "@angular/common";
-import {Booking, BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {Booking, BookingService, Room} from "../../../../../shared/services/booking/booking-service.service";
 import {AuthService} from "../../../../authentication/services/authentican.service";
 
 export interface DialogData {

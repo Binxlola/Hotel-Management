@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Room} from "../../../shared/services/booking/booking-service.service";
+import { Component, OnInit } from '@angular/core';
+import {Room} from "../../../../shared/services/booking/booking-service.service";
 import {RoomFormComponent} from "../room-form/room-form.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatStepper} from "@angular/material/stepper";

@@ -2,7 +2,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 import {Autoplay, Swiper, SwiperOptions} from "swiper";
 import {MatDialog} from "@angular/material/dialog";
 import {BookingFormComponent} from "./booking-form/booking-form.component";
-import {BookingService, Room} from "../../../shared/services/booking/booking-service.service";
+import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
 
 @Component({
   selector: 'customer-booking-management',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BookingService, Room} from "../../../shared/services/booking/booking-service.service";
+import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
 import {MatDialog} from "@angular/material/dialog";
 import {RoomFormComponent} from "../room-form/room-form.component";
 import {Required} from "../../../../decorators/required-input.decorator";

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Booking, BookingService} from "../../../../shared/services/booking/booking-service.service";
+import {Booking, BookingService} from "../../../../../shared/services/booking/booking-service.service";
 import {DatePipe} from "@angular/common";
 
 @Component({

@@ -14,11 +14,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
+import { GuestLandingComponent } from './guest/guest-landing/guest-landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    GuestLandingComponent
   ],
   imports: [
     BrowserModule,
