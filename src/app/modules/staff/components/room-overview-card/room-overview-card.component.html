@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Room Overview</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <rooms-table #roomsTableComponent [editRoomFunction]="openRoomForm.bind(this)"></rooms-table>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="openRoomForm(undefined)">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

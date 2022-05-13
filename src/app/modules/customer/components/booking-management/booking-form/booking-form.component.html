@@ -1,0 +1,263 @@
+<h1 mat-dialog-title>Booking for {{roomData.type}}</h1>
+<div mat-dialog-content>
+  <mat-stepper #stepper orientation="horizontal" linear>
+
+    <!--  Booking Details Step  -->
+    <mat-step label="Booking Details" [stepControl]="bookingDetails" editable="false" state="room-details">
+
+      <!--   Booking Details Form   -->
+      <form [formGroup]="bookingDetails">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Adults</mat-label>
+                <mat-select formControlName="numAdults">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let num of numAdults" [value]="num">
+                    {{num}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Children</mat-label>
+                <mat-select formControlName="numChildren">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let num of numChildren" [value]="num">
+                    {{num}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Reservation name</mat-label>
+                <input matInput type="text" formControlName="resName"/>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="startDate" placeholder="Start date">
+                  <input matEndDate formControlName="endDate" placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="bookingDetails.controls['startDate'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="bookingDetails.controls['endDate'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Check-in Time</mat-label>
+                <input matInput type="time" min="{{roomData.minCheckIn}}" max="{{roomData.maxCheckIn}}" step="{{roomData.checkInOutInterval * 60}}" formControlName="inTime"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Check-out Time</mat-label>
+                <input matInput type="time" min="{{roomData.minCheckOut}}" max="{{roomData.maxCheckOut}}" step="{{roomData.checkInOutInterval * 60}}" formControlName="outTime"/>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Additional comments</mat-label>
+                <textarea matInput cdkTextareaAutosize formControlName="comments"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </mat-step>
+
+    <!--  Payment Details Step  -->
+    <mat-step label="Payment Details" [stepControl]="paymentDetails" editable="false" state="card-details">
+
+      <!--  Payment Details Form    -->
+      <form [formGroup]="paymentDetails">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div id="payment-types" class="mat-form-field-wrapper">
+                <div class="d-flex  justify-content-start align-items-center">
+                  <mat-radio-group formControlName="paymentMethod">
+                    <mat-radio-button *ngFor="let method of paymentMethods" [value]="method.value" class="mx-5">
+                      <fa-icon [icon]="method.icon" size="3x"></fa-icon>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <mat-form-field appearance="outline" hideRequiredMarker="true">
+              <mat-label>Card number</mat-label>
+              <input matInput formControlName="bnkAcct" type="text" placeholder="Bank - Branch - Account - Suffix"/>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Name on card</mat-label>
+                <input matInput formControlName="cardName" type="text"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Expiry date</mat-label>
+                <input matInput formControlName="cardExpiry" type="text"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" hideRequiredMarker="true">
+                <mat-label>Security code</mat-label>
+                <input matInput formControlName="cvv" type="text"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </mat-step>
+
+    <mat-step label="Review" editable="false" state="review">
+      <div id="booking-review-wrapper d-flex flex-column">
+
+        <!--   Container for booking details review     -->
+        <mat-list class="container">
+          <h1>Booking Details</h1>
+          <div class="review-pair">
+            <mat-label>Adults:</mat-label>
+            <mat-label>{{bookingDetails.get('numAdults')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Children:</mat-label>
+            <mat-label>{{bookingDetails.get('numChildren')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Reservation name:</mat-label>
+            <mat-label>{{bookingDetails.get('resName')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-in date:</mat-label>
+            <mat-label>
+              {{
+                datePipe.transform(bookingDetails.get('startDate')?.value, 'dd/MM/yyyy')
+              }}
+            </mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-out date:</mat-label>
+            <mat-label>
+              {{
+                datePipe.transform(bookingDetails.get('endDate')?.value, 'dd/MM/yyyy')
+              }}
+            </mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-in Time:</mat-label>
+            <mat-label>{{bookingDetails.get('inTime')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Check-out Time:</mat-label>
+            <mat-label>{{bookingDetails.get('outTime')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+              <mat-label>Comments:</mat-label>
+              <textarea matInput cdkTextareaAutosize readonly>{{bookingDetails.get('comments')?.value}}</textarea>
+          </div>
+        </mat-list>
+
+        <!--   Container for payment details review     -->
+        <mat-list class="container">
+          <h1>Payment Details</h1>
+          <div class="review-pair">
+            <mat-label>Payment method:</mat-label>
+            <mat-label>{{paymentDetails.get('paymentMethod')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card No:</mat-label>
+            <mat-label>{{paymentDetails.get('bnkAcct')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card name::</mat-label>
+            <mat-label>{{paymentDetails.get('cardName')?.value}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="review-pair">
+            <mat-label>Card expiry:</mat-label>
+            <mat-label>{{paymentDetails.get('cardExpiry')?.value}}</mat-label>
+          </div>
+        </mat-list>
+
+        <!--   Cost details     -->
+        <mat-list class="container mt-3">
+          <div class="review-pair fs-6">
+            <mat-label>Total:</mat-label>
+            <mat-label>${{roomData.base_price}}</mat-label>
+          </div>
+        </mat-list>
+
+      </div>
+    </mat-step>
+
+    <mat-step label="Summary" editable="false" state="summary">
+      <div id="booking-summary-wrapper d-flex flex-column">
+
+        <!--   Container for booking details review     -->
+        <mat-list class="container">
+          <h1>Booking Summary</h1>
+          <div class="review-pair">
+            <mat-label>Reference:</mat-label>
+            <mat-label>{{roomData._id}}</mat-label>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list>
+
+      </div>
+    </mat-step>
+
+    <!-- Icon overrides   -->
+    <ng-template matStepperIcon="room-details">
+      <mat-icon>edit_note</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="card-details">
+      <mat-icon>credit_card</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="review">
+      <mat-icon>preview</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="summary">
+      <mat-icon>summarize</mat-icon>
+    </ng-template>
+  </mat-stepper>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between align-items-center">
+  <button mat-button (click)="onNoClick()">Close</button>
+  <div id="stepper_nav">
+    <button mat-button (click)="formNavigate(false)">Back</button>
+    <button mat-button (click)="formNavigate(true)">{{stepNextLabel}}</button>
+  </div>
+</div>

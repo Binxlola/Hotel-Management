@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {StatusService} from "./modules/shared/status.service";
 
 export interface StatusResponse {
   status: string
@@ -12,16 +11,25 @@ export interface StatusResponse {
 })
 export class AppComponent implements OnInit{
   title = 'Hotel-Management';
-  status = 'DOWN';
 
-  constructor(private statusService: StatusService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.statusService
-      .getStatus()
-      .subscribe(response => {
-        this.status = response.status;
-      });
+  ngOnInit() {}
+
+  Required(target: object, propertyKey: string) {
+    Object.defineProperty(target, propertyKey, {
+      get() {
+        throw new Error(`Attribute ${propertyKey} is required`);
+      },
+      set(value) {
+        Object.defineProperty(target, propertyKey, {
+          value,
+          writable: true,
+          configurable: true,
+        });
+      },
+      configurable: true
+    });
   }
 
 }

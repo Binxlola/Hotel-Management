@@ -1,0 +1,164 @@
+<main [id]="this.isCustomer ? 'customer-login' : 'staff-login'">
+  <div [id]="this.isCustomer ? 'login-customer-container' : 'login-staff-container'" [ngClass]="signupMode ? 'sign-up-mode' : ''" class="container">
+    <div [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-start'" class="wrapper">
+
+      <!--
+        LOGIN FORM
+
+        The following change based on isCustomer flag:
+          - Submit function redirect path
+          - Social icons header
+          - Social Icons
+          - Panel image
+      -->
+      <form class="sign-in-form" [formGroup]="loginForm" (ngSubmit)="login($event)">
+      <h1 class="title">Sign in</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button type="submit" value="login">Sign in</button>
+        <p *ngIf="this.isCustomer" class="social-text">Or sign in with social platform</p>
+        <div *ngIf="this.isCustomer" class="social-media">
+          <a href="#" class="social-icon">
+            <button mat-icon-button>
+              <fa-icon [icon]="faFacebook" size="lg"></fa-icon>
+            </button>
+          </a>
+          <a href="#" class="social-icon">
+            <button mat-icon-button>
+              <fa-icon [icon]="faTwitter" size="lg"></fa-icon>
+            </button>
+          </a>
+          <a href="#" class="social-icon">
+            <button mat-icon-button>
+              <fa-icon [icon]="faGoogle" size="lg"></fa-icon>
+            </button>
+          </a>
+            <a href="#" class="social-icon">
+              <button mat-icon-button>
+                <fa-icon [icon]="faLinkedin" size="lg"></fa-icon>
+              </button>
+            </a>
+        </div>
+        <div #signInError class="error-box"></div>
+      </form>
+
+
+      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->]
+      <!--CB line 63-71 -->
+
+      <form *ngIf="this.isCustomer" class="sign-up-form" [formGroup]="signupForm" (ngSubmit)="signup($event)">
+        <h2 class="title">Sign up</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+<!--          <input matInput> -->
+          <input matInput type="text" formControlName="username">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <!--          <input matInput> -->
+          <input matInput type="text" formControlName="first_name">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <!--          <input matInput> -->
+          <input matInput type="text" formControlName="last_name">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+<!--          <input matInput type="password">-->
+          <input matInput type="text" formControlName="password">
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+<!--          <input matInput>-->
+          <input matInput type="text" formControlName="email">
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button type="submit" value="register">Sign up</button>
+        <p class="social-text">Or sign up with social platform</p>
+        <div class="social-media">
+          <a href="#" class="social-icon">
+            <button mat-icon-button aria-label="Example icon button with a home icon">
+              <fa-icon [icon]="faFacebook"></fa-icon>
+            </button>
+          </a>
+          <a href="#" class="social-icon">
+            <button mat-icon-button aria-label="Example icon button with a home icon">
+              <fa-icon [icon]="faTwitter"></fa-icon>
+            </button>
+          </a>
+          <a href="#" class="social-icon">
+            <button mat-icon-button aria-label="Example icon button with a home icon">
+              <fa-icon [icon]="faGoogle"></fa-icon>
+            </button>
+          </a>
+            <a href="#" class="social-icon">
+              <button mat-icon-button aria-label="Example icon button with a home icon">
+                <fa-icon [icon]="faLinkedin"></fa-icon>
+              </button>
+            </a>
+        </div>
+        <div #signUpError class="error-box"></div>
+      </form>
+    </div>
+
+    <div id="panels-container" [ngClass]="this.isCustomer ? 'justify-content-around' : 'justify-content-end'" class="container">
+
+      <!--   LOGIN FORM COVER PANEL (LEFT) - Entire panel is rendered based on isCustomer flag   -->
+      <div *ngIf="this.isCustomer" class="panel left-panel">
+        <div class="content">
+          <h2>Member of Brand?</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor. Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id turpis in dui lacinia euismod dignissim ut risus.
+          </p>
+          <button mat-flat-button id="sign-in-toggle" (click)="toggleMode(false)">Sign in</button>
+        </div>
+        <img class="mt-5" src="assets/images/travel.svg" alt=""/>
+      </div>
+
+      <!--
+        REGISTRATION FORM COVER PANEL (RIGHT)
+
+        The following change based on isCustomer flag:
+          - Title
+          - Paragraph text
+          - Signup button (visibility)
+          - Panel image
+      -->
+      <div class="panel right-panel">
+        <div class="content">
+          <h2>{{this.isCustomer ?  "New to Brand?" : "Company Policy"}}</h2>
+          <p>
+            {{
+            this.isCustomer ?
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, " +
+              "quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus " +
+              "vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. " +
+              "Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum" +
+              " lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor." +
+              " Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id" +
+              " turpis in dui lacinia euismod dignissim ut risus."
+            :
+              "We value our employees and customers and endeavour to provide excellent service."+
+              " Our mission is to provide secure and luxurious rooms while also delivering excellent customer service."
+            }}
+          </p>
+          <button *ngIf="this.isCustomer" mat-flat-button (click)="toggleMode(true)">Sign up</button>
+        </div>
+        <img class="mt-5" [srcset]="this.isCustomer ? 'assets/images/registration.svg' : 'assets/images/team-colab.svg'" alt=""/>
+      </div>
+    </div>
+  </div>
+</main>

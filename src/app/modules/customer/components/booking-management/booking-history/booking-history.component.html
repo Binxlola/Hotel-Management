@@ -1,0 +1,53 @@
+<div id="booking-history-container">
+  <div class="loader" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults" strokeWidth="3" diameter="70"></mat-spinner>
+    <mat-card-subtitle>Loading booking history...</mat-card-subtitle>
+  </div>
+
+  <table *ngIf="!isLoadingResults" mat-table [dataSource]="bookings" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let booking"> {{booking.bookingName}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="check-in">
+      <th mat-header-cell *matHeaderCellDef> Check-in </th>
+      <td mat-cell *matCellDef="let booking">{{datePipe.transform(booking.checkInDate, 'dd MMM yyyy')}}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="check-out">
+      <th mat-header-cell *matHeaderCellDef> Check-out </th>
+      <td mat-cell *matCellDef="let booking">{{datePipe.transform(booking.checkOutDate, 'dd MM yyyy')}}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="guests">
+      <th mat-header-cell *matHeaderCellDef> Guests </th>
+      <td mat-cell *matCellDef="let booking">{{booking.numAdults + booking.numChildren}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paid">
+      <th mat-header-cell *matHeaderCellDef> Paid </th>
+      <td mat-cell *matCellDef="let booking">${{booking.totalPaid}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cancel_action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let booking">
+        <button mat-button (click)="cancelBooking(booking._id)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

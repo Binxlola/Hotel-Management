@@ -1,0 +1,52 @@
+<div class="nav-sidebar">
+  <div class="nav-sidebar-brand">
+    <button id="logo" mat-button disabled>
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>polymer</mat-icon>
+      </div>
+    </button>
+  </div>
+  <div class="nav-sidebar-top">
+    <button mat-button class="nav-button active">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>dashboard</mat-icon>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>chat</mat-icon>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>analytics</mat-icon>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>group</mat-icon>
+      </div>
+    </button>
+  </div>
+  <div class="nav-sidebar-bottom">
+    <button mat-button class="nav-button">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>notifications</mat-icon>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>settings</mat-icon>
+      </div>
+    </button>
+    <button mat-button class="nav-button" (click)="authService.logout()">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>logout</mat-icon>
+      </div>
+    </button>
+  </div>
+</div>
+
+<main>
+  <staff-dashboard></staff-dashboard>
+</main>

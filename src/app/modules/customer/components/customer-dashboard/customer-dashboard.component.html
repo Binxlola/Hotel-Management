@@ -1,0 +1,68 @@
+<mat-toolbar class="d-flex align-items-center justify-content-between p-0 m-0 text-light">
+  <div id="toolbar-left" class="d-flex align-items-center justify-content-start h-100 p-0 m-0 left-0">
+    <button class="flexItem" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+    Brand here
+  </div>
+  <div id="toolbar-center" class="d-flex mx-auto my-0">
+    <form id="search-field">
+      <mat-form-field>
+        <span matPrefix> </span>
+        <input type="text" matInput placeholder="Search">
+        <button matSuffix mat-button><mat-icon>search</mat-icon></button>
+      </mat-form-field>
+    </form>
+  </div>
+  <div id="toolbar-right" class="px-4 d-flex">
+    <mat-icon id="notification" class="flexItem" matBadge="15" matBadgeSize="small" matBadgeColor="warn">notifications</mat-icon>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav  #sidenav="matSidenav" class="text-light text-center" mode="over">
+    <button mat-button class="nav-button active">
+      <div class="d-flex align-items-center justify-content-center">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div>
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </div>
+    </button>
+    <button mat-button class="nav-button">
+      <div>
+        <mat-icon>info</mat-icon>
+        <span>About</span>
+      </div>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="nav-button">
+      <div>
+        <mat-icon>help</mat-icon>
+        <span>Help</span>
+      </div>
+    </button>
+
+    <button
+      mat-button
+      class="nav-button"
+      (click)="authService.logout()">
+      <div>
+        <mat-icon>logout</mat-icon>
+        <span>logout</span>
+      </div>
+    </button>
+  </mat-sidenav>
+
+  <!-- Router for main components of the Vision application -->
+  <mat-sidenav-content class="d-flex alignt-items-center justify-content-center h-100 w-100 mw-100 overflow-hidden">
+    <customer-booking-management></customer-booking-management>
+  </mat-sidenav-content>
+</mat-sidenav-container>
