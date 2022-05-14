@@ -4,6 +4,10 @@ import {AuthService} from "../../services/authentican.service";
 import {FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ResetPasswordComponent} from "../reset-password/reset-password.component";
+import {exitCodeFromResult} from "@angular/compiler-cli";
+import {addBodyClass} from "@angular/cdk/schematics";
 
 @Component({
   selector: 'app-authentication',
@@ -43,7 +47,7 @@ export class AuthenticationComponent implements OnInit {
   @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
   @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
 
-  constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
+  constructor(private _matDialog: MatDialog, private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
     this._isCustomer = this._router.url === "/login";
 
   }
@@ -52,6 +56,13 @@ export class AuthenticationComponent implements OnInit {
 
   toggleMode(toggleSignup: boolean): void {
     this.signupMode = toggleSignup;
+  }
+//making method that is called when dialog is closed
+  public resetPassword(): void {
+    this._matDialog.open(ResetPasswordComponent).afterClosed().subscribe((result)=>{
+      console.log(result);
+      //make web request,
+    });
   }
 
   /**

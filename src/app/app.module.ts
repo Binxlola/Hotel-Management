@@ -13,15 +13,21 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { GuestLandingComponent } from './guest/guest-landing/guest-landing.component';
+import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    GuestLandingComponent
+    GuestLandingComponent,
+    ResetPasswordComponent,
   ],
+
+  // added Forms Module and tried Ngbmodule and forms module >> imported this too
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -35,8 +41,14 @@ import { GuestLandingComponent } from './guest/guest-landing/guest-landing.compo
     MatButtonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    //FormsModule
+
   ],
   providers: [],
+  exports: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
