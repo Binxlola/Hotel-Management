@@ -26,9 +26,9 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatListModule} from "@angular/material/list";
 import { RoomCardComponent } from './components/booking-management/room-card/room-card.component';
 import {CustomerRoutingModule} from "./customer-routing.module";
-import { BookingHistoryComponent } from './components/booking-management/booking-history/booking-history.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -37,7 +37,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     BookingManagementComponent,
     BookingFormComponent,
     RoomCardComponent,
-    BookingHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +62,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     FontAwesomeModule,
     MatListModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SharedModule,
   ],
   exports: [
     CustomerDashboardComponent,

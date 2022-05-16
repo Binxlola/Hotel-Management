@@ -15,7 +15,7 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "ignorePatterns": ["karma.conf.js", "*.ts"],
+    "ignorePatterns": ["karma.conf.js", "*.ts", "*.html"],
     "rules": {
       "no-console": "off",
       "no-underscore-dangle": "off",

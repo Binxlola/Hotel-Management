@@ -15,14 +15,19 @@ import { RoomsTableComponent } from './components/rooms-table/rooms-table.compon
 import {MatTableModule} from "@angular/material/table";
 import { StaffDashboardComponent } from './components/staff-dashboard/staff-dashboard.component';
 import { RoomOverviewCardComponent } from './components/room-overview-card/room-overview-card.component';
+import {StaffRosterComponent} from "./components/staff-roster/staff-roster.component";
+import { BookingsCardComponent } from './components/bookings-card/bookings-card.component';
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
-    StaffComponent,
-    RoomFormComponent,
-    RoomsTableComponent,
-    StaffDashboardComponent,
-    RoomOverviewCardComponent
+      StaffComponent,
+      RoomFormComponent,
+      RoomsTableComponent,
+      StaffDashboardComponent,
+      RoomOverviewCardComponent,
+      StaffRosterComponent,
+      BookingsCardComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +40,7 @@ import { RoomOverviewCardComponent } from './components/room-overview-card/room-
     ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
+    SharedModule,
   ],
   exports: [
     StaffComponent,

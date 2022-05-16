@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {Booking, BookingService} from "../../../../../shared/services/booking/booking-service.service";
+import {Booking, BookingService} from "../../services/booking/booking-service.service";
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'booking-history',
-  templateUrl: './booking-history.component.html',
-  styleUrls: ['./booking-history.component.css']
+  selector: 'bookings-table',
+  templateUrl: './bookings-table.component.html',
+  styleUrls: ['./bookings-table.component.css']
 })
-export class BookingHistoryComponent {
+export class BookingsTableComponent {
 
   private _bookings: Booking[] = [];
   private _isLoadingResults = true;

@@ -70,6 +70,13 @@ mat-form-field {
   color: white;
 }
 
+.table-action {
+  max-width: 50px;
+}
+.table-data{
+  min-width: 100px;
+}
+
 /*::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{*/
 /*  color: white !important;*/
 /*  opacity: 1 !important;*/
