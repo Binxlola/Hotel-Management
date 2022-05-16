@@ -38,4 +38,17 @@ async function signup(username, password, firstName, lastName, email) {
   };
 }
 
-export default signup;
+async function getCustomers() {
+  const fieldSelection = [
+    'username',
+    'first_name',
+    'last_name',
+    'email',
+    'last_logon',
+    'registration_date',
+  ];
+
+  return Customer.find({}, fieldSelection);
+}
+
+export { signup, getCustomers };

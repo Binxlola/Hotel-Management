@@ -18,16 +18,20 @@ import { RoomOverviewCardComponent } from './components/room-overview-card/room-
 import {StaffRosterComponent} from "./components/staff-roster/staff-roster.component";
 import { BookingsCardComponent } from './components/bookings-card/bookings-card.component';
 import {SharedModule} from "../../shared/shared.module";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {StaffBookingFormComponent} from "./components/staff-booking-form/staff-booking-form.component";
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
-      StaffComponent,
-      RoomFormComponent,
-      RoomsTableComponent,
-      StaffDashboardComponent,
-      RoomOverviewCardComponent,
-      StaffRosterComponent,
-      BookingsCardComponent,
+    StaffComponent,
+    RoomFormComponent,
+    RoomsTableComponent,
+    StaffDashboardComponent,
+    RoomOverviewCardComponent,
+    StaffRosterComponent,
+    BookingsCardComponent,
+    StaffBookingFormComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,8 @@ import {SharedModule} from "../../shared/shared.module";
     MatCardModule,
     MatTableModule,
     SharedModule,
+    MatAutocompleteModule,
+    MatStepperModule,
   ],
   exports: [
     StaffComponent,

@@ -6,7 +6,21 @@
     <bookings-table></bookings-table>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-button (click)="makeBooking()">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Customer</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="customerControl"
+             [matAutocomplete]="customerAuto">
+      <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #customerAuto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.username}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-button (click)="makeBooking()" [disabled]="customerControl.invalid">
       <mat-icon>add</mat-icon>
     </button>
   </mat-card-actions>
