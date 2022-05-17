@@ -1,13 +1,3 @@
-mat-stepper {
-  background: transparent;
-  width: max-content;
-  max-width: 900px;
-}
-
-mat-step form {
-  margin: 10px 0 10px 0;
-}
-
 form {
   width: 500px;
 }

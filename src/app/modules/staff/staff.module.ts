@@ -21,6 +21,7 @@ import {SharedModule} from "../../shared/shared.module";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {StaffBookingFormComponent} from "./components/staff-booking-form/staff-booking-form.component";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {MatStepperModule} from "@angular/material/stepper";
     SharedModule,
     MatAutocompleteModule,
     MatStepperModule,
+    MatTooltipModule,
   ],
   exports: [
     StaffComponent,

@@ -1,12 +1,13 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {Booking, BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {BookingService} from "../../../../shared/services/booking/booking-service.service";
 import {AuthService} from "../../../authentication/services/authentican.service";
+import {Customer} from "../../services/staff/staff-service.service";
 
 export interface DialogData {
-  room: Room;
+  customer: Customer;
 }
 
 @Component({
@@ -22,20 +23,40 @@ export interface DialogData {
 })
 export class StaffBookingFormComponent implements OnInit {
 
+  private readonly _customer: Customer;
+  private readonly _roomFormGroup: FormGroup = this.fb.group({
+    roomType: ["", Validators.required],
+    numRooms: ["", Validators.required],
+    descShort: ["", Validators.required],
+    descFull: ["", Validators.required],
+    maxAdults: ["", Validators.required],
+    maxChildren: ["", Validators.required],
+    minCheckIn: ["", Validators.required],
+    maxCheckIn: ["", Validators.required],
+    minCheckOut: ["", Validators.required],
+    maxCheckOut: ["", Validators.required],
+    baseCost: ["", Validators.required],
+  })
+
   constructor(
     public dialogRef: MatDialogRef<StaffBookingFormComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: DialogData,
     private fb: FormBuilder,
     private _bookingService: BookingService,
     private _authService: AuthService
-  ) {}
+  ) {
+    this._customer = this._data.customer;
+  }
 
   ngOnInit(): void {}
 
-  public onNoClick(): void {
-    this.dialogRef.close();
+  //  ==== GETTERS && SETTERS ====
+  get customer(): Customer {
+    return this._customer;
   }
 
-  // ==== SIMPLE GETTERS AND SETTERS
+  get roomFormGroup(): FormGroup {
+    return this._roomFormGroup
+  }
 
 }

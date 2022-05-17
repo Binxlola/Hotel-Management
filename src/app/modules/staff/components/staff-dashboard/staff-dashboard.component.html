@@ -1,11 +1,15 @@
-<mat-grid-list cols="3" rowHeight="1:1">
-  <mat-grid-tile>
-    <room-overview-card></room-overview-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <staff-roster></staff-roster>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <bookings-card></bookings-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="container overflow-hidden">
+  <div class="row my-2">
+    <div class="col">
+      <room-overview-card></room-overview-card>
+    </div>
+    <div class="col">
+      <staff-roster></staff-roster>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <bookings-card></bookings-card>
+    </div>
+  </div>
+</div>

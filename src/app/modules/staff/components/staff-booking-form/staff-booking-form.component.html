@@ -1,10 +1,79 @@
-<h1 mat-dialog-title>Booking for customer</h1>
+<h1 mat-dialog-title>Booking for {{customer.username}}</h1>
 <div mat-dialog-content>
+  <form id="create-room-form" [formGroup]="roomFormGroup">
+    <mat-grid-list cols="2" rowHeight="3:1" gutterSize="5">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Room type</mat-label>
+          <input matInput type="text" formControlName="roomType"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Rooms available</mat-label>
+          <input matInput type="number" formControlName="numRooms"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Description short</mat-label>
+          <input matInput type="text" formControlName="descShort"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Description full</mat-label>
+          <input matInput type="text" formControlName="descFull"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Max adults</mat-label>
+          <input matInput type="number" formControlName="maxAdults"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Max children</mat-label>
+          <input matInput type="number" formControlName="maxChildren"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Earliest check-in</mat-label>
+          <input matInput type="time" formControlName="minCheckIn"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Latest check-in</mat-label>
+          <input matInput type="time" formControlName="maxCheckIn"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Earliest check-out</mat-label>
+          <input matInput type="time" formControlName="minCheckOut"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Latest check-out</mat-label>
+          <input matInput type="time" formControlName="maxCheckOut"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Base cost $</mat-label>
+          <input matInput type="number" formControlName="baseCost"/>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+  </form>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-between align-items-center">
-  <button mat-button (click)="onNoClick()">Close</button>
-  <div id="stepper_nav">
-    <button mat-button>Back</button>
-    <button mat-button>Next</button>
-  </div>
+  <button mat-button (click)="dialogRef.close()">Close</button>
+<!--  <button mat-button (click)="this.room ? updateRoom() : createRoom()">Submit</button>-->
 </div>

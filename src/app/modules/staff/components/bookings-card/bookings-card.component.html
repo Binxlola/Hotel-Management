@@ -6,22 +6,21 @@
     <bookings-table></bookings-table>
   </mat-card-content>
   <mat-card-actions align="end">
-    <mat-form-field class="example-full-width" appearance="outline">
+    <mat-form-field matTooltip="Select a customer to make a booking" matTooltipClass="bg-danger" [matTooltipDisabled]="customerControl.valid" class="example-full-width" appearance="outline">
       <mat-label>Customer</mat-label>
       <input type="text"
-             placeholder="Pick one"
              aria-label="Number"
              matInput
              [formControl]="customerControl"
              [matAutocomplete]="customerAuto">
-      <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #customerAuto="matAutocomplete">
+      <button mat-icon-button matSuffix (click)="makeBooking()" [disabled]="customerControl.invalid">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #customerAuto="matAutocomplete" (optionSelected)='selectOption($event)'>
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{option.username}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <button mat-button (click)="makeBooking()" [disabled]="customerControl.invalid">
-      <mat-icon>add</mat-icon>
-    </button>
   </mat-card-actions>
 </mat-card>

@@ -77,6 +77,23 @@ mat-form-field {
   min-width: 100px;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--glass-dark-high);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--customer-ternary);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--customer-primary);
+}
+
 /*::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{*/
 /*  color: white !important;*/
 /*  opacity: 1 !important;*/
