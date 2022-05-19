@@ -36,4 +36,13 @@ function sendBookingCancellation(userMail, bookingReference) {
   });
 }
 
-export { sendBookingConfirmation, sendBookingCancellation };
+function sendUuidEmail(userMail, uuid) {
+  const transporter = nodemailer.createTransport(emails.userEmail);
+  const mailOptions = {
+    from: emails.userEmail.auth.user,
+    to: userMail,
+    subject: 'Reset-Password',
+    text: `Press link to reset password, LINK HERE: http://localhost:4200/password/reset/`+ 'UUID'
+  };
+}
+export { sendBookingConfirmation, sendBookingCancellation, sendUuidEmail };

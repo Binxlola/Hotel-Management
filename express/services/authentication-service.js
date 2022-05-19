@@ -15,6 +15,7 @@ function getToken(username, id) {
   );
 }
 
+
 /**
  * This function checks if the user is a staff, then will compare against the correct database
  * username and password will be checked, if there is a match, then proceed to login

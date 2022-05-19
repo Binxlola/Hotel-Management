@@ -10,4 +10,6 @@ router.get('/all-customers', (req, res) => {
     .catch(() => res.status(404).json({ error: 'There was an error retrieving customers' }));
 });
 
+
+
 export default router;

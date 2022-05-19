@@ -24,6 +24,7 @@ app.use(express.static(distDir));
 app.use('/authentication', authenticationRouter);
 app.use('/booking', bookingRouter);
 app.use('/customer', customerRouter);
+app.use('/reset/password', authenticationRouter);
 
 // Make connection to DB
 mongoose.connect('mongodb+srv://admin:admin@cluster0.wnjia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {

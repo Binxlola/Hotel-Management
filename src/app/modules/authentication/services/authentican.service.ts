@@ -1,6 +1,6 @@
 import {ElementRef, Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, mapTo, Observable, of, tap, throwError} from "rxjs";
+import {catchError, EMPTY, mapTo, mergeMap, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
 
@@ -12,6 +12,10 @@ export interface Token {
 export interface User {
   _id: string,
   jwt: Token
+}
+
+export interface ResetPasswordError {
+  error: string
 }
 
 @Injectable({
@@ -69,6 +73,18 @@ export class AuthService {
       catchError(error => {
         callback(error, view);
         return of(false);
+      })
+    );
+
+  // post request with body with object as username (this calls method in backend)
+  public resetPassword = (
+    user: { username: string}
+  ): Observable<void> =>
+    this.http.post<ResetPasswordError|undefined> (`${this.AUTHENTICATION_URL}/passwordreset`, user).pipe(
+      mergeMap(result=> {
+        if (result){
+          return throwError(() => result)}
+        return EMPTY
       })
     );
 

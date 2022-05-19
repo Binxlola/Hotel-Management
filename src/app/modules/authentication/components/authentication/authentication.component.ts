@@ -47,7 +47,9 @@ export class AuthenticationComponent implements OnInit {
   @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
   @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
 
-  constructor(private _matDialog: MatDialog, private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
+  constructor(private _matDialog: MatDialog, private _router: Router,
+              private _authenticationService: AuthService, private fb: FormBuilder,
+              private _renderer : Renderer2){
     this._isCustomer = this._router.url === "/login";
 
   }
