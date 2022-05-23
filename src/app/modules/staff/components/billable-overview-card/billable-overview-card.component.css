@@ -1,0 +1,9 @@
+mat-card {
+  height: 100%;
+}
+
+#new-billable-wrapper, #new-category-wrapper {
+  background-color: var(--glass-customer-primary-high);
+  -webkit-backdrop-filter: var(--glassmorphism-blur);
+  backdrop-filter: var(--glassmorphism-blur);
+}

@@ -41,7 +41,7 @@ export class StaffBookingFormComponent implements OnInit {
 
   private readonly _customer: Customer;
   private readonly _bookingDetails: FormGroup = this.fb.group({
-    room: ["", [Validators.required, , this.validCustomerSelectedValidator()]],
+    room: ["", [Validators.required, this.validCustomerSelectedValidator()]],
     numAdults: [{value: "", disabled: true}, Validators.required],
     numChildren: [{value: "", disabled: true}, Validators.required],
     resName: [{value: "", disabled: true}, Validators.required],

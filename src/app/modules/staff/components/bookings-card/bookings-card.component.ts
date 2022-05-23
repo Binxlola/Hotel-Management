@@ -101,7 +101,7 @@ export class BookingsCardComponent implements OnInit {
    * @param event The option select event, used to get the selected value
    */
   public selectOption(event: MatAutocompleteSelectedEvent): void {
-    this._selectedCustomer = event.option.value
+    this._selectedCustomer = event.option.value;
   }
 
   public getOptionDisplay(value: Customer): string {

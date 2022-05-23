@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Billable Overview</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+
+    <div class="d-flex flex-column bottom-0 end-0">
+      <div id="new-category-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-1 rounded">
+        <h4>Add new category</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>New Category</mat-label>
+          <input type="text"
+                 matInput>
+          <button mat-icon-button matSuffix>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div id="new-billable-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-5 rounded">
+        <h4>Add new billable</h4>
+        <form [formGroup]="billableDetails" class="d-flex flex-row justify-content-between align-items-center">
+          <mat-form-field matTooltip="Select a category for billable" matTooltipClass="bg-danger"
+                          [matTooltipDisabled]="categoryControl.valid" class="example-full-width" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input type="text"
+                   matInput
+                   formControlName="category"
+                   [matAutocomplete]="customerAuto">
+            <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #customerAuto="matAutocomplete"
+                              (optionSelected)='selectOption($event)'>
+              <mat-option *ngFor="let option of filteredCategoryOptions | async" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="name"/>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cost</mat-label>
+            <input type="text" matInput formControlName="cost"/>
+            <button mat-icon-button matSuffix>
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+  </mat-card-actions>
+</mat-card>

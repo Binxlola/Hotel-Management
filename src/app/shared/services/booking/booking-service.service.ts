@@ -35,6 +35,11 @@ export interface Booking {
   comments: string,
 }
 
+export interface BillableCategory {
+  _id?: string,
+  name: string
+}
+
 @Injectable({
   providedIn: 'root'
 })

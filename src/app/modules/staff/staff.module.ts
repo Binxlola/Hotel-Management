@@ -24,6 +24,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { BillableOverviewCardComponent } from './components/billable-overview-card/billable-overview-card.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     RoomOverviewCardComponent,
     StaffRosterComponent,
     BookingsCardComponent,
-    StaffBookingFormComponent
+    StaffBookingFormComponent,
+    BillableOverviewCardComponent
   ],
   imports: [
     CommonModule,
