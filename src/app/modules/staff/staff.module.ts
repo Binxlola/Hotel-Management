@@ -22,6 +22,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {StaffBookingFormComponent} from "./components/staff-booking-form/staff-booking-form.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatAutocompleteModule,
     MatStepperModule,
     MatTooltipModule,
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   exports: [
     StaffComponent,

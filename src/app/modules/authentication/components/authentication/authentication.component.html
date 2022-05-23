@@ -24,10 +24,6 @@
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
         <button mat-flat-button type="submit" value="login">Sign in</button><br>
-        <!--        <button *ngIf="this.isCustomer" class="open-button" onclick="openForm()" >Open Form</button><br>-->
-        <!--        <button *ngIf="this.isCustomer" mat-flat-button (click)="onclick" value="Continue as guest"> Continue as guest</button>-->
-        <button mat-flat-button type="onclick"(click)="resetPassword()" value="Reset password">Reset password</button><br>
-        <button mat-flat-button type="onclick" value="Continue as guest"> Continue as guest</button>
         <p *ngIf="this.isCustomer" class="social-text">Or sign in with social platform</p>
         <div *ngIf="this.isCustomer" class="social-media">
           <a href="#" class="social-icon">
@@ -50,6 +46,10 @@
                 <fa-icon [icon]="faLinkedin" size="lg"></fa-icon>
               </button>
             </a>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+          <a class="decorated-link" (click)="resetPassword()">Reset password</a>
+          <a class="decorated-link"> Continue as guest</a>
         </div>
         <div #signInError class="error-box"></div>
       </form>

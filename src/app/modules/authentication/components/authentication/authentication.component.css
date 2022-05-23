@@ -133,6 +133,13 @@ a.social-icon {
   color: white;
 }
 
+.decorated-link {
+  color: white;
+  cursor: pointer;
+  /*text-decoration: none;*/
+  padding: .5rem 0 .5rem 0;
+}
+
 #panels-container {
   display: flex;
   align-items: center;
