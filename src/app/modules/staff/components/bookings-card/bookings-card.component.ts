@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {Customer, StaffService} from "../../services/staff/staff-service.service";
+import {StaffService} from "../../services/staff/staff-service.service";
 import {map, Observable, startWith} from "rxjs";
 import {
   AbstractControl,
@@ -12,8 +12,8 @@ import {
 } from "@angular/forms";
 import {StaffBookingFormComponent} from "../staff-booking-form/staff-booking-form.component";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
 import {BookingsTableComponent} from "../../../../shared/components/bookings-table/bookings-table.component";
+import {Customer} from "../../../../shared/interfaces";
 
 @Component({
   selector: 'bookings-card',

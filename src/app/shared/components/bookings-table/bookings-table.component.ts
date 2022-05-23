@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {Booking, BookingService} from "../../services/booking/booking-service.service";
+import {BookingService} from "../../services/booking/booking-service.service";
 import {DatePipe} from "@angular/common";
+import {Booking} from "../../interfaces";
 
 @Component({
   selector: 'bookings-table',

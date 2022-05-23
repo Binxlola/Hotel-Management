@@ -1,4 +1,5 @@
 import Staff from '../models/staff.js';
+import BillableCategory from '../models/billable-category.js';
 
 const newStaff = new Staff({
   username: 'Chris',
@@ -19,4 +20,14 @@ function saveStaff() {
   newStaffThree.save();
 }
 
-export default saveStaff;
+function getAllBillableCategories() {
+  return BillableCategory.find();
+}
+
+function saveBillableCategory(categoryObject) {
+  return new BillableCategory({
+    name: categoryObject.categoryName,
+  }).save();
+}
+
+export { saveStaff, saveBillableCategory, getAllBillableCategories };

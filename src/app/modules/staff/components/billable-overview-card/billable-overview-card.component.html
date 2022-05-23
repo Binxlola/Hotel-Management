@@ -8,11 +8,12 @@
     <div class="d-flex flex-column bottom-0 end-0">
       <div id="new-category-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-1 rounded">
         <h4>Add new category</h4>
-        <mat-form-field appearance="outline">
+        <mat-form-field matTooltip="Enter name to create new category" matTooltipClass="bg-danger" [matTooltipDisabled]="newCategoryControl.valid" appearance="outline">
           <mat-label>New Category</mat-label>
           <input type="text"
+                 [formControl]="newCategoryControl"
                  matInput>
-          <button mat-icon-button matSuffix>
+          <button mat-icon-button matSuffix (click)="saveNewCategory()" [disabled]="newCategoryControl.invalid">
             <mat-icon>add</mat-icon>
           </button>
         </mat-form-field>

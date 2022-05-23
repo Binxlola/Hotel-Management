@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Customer} from "../../services/staff/staff-service.service";
-import {Observable} from "rxjs";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {BookingsTableComponent} from "../../../../shared/components/bookings-table/bookings-table.component";
+import {StaffService} from "../../services/staff/staff-service.service";
+import {map, Observable, startWith} from "rxjs";
+import {FormBuilder, FormControl, FormControlStatus, FormGroup, Validators} from "@angular/forms";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {BillableCategory, Room} from "../../../../shared/services/booking/booking-service.service";
+import {BillableCategory, Customer} from "../../../../shared/interfaces";
 
 @Component({
   selector: 'billable-overview-card',
@@ -17,15 +16,62 @@ export class BillableOverviewCardComponent implements OnInit {
   private _categoryOptions: BillableCategory[] = [];
   private _filteredCategoryOptions: Observable<BillableCategory[]> | undefined;
 
+  private readonly _newCategoryControl: FormControl = new FormControl('', [Validators.required]);
   private readonly _billableDetails: FormGroup = this.fb.group({
     category: ["", Validators.required],
     name: ["", Validators.required],
     cost: ["", Validators.required]
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private _staffService: StaffService) {
+    this.updateBillableItems();
+  }
+
+  /**
+   * Takes the value of the new category form field and passes it to the staff service,
+   * to make an API call which will attempt to save the new category
+   */
+  public saveNewCategory(): void {
+    this._staffService.saveBillableCategory(this._newCategoryControl.value).subscribe(
+      res => {
+        alert(res ? "Category saved": "Unable to save category");
+      }
+    )
+  }
 
   ngOnInit(): void {
+    // Subscribe to customer control change to apply filters to auto complete
+    this._filteredCategoryOptions = this._billableDetails.get("category")!.valueChanges.pipe(
+      startWith(''),
+      map((value: string | BillableCategory) => this._filter(value)),
+    );
+
+    // Subscribe to the customer control state change, to account for a valid selection that is manually typed
+    this._billableDetails.get("category")!.statusChanges.subscribe(
+      (status: FormControlStatus) => {
+        if(status === "INVALID") this._selectedCategory = undefined;
+        else if(status === "VALID" && !this._selectedCategory) {
+          this._selectedCategory = this._categoryOptions.find((option: BillableCategory) => option.name == this._billableDetails.get("category")!.value);
+        }
+      }
+    )
+  }
+
+  /**
+   * Filter the options to be displayed in the customer auto complete form control
+   * @param value The value that is being used for filtering
+   */
+  private _filter(value: string | BillableCategory): BillableCategory[] {
+    const filterValue = typeof value === "string" ? value.toLowerCase() : value.name;
+    return this._categoryOptions.filter((option: BillableCategory) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  /**
+   * Use the staff service to query API for all existing customers
+   */
+  public updateBillableItems(): void {
+    this._staffService.getAllBillableCategories()
+      .then(categories => this._categoryOptions = [...categories]);
   }
 
   /**
@@ -37,6 +83,10 @@ export class BillableOverviewCardComponent implements OnInit {
   }
 
   //    ==== GETTERS && SETTERS ====
+  get newCategoryControl(): FormControl {
+    return this._newCategoryControl;
+  }
+
   get billableDetails(): FormGroup {
     return this._billableDetails;
   }

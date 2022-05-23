@@ -2,43 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-
-export interface Room {
-  _id?: string,
-  type: string,
-  description_short: string,
-  description_full: string,
-  max_adults: number,
-  max_children: number,
-  num_available: number,
-  base_price: number,
-  minCheckIn: string,
-  maxCheckIn: string,
-  minCheckOut: string,
-  maxCheckOut: string,
-  checkInOutInterval: number
-}
-
-export interface Booking {
-  _id?: string,
-  user?: string,
-  bookingName: string,
-  room: string,
-  uuid?: string | undefined,
-  totalPaid: number,
-  checkInDate: Date | string,
-  checkOutDate: Date | string,
-  checkInTime: string,
-  checkOutTime: string,
-  numAdults: number,
-  numChildren: number,
-  comments: string,
-}
-
-export interface BillableCategory {
-  _id?: string,
-  name: string
-}
+import {Booking, Room} from "../../interfaces";
 
 @Injectable({
   providedIn: 'root'

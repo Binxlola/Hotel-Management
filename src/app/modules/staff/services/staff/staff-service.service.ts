@@ -2,16 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
-
-export interface Customer {
-  _id: string,
-  username: string,
-  first_name: string,
-  last_name: string,
-  email: string,
-  last_logon: Date,
-  registration_date: Date
-}
+import {BillableCategory, Customer, Room} from "../../../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +10,41 @@ export interface Customer {
 export class StaffService {
 
   private readonly USERS_URL: string = `${environment.API_URL}/customer`;
+  private readonly BOOKING_URL: string = `${environment.API_URL}/booking`
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Queries the backend API to retrieve all existing customers
+   */
   public getAllCustomers = async (): Promise<Customer[]> =>
     await lastValueFrom(
       this.http.get<Customer[]>(`${this.USERS_URL}/all-customers`).pipe(
         catchError(this.handleError)
       )
+    );
+
+  /**
+   * Queries the backend API to retrieve all existing and active billable categories
+   */
+  public getAllBillableCategories = async (): Promise<BillableCategory[]> =>
+    await lastValueFrom(
+      this.http.get<BillableCategory[]>(`${this.BOOKING_URL}/all-billable-categories`).pipe(
+        catchError(this.handleError)
+      )
+    );
+
+  /**
+   * Saves a new billable category to the database
+   * @param name The name of the new category being saved
+   */
+  public saveBillableCategory = (name: string): Observable<boolean> =>
+    this.http.post<boolean>(`${this.BOOKING_URL}/save-billable-category`, {categoryName: name}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
     );
 
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {

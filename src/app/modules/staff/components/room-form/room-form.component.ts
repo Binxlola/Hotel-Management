@@ -1,8 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DialogData} from "../../../customer/components/booking-management/booking-form/booking-form.component";
-import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {BookingService} from "../../../../shared/services/booking/booking-service.service";
+import {Room} from "../../../../shared/interfaces";
 
 @Component({
   selector: 'room-form',

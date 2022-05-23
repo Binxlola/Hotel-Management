@@ -10,11 +10,11 @@ import {
   Validators
 } from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {Booking, BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {BookingService} from "../../../../shared/services/booking/booking-service.service";
 import {AuthService} from "../../../authentication/services/authentican.service";
-import {Customer} from "../../services/staff/staff-service.service";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {map, Observable, startWith} from "rxjs";
+import {Booking, Customer, Room} from "../../../../shared/interfaces";
 
 export interface DialogData {
   customer: Customer;

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Renderer2} from '@angular/core';
-import {Room} from "../../../../../shared/services/booking/booking-service.service";
 import {Required} from "../../../../../decorators/required-input.decorator";
+import {Room} from "../../../../../shared/interfaces";
 
 export interface MatCardSections {
   wrapper: HTMLElement | undefined,

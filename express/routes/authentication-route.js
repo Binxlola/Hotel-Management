@@ -1,7 +1,7 @@
 import express from 'express';
 import { login } from '../services/authentication-service.js';
-import {resetPassword, signup} from '../services/customer-service.js';
-import saveStaff from '../services/staff-service.js';
+import { resetPassword, signup } from '../services/customer-service.js';
+import { saveStaff } from '../services/staff-service.js';
 
 // Create Router
 const router = express.Router();
@@ -18,14 +18,13 @@ router.post('/passwordreset', async (req, res) => {
   try {
     await resetPassword(body.username);
     res.sendStatus(200);
-  }
-  catch(error){
-    res.json({error : "error with input"});
-    console.log(error)
+  } catch (error) {
+    res.json({ error: 'error with input' });
+    console.log(error);
   }
 });
 
-//promise chaining with then and catch
+// promise chaining with then and catch
 router.post('/signup', async (req, res) => {
   const { body } = req;
   await signup(body.username, body.password, body.firstName, body.lastName, body.email)
