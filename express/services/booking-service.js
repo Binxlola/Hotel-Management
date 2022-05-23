@@ -83,8 +83,12 @@ async function saveBooking(booking) {
   }).save();
 
   if (newBooking) {
-    const user = await Customer.findById(booking.user);
-    sendBookingConfirmation(user.email, newBooking.uuid);
+    try {
+      const user = await Customer.findById(booking.user);
+      sendBookingConfirmation(user.email, newBooking.uuid);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return newBooking;

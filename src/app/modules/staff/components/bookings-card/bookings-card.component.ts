@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {Customer, StaffService} from "../../services/staff/staff-service.service";
 import {map, Observable, startWith} from "rxjs";
@@ -12,6 +12,8 @@ import {
 } from "@angular/forms";
 import {StaffBookingFormComponent} from "../staff-booking-form/staff-booking-form.component";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
+import {BookingsTableComponent} from "../../../../shared/components/bookings-table/bookings-table.component";
 
 @Component({
   selector: 'bookings-card',
@@ -24,6 +26,7 @@ export class BookingsCardComponent implements OnInit {
   private _options: Customer[] = [];
   private _filteredOptions: Observable<Customer[]> | undefined;
   private _customerControl: FormControl = new FormControl('', [Validators.required, this.validCustomerSelectedValidator()]);
+  @ViewChild('bookingsTableComponent') private _bookingsTable: BookingsTableComponent | undefined
 
   constructor(private _bookingDialog: MatDialog, private _staffService: StaffService) {
     this.updateCustomers();
@@ -72,9 +75,10 @@ export class BookingsCardComponent implements OnInit {
       data: {customer: this._selectedCustomer},
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe(() => {
       this._customerControl.setValue("");
       this._customerControl.reset();
+      this._bookingsTable?.updateBookings();
     });
   }
 

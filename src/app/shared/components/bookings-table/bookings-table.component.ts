@@ -19,7 +19,7 @@ export class BookingsTableComponent {
     this.updateBookings();
   }
 
-  private updateBookings(): void {
+  public updateBookings(): void {
     this._bookingService.getAllBookings()
       .then(bookings => {
           this._bookings = [...bookings];
