@@ -45,7 +45,6 @@ import {MatTableModule} from "@angular/material/table";
     MatProgressSpinnerModule,
     MatCardModule,
     MatTableModule,
-    //FormsModule
 
   ],
   providers: [],
