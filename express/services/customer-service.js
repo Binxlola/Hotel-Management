@@ -1,9 +1,5 @@
 import Customer from '../models/customer.js';
 import { getToken } from './authentication-service.js';
-import Staff from "../models/staff.js";
-import * as uuid from "uuid";
-import UserUUIDModel from "../models/reset-id.js";
-import {sendBookingCancellation, sendUuidEmail} from "./utility-service.js";
 
 /**
  * This function checks if the user is a customer, then will compare against the correct database
@@ -42,30 +38,6 @@ async function signup(username, password, firstName, lastName, email) {
   };
 }
 
-
-async function resetPassword(username) {
-  const filter = { username };
-  let user = await Customer.findOne(filter).exec();
-
-  console.log("made it before if");
-
-  //guard condition
-  if (!user) throw 'The username does not exist!';
-
-    console.log("made it to else");
-  //create UUID and store it into our reset-id model
-    const UUID = uuid.v4();
-    await new UserUUIDModel({
-      UUID: UUID,
-      username: username,
-      email: user.email,
-    }).save();
-    sendUuidEmail(user.email, UUID);
-
-    //end point to invoke method
-}
-
-
 async function getCustomers() {
   const fieldSelection = [
     'username',
@@ -79,4 +51,4 @@ async function getCustomers() {
   return Customer.find({}, fieldSelection);
 }
 
-export { signup, getCustomers, resetPassword };
+export { signup, getCustomers };

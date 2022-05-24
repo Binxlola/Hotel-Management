@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import emails from '../config.js';
+import config from '../config.js';
 
 /**
  * This is sending information to a users email from the master email.
@@ -7,9 +7,9 @@ import emails from '../config.js';
  * @param bookingReference this takes the reference code generated from booking.
  */
 function sendBookingConfirmation(userMail, bookingReference) {
-  const transporter = nodemailer.createTransport(emails.bookingEmail);
+  const transporter = nodemailer.createTransport(config.emails.bookingEmail);
   const mailOptions = {
-    from: emails.bookingEmail.auth.user,
+    from: config.emails.bookingEmail.auth.user,
     to: userMail,
     subject: 'Booking Confirmation',
     text: `Your booking was successfully completed, ref: ${bookingReference}`,
@@ -22,9 +22,9 @@ function sendBookingConfirmation(userMail, bookingReference) {
 }
 
 function sendBookingCancellation(userMail, bookingReference) {
-  const transporter = nodemailer.createTransport(emails.bookingEmail);
+  const transporter = nodemailer.createTransport(config.emails.bookingEmail);
   const mailOptions = {
-    from: emails.bookingEmail.auth.user,
+    from: config.emails.bookingEmail.auth.user,
     to: userMail,
     subject: 'Booking Cancellation',
     text: `Your booking was successfully canceled, ref: ${bookingReference}`,
@@ -36,13 +36,18 @@ function sendBookingCancellation(userMail, bookingReference) {
   });
 }
 
-function sendUuidEmail(userMail, uuid) {
-  const transporter = nodemailer.createTransport(emails.userEmail);
+function sendPasswordReset(userMail, uuid) {
+  const transporter = nodemailer.createTransport(config.emails.bookingEmail);
   const mailOptions = {
-    from: emails.userEmail.auth.user,
+    from: config.emails.bookingEmail.auth.user,
     to: userMail,
     subject: 'Reset-Password',
-    text: `Press link to reset password, LINK HERE: http://localhost:4200/password/reset/`+ 'UUID'
+    text: `Press link to reset password, LINK HERE: ${new URL("http://localhost:4200/reset-password/" + uuid)}`
   };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) console.log(error);
+    else console.log('Email sent');
+  });
 }
-export { sendBookingConfirmation, sendBookingCancellation, sendUuidEmail };
+export { sendBookingConfirmation, sendBookingCancellation, sendPasswordReset };

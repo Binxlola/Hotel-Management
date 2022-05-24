@@ -3,7 +3,7 @@ import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-bra
 import {AuthService} from "../../services/authentican.service";
 import {FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {ResetPasswordComponent} from "../reset-password/reset-password.component";
 import {exitCodeFromResult} from "@angular/compiler-cli";
@@ -17,6 +17,7 @@ import {addBodyClass} from "@angular/cdk/schematics";
 export class AuthenticationComponent implements OnInit {
 
   public readonly _isCustomer: boolean;
+  private _resetID: string | null = null;
 
   // loginFormGroup requires username and password
   private _loginFormGroup: FormGroup = this.fb.group({
@@ -49,12 +50,18 @@ export class AuthenticationComponent implements OnInit {
 
   constructor(private _matDialog: MatDialog, private _router: Router,
               private _authenticationService: AuthService, private fb: FormBuilder,
-              private _renderer : Renderer2){
+              private _renderer : Renderer2,
+              private _route: ActivatedRoute ){
     this._isCustomer = this._router.url === "/login";
-
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._route.paramMap.subscribe(params => {
+      this._resetID = params.get('id');
+    });
+
+    if (this._resetID) this.resetPassword();
+  }
 
   toggleMode(toggleSignup: boolean): void {
     this.signupMode = toggleSignup;

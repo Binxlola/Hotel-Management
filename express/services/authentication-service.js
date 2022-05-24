@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import Staff from '../models/staff.js';
 import Customer from '../models/customer.js';
+import * as uuid from "uuid";
+import PasswordResetModel from "../models/reset-id.js";
+import {sendPasswordReset} from "./utility-service.js";
 
 function getToken(username, id) {
   return jwt.sign(
@@ -42,4 +45,25 @@ async function login(username, password, isCustomer) {
   };
 }
 
-export { login, getToken };
+async function resetPassword(body) {
+  const filter = { username: body.username };
+  let user = await Customer.findOne(filter);
+
+  //guard condition
+  if (!user) throw 'The username does not exist!';
+  //create UUID and store it into our reset-id model
+  const UUID = uuid.v4();
+  await new PasswordResetModel({
+    UUID: UUID,
+    username: body.username,
+    email: user.email,
+  }).save();
+  try {
+    sendPasswordReset(user.email, UUID);
+  }
+  catch(e){
+    console.log(e);
+  }
+  //end point to invoke method
+}
+export { login, getToken, resetPassword };

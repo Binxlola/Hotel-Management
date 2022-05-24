@@ -20,6 +20,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
+import { PasswordRedirectComponent } from './modules/authentication/components/password-redirect/password-redirect.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatTableModule} from "@angular/material/table";
     AuthenticationComponent,
     GuestLandingComponent,
     ResetPasswordComponent,
+    PasswordRedirectComponent,
   ],
   imports: [
     BrowserModule,

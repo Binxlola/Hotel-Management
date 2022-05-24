@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {AuthenticationComponent} from "./modules/authentication/components/authentication/authentication.component";
 import {ModulesGuard} from "./modules/authentication/guards/modules.guard";
+import {ResetPasswordComponent} from "./modules/authentication/components/reset-password/reset-password.component";
 
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/login'},
   {path: 'login', component: AuthenticationComponent},
   {path: 'staff-login', component: AuthenticationComponent},
+  {path: 'reset-password/:id', component: AuthenticationComponent},
   {
     path: "customer",
     loadChildren: () => import('./modules/customer/customer.module').then(m => m.CustomerModule),

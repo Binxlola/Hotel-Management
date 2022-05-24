@@ -1,6 +1,6 @@
 import express from 'express';
-import { login } from '../services/authentication-service.js';
-import { resetPassword, signup } from '../services/customer-service.js';
+import {login, resetPassword} from '../services/authentication-service.js';
+import { signup } from '../services/customer-service.js';
 import { saveStaff } from '../services/staff-service.js';
 
 // Create Router
@@ -13,10 +13,9 @@ router.post('/login', async (req, res) => {
     .catch((err) => res.status(401).send(err));
 });
 // can user this for booking component direct to new page
-router.post('/passwordreset', async (req, res) => {
-  const { body } = req;
+router.post('/password-reset', async (req, res) => {
   try {
-    await resetPassword(body.username);
+    await resetPassword(req.body);
     res.sendStatus(200);
   } catch (error) {
     res.json({ error: 'error with input' });

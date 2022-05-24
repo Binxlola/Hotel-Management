@@ -1,9 +1,8 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Router} from "@angular/router";
+import {MatDialogRef} from "@angular/material/dialog";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService, ResetPasswordError} from "../../services/authentican.service";
-import {typeWithParameters} from "@angular/compiler/src/render3/util";
 
 export interface ResetPasswordResult{
   username: string;
@@ -22,10 +21,13 @@ export class ResetPasswordComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder,private _router: Router,private _authenticationService: AuthService, private matDialogRef: MatDialogRef<ResetPasswordComponent,
-    ResetPasswordResult>, private _renderer : Renderer2){
-    // this._router.url === "/reset/password";
-
+  constructor(
+    private fb: FormBuilder,
+    private _router: Router,
+    private _authenticationService: AuthService,
+    private _route: ActivatedRoute
+  ) {
+    this._route.params.subscribe( params => console.log(params));
   }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class ResetPasswordComponent implements OnInit {
 
     if(this._resetPasswordForm.valid) {
       this._authenticationService.resetPassword({
-        username: this._resetPasswordForm.get('username')?.value
+        username: this._resetPasswordForm.get('username')!.value
       }).subscribe({
         error : (err: ResetPasswordError) => {alert("Error")},
         complete : () => {alert("complete")}
