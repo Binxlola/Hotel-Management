@@ -11,3 +11,8 @@ mat-card {
   -webkit-backdrop-filter: var(--glassmorphism-blur);
   backdrop-filter: var(--glassmorphism-blur);
 }
+
+mat-panel-description {
+  justify-content: end;
+  align-items: center;
+}

@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  deleteBillable,
   getAllBillableCategories,
   getAllBillableGroups,
   saveBillable,
@@ -30,6 +31,12 @@ router.post('/save-billable-category', (req, res) => {
 router.post('/save-billable', (req, res) => {
   saveBillable(req.body)
     .then((billable) => res.json(billable))
+    .catch(() => res.status(500).json({ error: 'There was an error saving new billable' }));
+});
+
+router.post('/delete-billable', (req, res) => {
+  deleteBillable(req.body.id)
+    .then((response) => res.json(response))
     .catch(() => res.status(500).json({ error: 'There was an error saving new billable' }));
 });
 

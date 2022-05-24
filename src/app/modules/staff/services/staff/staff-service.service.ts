@@ -71,6 +71,20 @@ export class StaffService {
       })
     );
 
+  /**
+   * Posts a billable ID to the backend API for deletion.
+   * Will return a boolean representing process status
+   * @param billableID The ID of the billable to be deleted
+   */
+  public deleteBillable = (billableID: string): Observable<boolean> =>
+    this.http.post<boolean>(`${this.STAFF_URL}/delete-billable`, {id: billableID}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    )
+
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

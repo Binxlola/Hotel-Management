@@ -4,12 +4,18 @@
   </mat-card-header>
   <mat-card-content class="d-flex flex-column justify-content-between h-100">
     <mat-accordion id="billable-groups" multi="false">
-      <mat-expansion-panel *ngFor="let group of billableGroups">
-        <mat-expansion-panel-header>
+      <mat-expansion-panel *ngFor="let group of billableGroups" [disabled]="group.items.length < 1">
+        <mat-expansion-panel-header class="text-dark">
           <mat-panel-title>{{group.category.name}}</mat-panel-title>
+          <mat-panel-description>
+            <div *ngIf="group.items.length < 1" class="pe-3">No items for category</div>
+            <button mat-icon-button matTooltip="Delete category and all billable items in category" matTooltipClass="bg-danger">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-chip-list>
-          <mat-chip *ngFor="let billable of group.items" color="warn" [selectable]="false" selected>{{billable.name}}: ${{billable.cost}}
+          <mat-chip *ngFor="let billable of group.items" color="warn" selected (removed)="deleteBillable(billable)">{{billable.name}}: ${{billable.cost}}
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>
             </button>

@@ -85,6 +85,8 @@ export class BillableOverviewCardComponent implements OnInit {
         alert(res ? "Category saved": "Unable to save category");
       }
     )
+
+    this._newCategoryControl.reset();
   }
 
   /**
@@ -99,8 +101,6 @@ export class BillableOverviewCardComponent implements OnInit {
       cost: Number(this.billableDetails.get("cost")!.value)
     }
 
-    console.log(billable);
-
     this._staffService.saveBillable(billable).subscribe(
       res => {
         if(res) this.updateBillableData();
@@ -109,6 +109,19 @@ export class BillableOverviewCardComponent implements OnInit {
     )
 
     this._billableDetails.reset();
+  }
+
+  /**
+   * Uses the staff service to communicate a billable deletion
+   * @param billable The billable to be deleted
+   */
+  public deleteBillable(billable: Billable): void {
+    this._staffService.deleteBillable(billable._id!).subscribe(
+      res => {
+        if(res) this.updateBillableData();
+        alert(res ? "Billable deleted" : "Unable to delete billable");
+      }
+    )
   }
 
   //    ==== GETTERS && SETTERS ====

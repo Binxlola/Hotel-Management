@@ -1,8 +1,5 @@
-import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import Staff from '../models/staff.js';
 import BillableCategory from '../models/billable-category.js';
-import Booking from '../models/booking.js';
 import Billable from '../models/billable.js';
 
 const newStaff = new Staff({
@@ -42,6 +39,10 @@ function saveBillable(billable) {
   }).save();
 }
 
+function deleteBillable(id) {
+  return Billable.findByIdAndDelete(id);
+}
+
 async function getAllBillableGroups() {
   const result = {};
   const billableCategories = await BillableCategory.find();
@@ -65,5 +66,5 @@ async function getAllBillableGroups() {
 
 export {
   saveStaff, saveBillableCategory, getAllBillableCategories, saveBillable,
-  getAllBillableGroups,
+  getAllBillableGroups, deleteBillable
 };
