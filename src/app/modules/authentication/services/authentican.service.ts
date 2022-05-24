@@ -79,12 +79,12 @@ export class AuthService {
   // post request with body with object as username (this calls method in backend)
   public resetPassword = (
     user: { username: string}
-  ): Observable<void> =>
-    this.http.post<ResetPasswordError|undefined> (`${this.AUTHENTICATION_URL}/passwordreset`, user).pipe(
-      mergeMap(result=> {
-        if (result){
-          return throwError(() => result)}
-        return EMPTY
+  ): Observable<boolean> =>
+    this.http.post<void> (`${this.AUTHENTICATION_URL}/password-reset`, user).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
       })
     );
 
