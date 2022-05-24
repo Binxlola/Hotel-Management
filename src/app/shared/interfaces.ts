@@ -44,3 +44,10 @@ export interface BillableCategory {
   _id?: string,
   name: string
 }
+
+export interface Billable {
+  _id?: string,
+  categoryID?: string,
+  name: string,
+  cost: number
+}

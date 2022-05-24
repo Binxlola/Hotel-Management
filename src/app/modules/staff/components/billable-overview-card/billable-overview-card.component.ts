@@ -3,7 +3,7 @@ import {StaffService} from "../../services/staff/staff-service.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormControl, FormControlStatus, FormGroup, Validators} from "@angular/forms";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {BillableCategory, Customer} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, Customer} from "../../../../shared/interfaces";
 
 @Component({
   selector: 'billable-overview-card',
@@ -20,23 +20,11 @@ export class BillableOverviewCardComponent implements OnInit {
   private readonly _billableDetails: FormGroup = this.fb.group({
     category: ["", Validators.required],
     name: ["", Validators.required],
-    cost: ["", Validators.required]
+    cost: ["", [Validators.required, Validators.pattern("^[0-9]*$")]]
   });
 
   constructor(private fb: FormBuilder, private _staffService: StaffService) {
     this.updateBillableItems();
-  }
-
-  /**
-   * Takes the value of the new category form field and passes it to the staff service,
-   * to make an API call which will attempt to save the new category
-   */
-  public saveNewCategory(): void {
-    this._staffService.saveBillableCategory(this._newCategoryControl.value).subscribe(
-      res => {
-        alert(res ? "Category saved": "Unable to save category");
-      }
-    )
   }
 
   ngOnInit(): void {
@@ -67,6 +55,14 @@ export class BillableOverviewCardComponent implements OnInit {
   }
 
   /**
+   * Keep track of the room selected for a new booking
+   * @param event The option select event, used to get the selected value
+   */
+  public selectOption(event: MatAutocompleteSelectedEvent): void {
+    this._selectedCategory = event.option.value;
+  }
+
+  /**
    * Use the staff service to query API for all existing customers
    */
   public updateBillableItems(): void {
@@ -75,11 +71,30 @@ export class BillableOverviewCardComponent implements OnInit {
   }
 
   /**
-   * Keep track of the room selected for a new booking
-   * @param event The option select event, used to get the selected value
+   * Takes the value of the new category form field and passes it to the staff service,
+   * to make an API call which will attempt to save the new category
    */
-  public selectOption(event: MatAutocompleteSelectedEvent): void {
-    this._selectedCategory = event.option.value;
+  public saveNewCategory(): void {
+    this._staffService.saveBillableCategory(this._newCategoryControl.value).subscribe(
+      res => {
+        alert(res ? "Category saved": "Unable to save category");
+      }
+    )
+  }
+
+  public saveNewBillable(): void {
+    const billable: Billable = {
+      categoryID: this._selectedCategory?._id,
+      name: this._billableDetails.get("name")!.value,
+      cost: Number(this.billableDetails.get("cost")!.value)
+    }
+
+    this._staffService.saveBillable(billable).subscribe(
+      res => {
+        alert(res ? "Billable saved" : "Unable to save billable");
+      }
+    )
+
   }
 
   //    ==== GETTERS && SETTERS ====

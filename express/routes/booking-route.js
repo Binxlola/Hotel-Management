@@ -7,7 +7,7 @@ import {
   updateRoom,
   deleteRoom, cancelBooking,
 } from '../services/booking-service.js';
-import {getAllBillableCategories, saveBillableCategory} from "../services/staff-service.js";
+import {getAllBillableCategories, saveBillable, saveBillableCategory} from "../services/staff-service.js";
 
 // Create Router
 const router = express.Router();
@@ -91,6 +91,12 @@ router.post('/save-billable-category', (req, res) => {
   saveBillableCategory(req.body)
     .then((category) => res.json(category))
     .catch(() => res.status(500).json({ error: 'There was an error saving new billable category' }));
+});
+
+router.post('/save-billable', (req, res) => {
+  saveBillable(req.body)
+    .then((billable) => res.json(billable))
+    .catch(() => res.status(500).json({ error: 'There was an error saving new billable' }));
 });
 
 export default router;

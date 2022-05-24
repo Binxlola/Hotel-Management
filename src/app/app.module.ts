@@ -13,14 +13,12 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from "@angular/forms";
-import { BookingsTableComponent} from "./shared/components/bookings-table/bookings-table.component";
 import { GuestLandingComponent } from './guest/guest-landing/guest-landing.component';
 import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
-import { PasswordRedirectComponent } from './modules/authentication/components/password-redirect/password-redirect.component';
 
 
 @NgModule({
@@ -29,7 +27,6 @@ import { PasswordRedirectComponent } from './modules/authentication/components/p
     AuthenticationComponent,
     GuestLandingComponent,
     ResetPasswordComponent,
-    PasswordRedirectComponent,
   ],
   imports: [
     BrowserModule,

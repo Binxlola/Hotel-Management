@@ -1,5 +1,9 @@
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import Staff from '../models/staff.js';
 import BillableCategory from '../models/billable-category.js';
+import Booking from '../models/booking.js';
+import Billable from '../models/billable.js';
 
 const newStaff = new Staff({
   username: 'Chris',
@@ -30,4 +34,14 @@ function saveBillableCategory(categoryObject) {
   }).save();
 }
 
-export { saveStaff, saveBillableCategory, getAllBillableCategories };
+function saveBillable(billable) {
+  return new Billable({
+    category: billable.categoryID,
+    name: billable.name,
+    cost: billable.cost,
+  }).save();
+}
+
+export {
+  saveStaff, saveBillableCategory, getAllBillableCategories, saveBillable,
+};

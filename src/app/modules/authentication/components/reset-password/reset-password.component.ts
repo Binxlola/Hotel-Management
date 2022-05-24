@@ -1,12 +1,7 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService, ResetPasswordError} from "../../services/authentican.service";
-
-export interface ResetPasswordResult{
-  username: string;
-}
+import {AuthService} from "../../services/authentican.service";
 
 @Component({
   selector: 'app-reset-password',
@@ -41,7 +36,6 @@ export class ResetPasswordComponent implements OnInit {
       this._authenticationService.resetPassword({
         username: this._resetPasswordForm.get('username')!.value
       }).subscribe({
-        error : (err: ResetPasswordError) => {alert("Error")},
         complete : () => {alert("complete")}
       });
     }

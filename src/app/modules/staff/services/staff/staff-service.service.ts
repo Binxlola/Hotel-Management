@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
-import {BillableCategory, Customer, Room} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, Customer, Room} from "../../../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,19 @@ export class StaffService {
    */
   public saveBillableCategory = (name: string): Observable<boolean> =>
     this.http.post<boolean>(`${this.BOOKING_URL}/save-billable-category`, {categoryName: name}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
+
+  /**
+   * Saves a new billable category to the database
+   * @param billable The name of the new category being saved
+   */
+  public saveBillable = (billable: Billable): Observable<boolean> =>
+    this.http.post<boolean>(`${this.BOOKING_URL}/save-billable`, billable).pipe(
       mapTo(true),
       catchError((error, caught) => {
         this.handleError(error, caught);
