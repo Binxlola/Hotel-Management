@@ -87,12 +87,19 @@ export class BillableOverviewCardComponent implements OnInit {
     )
   }
 
+  /**
+   * Builds a new billable data object and passes it to the staff service.
+   * The service will make a request to the backend to save the new billable.
+   * Notify the user of save status and reset the form
+   */
   public saveNewBillable(): void {
     const billable: Billable = {
-      category: this._selectedCategory?._id,
+      category: this._selectedCategory!._id,
       name: this._billableDetails.get("name")!.value,
       cost: Number(this.billableDetails.get("cost")!.value)
     }
+
+    console.log(billable);
 
     this._staffService.saveBillable(billable).subscribe(
       res => {
@@ -101,6 +108,7 @@ export class BillableOverviewCardComponent implements OnInit {
       }
     )
 
+    this._billableDetails.reset();
   }
 
   //    ==== GETTERS && SETTERS ====

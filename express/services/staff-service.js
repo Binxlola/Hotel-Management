@@ -36,7 +36,7 @@ function saveBillableCategory(categoryObject) {
 
 function saveBillable(billable) {
   return new Billable({
-    category: billable.categoryID,
+    category: billable.category,
     name: billable.name,
     cost: billable.cost,
   }).save();
