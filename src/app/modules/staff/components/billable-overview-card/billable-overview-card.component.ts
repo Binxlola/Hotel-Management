@@ -1,16 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StaffService} from "../../services/staff/staff-service.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormControl, FormControlStatus, FormGroup, Validators} from "@angular/forms";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {Billable, BillableCategory, Customer} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, BillableGroup} from "../../../../shared/interfaces";
 
 @Component({
   selector: 'billable-overview-card',
   templateUrl: './billable-overview-card.component.html',
-  styleUrls: ['./billable-overview-card.component.css']
+  styleUrls: ['./billable-overview-card.component.css'],
 })
 export class BillableOverviewCardComponent implements OnInit {
+
+  private _billableGroups: BillableGroup[] = [];
 
   private _selectedCategory: BillableCategory | undefined;
   private _categoryOptions: BillableCategory[] = [];
@@ -24,7 +26,7 @@ export class BillableOverviewCardComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private _staffService: StaffService) {
-    this.updateBillableItems();
+    this.updateBillableData();
   }
 
   ngOnInit(): void {
@@ -62,13 +64,15 @@ export class BillableOverviewCardComponent implements OnInit {
     this._selectedCategory = event.option.value;
   }
 
-  /**
-   * Use the staff service to query API for all existing customers
-   */
-  public updateBillableItems(): void {
+  private updateBillableData(): void{
     this._staffService.getAllBillableCategories()
-      .then(categories => this._categoryOptions = [...categories]);
+      .then(categories => this._categoryOptions = categories);
+
+    this._staffService.getAllBillableGroups()
+      .then(billableGroups => this._billableGroups = billableGroups)
+
   }
+
 
   /**
    * Takes the value of the new category form field and passes it to the staff service,
@@ -77,6 +81,7 @@ export class BillableOverviewCardComponent implements OnInit {
   public saveNewCategory(): void {
     this._staffService.saveBillableCategory(this._newCategoryControl.value).subscribe(
       res => {
+        if(res) this.updateBillableData();
         alert(res ? "Category saved": "Unable to save category");
       }
     )
@@ -84,13 +89,14 @@ export class BillableOverviewCardComponent implements OnInit {
 
   public saveNewBillable(): void {
     const billable: Billable = {
-      categoryID: this._selectedCategory?._id,
+      category: this._selectedCategory?._id,
       name: this._billableDetails.get("name")!.value,
       cost: Number(this.billableDetails.get("cost")!.value)
     }
 
     this._staffService.saveBillable(billable).subscribe(
       res => {
+        if(res) this.updateBillableData();
         alert(res ? "Billable saved" : "Unable to save billable");
       }
     )
@@ -98,6 +104,10 @@ export class BillableOverviewCardComponent implements OnInit {
   }
 
   //    ==== GETTERS && SETTERS ====
+  get billableGroups(): BillableGroup[] {
+    return this._billableGroups;
+  }
+
   get newCategoryControl(): FormControl {
     return this._newCategoryControl;
   }

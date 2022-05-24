@@ -47,7 +47,12 @@ export interface BillableCategory {
 
 export interface Billable {
   _id?: string,
-  categoryID?: string,
+  category?: string,
   name: string,
   cost: number
+}
+
+export interface BillableGroup {
+  category: BillableCategory,
+  items: Billable[],
 }

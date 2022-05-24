@@ -2,6 +2,10 @@ mat-card {
   height: 100%;
 }
 
+#billable-groups mat-expansion-panel {
+  background-color: var(--accent);
+}
+
 #new-billable-wrapper, #new-category-wrapper {
   background-color: var(--glass-customer-primary-high);
   -webkit-backdrop-filter: var(--glassmorphism-blur);

@@ -42,6 +42,28 @@ function saveBillable(billable) {
   }).save();
 }
 
+async function getAllBillableGroups() {
+  const result = {};
+  const billableCategories = await BillableCategory.find();
+  const billableItems = await Billable.find();
+
+  // Build result structure
+  billableCategories.forEach((category) => {
+    result[category._id.toString()] = {
+      category,
+      items: [],
+    };
+  });
+
+  // Fill each group with billable items
+  billableItems.forEach((item) => {
+    result[item.category.toString()].items.push(item);
+  });
+
+  return Object.values(result);
+}
+
 export {
   saveStaff, saveBillableCategory, getAllBillableCategories, saveBillable,
+  getAllBillableGroups,
 };

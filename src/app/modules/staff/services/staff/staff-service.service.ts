@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
-import {Billable, BillableCategory, Customer, Room} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, BillableGroup, Customer, Room} from "../../../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StaffService {
 
+  private readonly STAFF_URL: string = `${environment.API_URL}/staff`;
   private readonly USERS_URL: string = `${environment.API_URL}/customer`;
-  private readonly BOOKING_URL: string = `${environment.API_URL}/booking`
+  private readonly BOOKING_URL: string = `${environment.API_URL}/booking`;
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +30,17 @@ export class StaffService {
    */
   public getAllBillableCategories = async (): Promise<BillableCategory[]> =>
     await lastValueFrom(
-      this.http.get<BillableCategory[]>(`${this.BOOKING_URL}/all-billable-categories`).pipe(
+      this.http.get<BillableCategory[]>(`${this.STAFF_URL}/all-billable-categories`).pipe(
+        catchError(this.handleError)
+      )
+    );
+
+  /**
+   * Queries the backend API to retrieve all existing and active billable categories
+   */
+  public getAllBillableGroups = async (): Promise<BillableGroup[]> =>
+    await lastValueFrom(
+      this.http.get<BillableGroup[]>(`${this.STAFF_URL}/all-billable-groups`).pipe(
         catchError(this.handleError)
       )
     );
@@ -39,7 +50,7 @@ export class StaffService {
    * @param name The name of the new category being saved
    */
   public saveBillableCategory = (name: string): Observable<boolean> =>
-    this.http.post<boolean>(`${this.BOOKING_URL}/save-billable-category`, {categoryName: name}).pipe(
+    this.http.post<boolean>(`${this.STAFF_URL}/save-billable-category`, {categoryName: name}).pipe(
       mapTo(true),
       catchError((error, caught) => {
         this.handleError(error, caught);
@@ -52,7 +63,7 @@ export class StaffService {
    * @param billable The name of the new category being saved
    */
   public saveBillable = (billable: Billable): Observable<boolean> =>
-    this.http.post<boolean>(`${this.BOOKING_URL}/save-billable`, billable).pipe(
+    this.http.post<boolean>(`${this.STAFF_URL}/save-billable`, billable).pipe(
       mapTo(true),
       catchError((error, caught) => {
         this.handleError(error, caught);

@@ -25,6 +25,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { BillableOverviewCardComponent } from './components/billable-overview-card/billable-overview-card.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -38,24 +40,26 @@ import { BillableOverviewCardComponent } from './components/billable-overview-ca
     StaffBookingFormComponent,
     BillableOverviewCardComponent
   ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatTableModule,
-    SharedModule,
-    MatAutocompleteModule,
-    MatStepperModule,
-    MatTooltipModule,
-    MatSelectModule,
-    MatDatepickerModule,
-  ],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatGridListModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatTableModule,
+        SharedModule,
+        MatAutocompleteModule,
+        MatStepperModule,
+        MatTooltipModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatExpansionModule,
+        MatChipsModule,
+    ],
   exports: [
     StaffComponent,
     StaffRoutingModule

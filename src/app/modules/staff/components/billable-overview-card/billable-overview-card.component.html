@@ -2,10 +2,24 @@
   <mat-card-header>
     <mat-card-title>Billable Overview</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="d-flex flex-column justify-content-between h-100">
+    <mat-accordion id="billable-groups" multi="false">
+      <mat-expansion-panel *ngFor="let group of billableGroups">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{group.category.name}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-chip-list>
+          <mat-chip *ngFor="let billable of group.items" color="warn" [selectable]="false" selected>{{billable.name}}: ${{billable.cost}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-expansion-panel>
+    </mat-accordion>
 
 
-    <div class="d-flex flex-column bottom-0 end-0">
+    <div class="d-flex flex-column">
       <div id="new-category-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-1 rounded">
         <h4>Add new category</h4>
         <mat-form-field matTooltip="Enter name to create new category" matTooltipClass="bg-danger" [matTooltipDisabled]="newCategoryControl.valid" appearance="outline">
