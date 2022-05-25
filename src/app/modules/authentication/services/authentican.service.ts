@@ -74,9 +74,9 @@ export class AuthService {
 
   // post request with body with object as username (this calls method in backend)
   public resetPassword = (
-    user: { username: string}
+    data: { value: string, resetID: string | null, isNewReset: boolean}
   ): Observable<boolean> =>
-    this.http.post<void> (`${this.AUTHENTICATION_URL}/password-reset`, user).pipe(
+    this.http.post<void> (`${this.AUTHENTICATION_URL}/password-reset`, data).pipe(
       mapTo(true),
       catchError((error, caught) => {
         this.handleError(error, caught);

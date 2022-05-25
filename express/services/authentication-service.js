@@ -45,25 +45,33 @@ async function login(username, password, isCustomer) {
   };
 }
 
+//
 async function resetPassword(body) {
-  const filter = { username: body.username };
-  let user = await Customer.findOne(filter);
+  let filter;
+  let user;
+  if (body.isNewReset) {
 
-  //guard condition
-  if (!user) throw 'The username does not exist!';
-  //create UUID and store it into our reset-id model
-  const UUID = uuid.v4();
-  await new PasswordResetModel({
-    UUID: UUID,
-    username: body.username,
-    email: user.email,
-  }).save();
-  try {
-    sendPasswordReset(user.email, UUID);
+    filter = { username: body.value };
+    user = await Customer.findOne(filter);
+    if (!user) throw 'The username does not exist!';
+
+    const UUID = uuid.v4();
+    await new PasswordResetModel({
+      UUID: UUID,
+      username: body.value,
+      email: user.email,
+    }).save();
+    try {
+      sendPasswordReset(user.email, UUID);
+    } catch(e){
+      console.log(e);
+    }
+
+  } else {
+    filter = { UUID: body.resetID };
+    const passwordReset = await PasswordResetModel.findOne(filter);
+    await Customer.findOneAndUpdate({email: passwordReset.email},{password: body.value});
+    await PasswordResetModel.findByIdAndDelete(passwordReset._id);
   }
-  catch(e){
-    console.log(e);
-  }
-  //end point to invoke method
 }
 export { login, getToken, resetPassword };

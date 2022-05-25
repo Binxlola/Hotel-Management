@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/authentican.service";
-import {Room} from "../../../../shared/interfaces";
-import {
-  BookingFormComponent
-} from "../../../customer/components/booking-management/booking-form/booking-form.component";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {of} from "rxjs";
+
+export interface DialogData {
+  id: string | null;
+}
 
 @Component({
   selector: 'app-reset-password',
@@ -14,39 +16,48 @@ import {
 })
 export class ResetPasswordComponent implements OnInit {
 
-
-  private _resetPasswordForm: FormGroup = this.fb.group({
-    username: ["", Validators.required],
-  });
+  private readonly _usernameControl : FormControl;
+  private readonly _passwordControl : FormControl;
 
 
   constructor(
     private fb: FormBuilder,
     private _router: Router,
     private _authenticationService: AuthService,
+    @Inject(MAT_DIALOG_DATA) private _data: DialogData,
     private _route: ActivatedRoute
   ) {
-    this._route.params.subscribe( params => console.log(params));
+    this._usernameControl = new FormControl('', [Validators.required]);
+    this._passwordControl = new FormControl('', [Validators.required]);
   }
 
   ngOnInit(): void {
   }
 
 
-  public resetPassword(event: SubmitEvent): void{
-    event.preventDefault();
-
-    if(this._resetPasswordForm.valid) {
+  public resetPassword(isNewReset: boolean): void{
+    const control: FormControl = isNewReset ? this._usernameControl : this._passwordControl;
+    if(control.valid) {
       this._authenticationService.resetPassword({
-        username: this._resetPasswordForm.get('username')!.value
+        value: control!.value,
+        resetID: this._data.id,
+        isNewReset
       }).subscribe({
         complete : () => {alert("complete")}
       });
     }
   }
 
-  get resetPasswordForm(): FormGroup {
-    return this._resetPasswordForm;
+  get data(): DialogData {
+    return this._data;
+  }
+
+  get usernameControl(): FormControl {
+    return this._usernameControl;
+  }
+
+  get passwordControl(): FormControl {
+    return this._passwordControl;
   }
 
 }
