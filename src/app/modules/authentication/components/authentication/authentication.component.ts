@@ -8,6 +8,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {ResetPasswordComponent} from "../reset-password/reset-password.component";
 import {exitCodeFromResult} from "@angular/compiler-cli";
 import {addBodyClass} from "@angular/cdk/schematics";
+import {
+  BookingFormComponent
+} from "../../../customer/components/booking-management/booking-form/booking-form.component";
 
 @Component({
   selector: 'app-authentication',
@@ -48,7 +51,8 @@ export class AuthenticationComponent implements OnInit {
   @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
   @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
 
-  constructor(private _matDialog: MatDialog, private _router: Router,
+  constructor(private _matDialog: MatDialog,
+              private _router: Router,
               private _authenticationService: AuthService, private fb: FormBuilder,
               private _renderer : Renderer2,
               private _route: ActivatedRoute ){
@@ -68,9 +72,10 @@ export class AuthenticationComponent implements OnInit {
   }
 //making method that is called when dialog is closed
   public resetPassword(): void {
-    this._matDialog.open(ResetPasswordComponent).afterClosed().subscribe((result)=>{
-      console.log(result);
-      //make web request,
+    const dialogRef = this._matDialog.open(ResetPasswordComponent, {
+      disableClose: false,
+      hasBackdrop: true,
+      data: {id: this._resetID},
     });
   }
 

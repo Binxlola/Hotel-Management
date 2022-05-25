@@ -13,6 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from "@angular/forms";
+import { BookingsTableComponent} from "./shared/components/bookings-table/bookings-table.component";
 import { GuestLandingComponent } from './guest/guest-landing/guest-landing.component';
 import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
 import {MatDialogModule} from "@angular/material/dialog";
@@ -45,6 +46,7 @@ import {MatTableModule} from "@angular/material/table";
     MatProgressSpinnerModule,
     MatCardModule,
     MatTableModule,
+    //FormsModule
 
   ],
   providers: [],

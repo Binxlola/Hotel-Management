@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/authentican.service";
+import {Room} from "../../../../shared/interfaces";
+import {
+  BookingFormComponent
+} from "../../../customer/components/booking-management/booking-form/booking-form.component";
 
 @Component({
   selector: 'app-reset-password',
