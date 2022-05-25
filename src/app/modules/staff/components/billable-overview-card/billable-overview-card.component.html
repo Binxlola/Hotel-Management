@@ -3,13 +3,14 @@
     <mat-card-title>Billable Overview</mat-card-title>
   </mat-card-header>
   <mat-card-content class="d-flex flex-column justify-content-between h-100">
-    <mat-accordion id="billable-groups" multi="false">
+
+    <mat-accordion id="billable-groups" multi="false" *ngIf="billableGroups.length > 0; else noData">
       <mat-expansion-panel *ngFor="let group of billableGroups" [disabled]="group.items.length < 1">
         <mat-expansion-panel-header class="text-dark">
           <mat-panel-title>{{group.category.name}}</mat-panel-title>
           <mat-panel-description>
             <div *ngIf="group.items.length < 1" class="pe-3">No items for category</div>
-            <button mat-icon-button matTooltip="Delete category and all billable items in category" matTooltipClass="bg-danger">
+            <button mat-icon-button matTooltip="Delete category and all billable items in category" matTooltipClass="bg-danger" (click)="deleteBillableGroup(group)">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-panel-description>
@@ -23,6 +24,10 @@
         </mat-chip-list>
       </mat-expansion-panel>
     </mat-accordion>
+
+    <ng-template #noData>
+      <h3 class="text-center">There is no billable data</h3>
+    </ng-template>
 
 
     <div class="d-flex flex-column">

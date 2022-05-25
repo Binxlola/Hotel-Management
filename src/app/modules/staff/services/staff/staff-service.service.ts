@@ -83,7 +83,21 @@ export class StaffService {
         this.handleError(error, caught);
         return of(false);
       })
-    )
+    );
+
+  /**
+   * Post a billable group object to the backend API for deletion.
+   * Will returns a boolean representing the process status
+   * @param group
+   */
+  public deleteBillableGroup = (group: BillableGroup): Observable<boolean> =>
+    this.http.post<boolean>(`${this.STAFF_URL}/delete-billable-group`, group).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
 
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {
     if (error.status === 0) {

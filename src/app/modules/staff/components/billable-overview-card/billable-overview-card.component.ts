@@ -116,12 +116,25 @@ export class BillableOverviewCardComponent implements OnInit {
    * @param billable The billable to be deleted
    */
   public deleteBillable(billable: Billable): void {
-    this._staffService.deleteBillable(billable._id!).subscribe(
-      res => {
-        if(res) this.updateBillableData();
-        alert(res ? "Billable deleted" : "Unable to delete billable");
-      }
-    )
+    if(confirm("Are you sure you want to delete " + billable.name)) {
+      this._staffService.deleteBillable(billable._id!).subscribe(
+        res => {
+          if(res) this.updateBillableData();
+          alert(res ? "Billable deleted" : "Unable to delete billable");
+        }
+      )
+    }
+  }
+
+  public deleteBillableGroup(group: BillableGroup): void {
+    if(confirm("Are you sure you want to delete " + group.category.name)) {
+      this._staffService.deleteBillableGroup(group).subscribe(
+        res => {
+          if(res) this.updateBillableData();
+          alert(res ? "Group and all group items deleted" : "Unable to delete group and item");
+        }
+      )
+    }
   }
 
   //    ==== GETTERS && SETTERS ====

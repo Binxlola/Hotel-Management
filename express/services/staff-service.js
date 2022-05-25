@@ -43,6 +43,16 @@ function deleteBillable(id) {
   return Billable.findByIdAndDelete(id);
 }
 
+async function deleteBillableGroup(group) {
+  // remove all the billable items first
+  for(const item of group.items) {
+    await Billable.findByIdAndDelete(item._id);
+  }
+
+  // Finally, we remove the category
+  return BillableCategory.findByIdAndDelete(group.category._id);
+}
+
 async function getAllBillableGroups() {
   const result = {};
   const billableCategories = await BillableCategory.find();
@@ -66,5 +76,5 @@ async function getAllBillableGroups() {
 
 export {
   saveStaff, saveBillableCategory, getAllBillableCategories, saveBillable,
-  getAllBillableGroups, deleteBillable
+  getAllBillableGroups, deleteBillable, deleteBillableGroup,
 };

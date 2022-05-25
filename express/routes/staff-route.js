@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  deleteBillable,
+  deleteBillable, deleteBillableGroup,
   getAllBillableCategories,
   getAllBillableGroups,
   saveBillable,
@@ -37,7 +37,13 @@ router.post('/save-billable', (req, res) => {
 router.post('/delete-billable', (req, res) => {
   deleteBillable(req.body.id)
     .then((response) => res.json(response))
-    .catch(() => res.status(500).json({ error: 'There was an error saving new billable' }));
+    .catch(() => res.status(500).json({ error: 'There was an error deleting billable' }));
+});
+
+router.post('/delete-billable-group', (req, res) => {
+  deleteBillableGroup(req.body)
+    .then((response) => res.json(response))
+    .catch(() => res.status(500).json({ error: 'There was an error deleting billable group and it\'s items' }));
 });
 
 export default router;
