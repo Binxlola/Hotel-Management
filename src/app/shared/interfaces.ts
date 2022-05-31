@@ -1,3 +1,24 @@
+export interface Token {
+  token: string,
+  expiresIn: number
+}
+
+export interface LoggedInUser {
+  _id: string,
+  jwt: Token,
+  role: string | undefined
+}
+
+export interface Staff {
+  _id: string,
+  first_name: string,
+  last_name: string,
+  email: string,
+  mobile: string,
+  taxCode: string,
+  role: string
+}
+
 export interface Customer {
   _id: string,
   username: string,

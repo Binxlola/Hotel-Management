@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {RoomFormComponent} from "../room-form/room-form.component";
+import {RoomFormComponent} from "../../forms/room-form/room-form.component";
 import {MatDialog} from "@angular/material/dialog";
-import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
-import {Room} from "../../../../shared/interfaces";
+import {RoomsTableComponent} from "../../tables/rooms-table/rooms-table.component";
+import {Room} from "../../../../../shared/interfaces";
 
 @Component({
   selector: 'room-overview-card',

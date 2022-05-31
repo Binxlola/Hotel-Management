@@ -2,25 +2,6 @@ import Staff from '../models/staff.js';
 import BillableCategory from '../models/billable-category.js';
 import Billable from '../models/billable.js';
 
-const newStaff = new Staff({
-  username: 'Chris',
-  password: 'Breanna',
-});
-const newStaffTwo = new Staff({
-  username: 'Admin1',
-  password: 'Password1',
-});
-const newStaffThree = new Staff({
-  username: 'Admin2',
-  password: 'Password2',
-});
-
-function saveStaff() {
-  newStaff.save();
-  newStaffTwo.save();
-  newStaffThree.save();
-}
-
 function getAllBillableCategories() {
   return BillableCategory.find();
 }
@@ -53,6 +34,11 @@ async function deleteBillableGroup(group) {
   return BillableCategory.findByIdAndDelete(group.category._id);
 }
 
+/**
+ * Will retrieve all billable items, condensed into their respective categories
+ * using a Billable Group object
+ * @returns {Promise<unknown[]>}
+ */
 async function getAllBillableGroups() {
   const result = {};
   const billableCategories = await BillableCategory.find();
@@ -74,7 +60,15 @@ async function getAllBillableGroups() {
   return Object.values(result);
 }
 
+/**
+ * Query the staff model schema for all available roles for staff members
+ * @returns {*} An array of staff roles
+ */
+async function getStaffRolesList() {
+  return Staff.schema.path('staffRole').enumValues;
+}
+
 export {
-  saveStaff, saveBillableCategory, getAllBillableCategories, saveBillable,
-  getAllBillableGroups, deleteBillable, deleteBillableGroup,
+  saveBillableCategory, getAllBillableCategories, saveBillable,
+  getAllBillableGroups, deleteBillable, deleteBillableGroup, getStaffRolesList
 };

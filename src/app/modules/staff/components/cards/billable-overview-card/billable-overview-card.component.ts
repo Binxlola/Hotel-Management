@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {StaffService} from "../../services/staff/staff-service.service";
+import {StaffService} from "../../../services/staff/staff-service.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormControl, FormControlStatus, FormGroup, Validators} from "@angular/forms";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {Billable, BillableCategory, BillableGroup} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, BillableGroup} from "../../../../../shared/interfaces";
 
 @Component({
   selector: 'billable-overview-card',

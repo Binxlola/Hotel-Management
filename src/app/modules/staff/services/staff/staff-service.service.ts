@@ -99,6 +99,16 @@ export class StaffService {
       })
     );
 
+  /**
+   * Queries the backend API to retrieve all existing customers
+   */
+  public getAllStaffRoles = async (): Promise<String[]> =>
+    await lastValueFrom(
+      this.http.get<String[]>(`${this.STAFF_URL}/all-staff-roles`).pipe(
+        catchError(this.handleError)
+      )
+    );
+
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

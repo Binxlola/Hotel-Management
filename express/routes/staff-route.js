@@ -2,7 +2,7 @@ import express from 'express';
 import {
   deleteBillable, deleteBillableGroup,
   getAllBillableCategories,
-  getAllBillableGroups,
+  getAllBillableGroups, getStaffRolesList,
   saveBillable,
   saveBillableCategory,
 } from '../services/staff-service.js';
@@ -44,6 +44,12 @@ router.post('/delete-billable-group', (req, res) => {
   deleteBillableGroup(req.body)
     .then((response) => res.json(response))
     .catch(() => res.status(500).json({ error: 'There was an error deleting billable group and it\'s items' }));
+});
+
+router.get('/all-staff-roles', (req, res) => {
+  getStaffRolesList()
+    .then((roles) => res.json(roles))
+    .catch(() => res.status(404).json({ error: 'There was an error retrieving the array of staff roles' }));
 });
 
 export default router;

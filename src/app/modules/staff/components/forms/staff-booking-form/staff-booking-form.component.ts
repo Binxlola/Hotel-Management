@@ -5,16 +5,17 @@ import {
   FormBuilder,
   FormControl,
   FormControlStatus,
-  FormGroup, ValidationErrors,
+  FormGroup,
+  ValidationErrors,
   ValidatorFn,
   Validators
 } from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {BookingService} from "../../../../shared/services/booking/booking-service.service";
-import {AuthService} from "../../../authentication/services/authentican.service";
+import {BookingService} from "../../../../../shared/services/booking/booking-service.service";
+import {AuthService} from "../../../../authentication/services/authentican.service";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {map, Observable, startWith} from "rxjs";
-import {Booking, Customer, Room} from "../../../../shared/interfaces";
+import {Booking, Customer, Room} from "../../../../../shared/interfaces";
 
 export interface DialogData {
   customer: Customer;
@@ -32,12 +33,6 @@ export interface DialogData {
   ],
 })
 export class StaffBookingFormComponent implements OnInit {
-
-  private _selectedRoom: Room | undefined = undefined;
-  private _options: Room[] = [];
-  private _filteredOptions: Observable<Room[]> | undefined;
-  private _numAdults: number[];
-  private _numChildren: number[];
 
   private readonly _customer: Customer;
   private readonly _bookingDetails: FormGroup = this.fb.group({
@@ -66,6 +61,49 @@ export class StaffBookingFormComponent implements OnInit {
     this.updateRooms();
   }
 
+  private _selectedRoom: Room | undefined = undefined;
+
+  get selectedRoom(): Room | undefined {
+    return this._selectedRoom;
+  }
+
+  private _options: Room[] = [];
+
+  get options(): Room[] {
+    return this._options;
+  }
+
+  private _filteredOptions: Observable<Room[]> | undefined;
+
+  //  ==== GETTERS && SETTERS ====
+  get filteredOptions(): Observable<Room[]> | undefined {
+    return this._filteredOptions;
+  }
+
+  private _numAdults: number[];
+
+  get numAdults(): number[] {
+    return this._numAdults;
+  }
+
+  private _numChildren: number[];
+
+  get numChildren(): number[] {
+    return this._numChildren;
+  }
+
+  get roomControl(): FormControl {
+    return <FormControl>this._bookingDetails.get("room")!;
+  }
+
+  get customer(): Customer {
+    return this._customer;
+  }
+
+  get bookingDetails(): FormGroup {
+    return this._bookingDetails;
+  }
+
   ngOnInit(): void {
     //Default the reservation name
     this._bookingDetails.get("resName")!.patchValue(this._customer.first_name + " " + this._customer.last_name);
@@ -79,11 +117,10 @@ export class StaffBookingFormComponent implements OnInit {
     // Subscribe to the customer control state change, to account for a valid selection that is manually typed
     this._bookingDetails.get("room")!.statusChanges.subscribe(
       (status: FormControlStatus) => {
-        if(status === "INVALID") {
+        if (status === "INVALID") {
           this.updateSelectedRoom(undefined);
           this.disableBookingControls();
-        }
-        else if(status === "VALID" && !this._selectedRoom) {
+        } else if (status === "VALID" && !this._selectedRoom) {
           this.enableBookingControls();
           this.updateSelectedRoom(
             this._selectedRoom = this.options.find((option: Room) => option.type == this._bookingDetails.get("room")!.value)
@@ -99,6 +136,40 @@ export class StaffBookingFormComponent implements OnInit {
   public updateRooms(): void {
     this._bookingService.getAllRooms()
       .then(rooms => this._options = [...rooms]);
+  }
+
+  /**
+   * Keep track of the room selected for a new booking
+   * @param event The option select event, used to get the selected value
+   */
+  public selectOption(event: MatAutocompleteSelectedEvent): void {
+    this.updateSelectedRoom(event.option.value);
+  }
+
+  public makeBooking(): void {
+    let booking: Booking = {
+      user: this._customer._id,
+      bookingName: this.bookingDetails.get("resName")?.value,
+      room: this._selectedRoom!._id!,
+      totalPaid: this._selectedRoom!.base_price,
+      checkInDate: this.bookingDetails.get("startDate")?.value,
+      checkOutDate: this.bookingDetails.get("endDate")?.value,
+      checkInTime: this.bookingDetails.get("inTime")?.value,
+      checkOutTime: this.bookingDetails.get("outTime")?.value,
+      numAdults: this.bookingDetails.get("numAdults")?.value,
+      numChildren: this.bookingDetails.get("numChildren")?.value,
+      comments: this.bookingDetails.get("comments")?.value,
+    }
+
+    this._bookingService.makeBooking(booking)
+      .then(res => {
+        alert(res !== undefined ? "Booking made, customer will be notified" : "Booking was unable to be made");
+        this.dialogRef.close();
+      });
+  }
+
+  public getOptionDisplay(value: Room): string {
+    return value.type;
   }
 
   /**
@@ -134,7 +205,7 @@ export class StaffBookingFormComponent implements OnInit {
    */
   private updateSelectedRoom(room: Room | undefined): void {
     this._selectedRoom = room;
-    if(room !== undefined) {
+    if (room !== undefined) {
       // Build guest number options array from room limits
       this._numAdults = [...Array(this._selectedRoom!.max_adults + 1).keys()];
       this._numChildren = [...Array(this._selectedRoom!.max_adults + 1).keys()];
@@ -162,73 +233,6 @@ export class StaffBookingFormComponent implements OnInit {
       ).length == 1;
       return !customerExists ? {invalidCustomer: {value: controlVal}} : null;
     }
-  }
-
-  /**
-   * Keep track of the room selected for a new booking
-   * @param event The option select event, used to get the selected value
-   */
-  public selectOption(event: MatAutocompleteSelectedEvent): void {
-    this.updateSelectedRoom(event.option.value);
-  }
-
-  public makeBooking(): void {
-    let booking: Booking = {
-      user: this._customer._id,
-      bookingName: this.bookingDetails.get("resName")?.value,
-      room: this._selectedRoom!._id!,
-      totalPaid: this._selectedRoom!.base_price,
-      checkInDate: this.bookingDetails.get("startDate")?.value,
-      checkOutDate: this.bookingDetails.get("endDate")?.value,
-      checkInTime: this.bookingDetails.get("inTime")?.value,
-      checkOutTime: this.bookingDetails.get("outTime")?.value,
-      numAdults: this.bookingDetails.get("numAdults")?.value,
-      numChildren: this.bookingDetails.get("numChildren")?.value,
-      comments: this.bookingDetails.get("comments")?.value,
-    }
-
-    this._bookingService.makeBooking(booking)
-      .then(res => {
-        alert(res !== undefined ? "Booking made, customer will be notified" : "Booking was unable to be made");
-        this.dialogRef.close();
-      });
-  }
-
-  //  ==== GETTERS && SETTERS ====
-  get filteredOptions(): Observable<Room[]> | undefined{
-    return this._filteredOptions;
-  }
-
-  get roomControl(): FormControl {
-    return <FormControl>this._bookingDetails.get("room")!;
-  }
-
-  public getOptionDisplay(value: Room): string {
-    return value.type;
-  }
-
-  get customer(): Customer {
-    return this._customer;
-  }
-
-  get options(): Room[] {
-    return this._options;
-  }
-
-  get bookingDetails(): FormGroup {
-    return this._bookingDetails;
-  }
-
-  get numAdults(): number[] {
-    return this._numAdults;
-  }
-
-  get numChildren(): number[] {
-    return this._numChildren;
-  }
-
-  get selectedRoom(): Room | undefined {
-    return this._selectedRoom;
   }
 
 }

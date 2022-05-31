@@ -1,7 +1,6 @@
 import express from 'express';
-import {login, resetPassword} from '../services/authentication-service.js';
+import { login, resetPassword, serviceInit } from '../services/authentication-service.js';
 import { signup } from '../services/customer-service.js';
-import { saveStaff } from '../services/staff-service.js';
 
 // Create Router
 const router = express.Router();
@@ -31,10 +30,16 @@ router.post('/signup', async (req, res) => {
     .catch((err) => res.status(401).send(err));
 });
 
-router.get('/saveStaff', async () => {
-  saveStaff();
+/**
+ * User to create a default superuser for the web application and
+ * the backend service on initial start-up.
+ * This route should only have an affect once,
+ * when no default superuser exists and there is currently no data in the system.
+ */
+router.get('/setup-superuser', (req, res) => {
+  serviceInit()
+    .then(() => res.status(201).send('Default superuser created'))
+    .catch((err) => res.status(401).send(err));
 });
-
-// CB -- here//
 
 export default router;

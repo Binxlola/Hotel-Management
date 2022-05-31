@@ -25,7 +25,10 @@ export class ModulesGuard implements CanLoad, CanActivate {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this._authService.isLoggedIn();
+
+    if(route.path === "staff") {
+      return this._authService.isLoggedIn() && this._authService.user!.role !== undefined;
+    } else return this._authService.isLoggedIn();
   }
 
   /**
@@ -34,7 +37,17 @@ export class ModulesGuard implements CanLoad, CanActivate {
    * @param state Snapshot of current router state.
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(!this._authService.isLoggedIn()) return this._router.parseUrl("/login");
-    else return true;
+
+    const isStaffModule: boolean = state.url === "/staff";
+    const staffRedirect: UrlTree = this._router.parseUrl("/staff-login");
+    const customerRedirect: UrlTree = this._router.parseUrl("/login");
+
+    // Not logged in, no need to go further
+    if (!this._authService.isLoggedIn()) return isStaffModule ? staffRedirect : customerRedirect;
+
+    // Is logged in, but holds no role and trying to access staff module
+    if (isStaffModule && this._authService.user!.role === undefined) return staffRedirect;
+
+    return true
   }
 }

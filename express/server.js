@@ -46,6 +46,4 @@ const server = app.listen(process.env.PORT || 8080, () => {
   console.log('App now running on port', port);
 });
 
-app.get('/api/status', (req, res) => {
-  res.status(200).json({ status: 'UP' });
-});
+

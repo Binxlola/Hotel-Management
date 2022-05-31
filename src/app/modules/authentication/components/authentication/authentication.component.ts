@@ -1,16 +1,11 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons";
 import {AuthService} from "../../services/authentican.service";
-import {FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {ResetPasswordComponent} from "../reset-password/reset-password.component";
-import {exitCodeFromResult} from "@angular/compiler-cli";
-import {addBodyClass} from "@angular/cdk/schematics";
-import {
-  BookingFormComponent
-} from "../../../customer/components/booking-management/booking-form/booking-form.component";
 
 @Component({
   selector: 'app-authentication',
