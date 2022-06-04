@@ -6,7 +6,16 @@ import PasswordResetModel from '../models/reset-id.js';
 import { sendPasswordReset } from './utility-service.js';
 
 async function serviceInit() {
-  const defaultAdminStruct = { username: 'admin', password: 'admin', staffRole: 'admin' };
+  const defaultAdminStruct = {
+    username: 'admin',
+    password: 'admin',
+    firstName: 'admin',
+    lastName: 'admin',
+    email: 'admin@text.com',
+    mobile: '123456789',
+    taxCode: 'X',
+    role: 'admin',
+  };
   const defaultAdmin = await Staff.findOne(defaultAdminStruct);
 
   if (defaultAdmin) throw 'Default superuser already created once';
@@ -55,7 +64,7 @@ async function login(username, password, isCustomer) {
       expiresIn: 3600,
     },
     _id: user._id,
-    role: isCustomer ? undefined : user.staffRole,
+    role: isCustomer ? undefined : user.role,
   };
 }
 

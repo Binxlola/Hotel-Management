@@ -10,11 +10,13 @@ export interface LoggedInUser {
 }
 
 export interface Staff {
-  _id: string,
-  first_name: string,
-  last_name: string,
+  _id?: string,
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string,
   email: string,
-  mobile: string,
+  mobile: number,
   taxCode: string,
   role: string
 }

@@ -28,6 +28,7 @@ import { BillableOverviewCardComponent } from './components/cards/billable-overv
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatChipsModule} from "@angular/material/chips";
 import { StaffFormComponent } from './components/forms/staff-form/staff-form.component';
+import { StaffTableComponent } from './components/tables/staff-table/staff-table.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StaffFormComponent } from './components/forms/staff-form/staff-form.com
     BookingsCardComponent,
     StaffBookingFormComponent,
     BillableOverviewCardComponent,
-    StaffFormComponent
+    StaffFormComponent,
+    StaffTableComponent
   ],
     imports: [
         CommonModule,

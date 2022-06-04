@@ -26,12 +26,33 @@ function deleteBillable(id) {
 
 async function deleteBillableGroup(group) {
   // remove all the billable items first
-  for(const item of group.items) {
+  for (const item of group.items) {
     await Billable.findByIdAndDelete(item._id);
   }
 
   // Finally, we remove the category
   return BillableCategory.findByIdAndDelete(group.category._id);
+}
+
+function saveOrUpdateStaff(staffData) {
+  const document = {
+    username: staffData.staff.username,
+    password: staffData.staff.password,
+    firstName: staffData.staff.firstName,
+    lastName: staffData.staff.lastName,
+    email: staffData.staff.email,
+    mobile: staffData.staff.mobile,
+    taxCode: staffData.staff.taxCode,
+    role: staffData.staff.role,
+  };
+
+  // If new staff is being created
+  if (staffData.staffID === undefined || staffData.staffID === '') {
+    const staffModel = new Staff(document);
+    return staffModel.save();
+  }
+
+  return Staff.findByIdAndUpdate(staffData.staffID, document);
 }
 
 /**
@@ -60,15 +81,19 @@ async function getAllBillableGroups() {
   return Object.values(result);
 }
 
+async function getStaff() {
+  return Staff.find();
+}
+
 /**
  * Query the staff model schema for all available roles for staff members
  * @returns {*} An array of staff roles
  */
 async function getStaffRolesList() {
-  return Staff.schema.path('staffRole').enumValues;
+  return Staff.schema.path('role').enumValues;
 }
 
 export {
-  saveBillableCategory, getAllBillableCategories, saveBillable,
-  getAllBillableGroups, deleteBillable, deleteBillableGroup, getStaffRolesList
+  saveBillableCategory, getAllBillableCategories, saveBillable, getAllBillableGroups,
+  deleteBillable, deleteBillableGroup, getStaffRolesList, saveOrUpdateStaff, getStaff,
 };

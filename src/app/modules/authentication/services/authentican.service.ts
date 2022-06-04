@@ -11,6 +11,7 @@ import {LoggedInUser} from "../../../shared/interfaces";
 export class AuthService {
 
   private _user: LoggedInUser | undefined;
+  private _isAdmin: boolean = false;
 
   private readonly TOKEN_KEY = "Token";
   private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
@@ -78,6 +79,7 @@ export class AuthService {
 
   private logUserIn(user: LoggedInUser, redirectPath: string): void{
     this._user = user;
+    this._isAdmin = user.role === 'admin';
     localStorage.setItem(this.TOKEN_KEY, user.jwt.token);
     this.redirectTo(redirectPath);
   }
@@ -136,5 +138,9 @@ export class AuthService {
 
   get user(): LoggedInUser | undefined {
     return this._user;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
   }
 }

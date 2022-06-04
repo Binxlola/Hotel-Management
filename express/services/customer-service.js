@@ -21,11 +21,11 @@ async function signup(username, password, firstName, lastName, email) {
   else if (user != null && user.email === email) throw 'This email already exists';
   else {
     user = await new Customer({
-      username: username,
-      password: password,
+      username,
+      password,
       first_name: firstName,
       last_name: lastName,
-      email: email,
+      email,
     }).save();
   }
 

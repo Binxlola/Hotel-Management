@@ -25,7 +25,7 @@ export class StaffFormComponent implements OnInit {
     private _dialogRef: MatDialogRef<StaffFormComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: staffFormData,
     private fb: FormBuilder,
-    private _staffService: StaffService
+    private _staffService: StaffService,
   ) {
     this._staff = this._data.staff;
 
@@ -34,9 +34,11 @@ export class StaffFormComponent implements OnInit {
     this.updateStaffRoles();
 
     this._staffFormGroup = this.fb.group({
-      firstName: [{value: this._staff ? this._staff?.first_name : "", disabled: this._isEdit}, Validators.required],
-      lastName: [this._staff ? this._staff?.last_name : "", Validators.required],
-      staffRole: [this._staff ? this._staff?.role : "", Validators.required],
+      username: [{value: this._staff ? this._staff?.username : "", disabled: this._isEdit}, Validators.required],
+      password: [{value: this._staff ? this._staff?.password : "", disabled: this._isEdit}, Validators.required],
+      firstName: [{value: this._staff ? this._staff?.firstName : "", disabled: this._isEdit}, Validators.required],
+      lastName: [this._staff ? this._staff?.lastName : "", Validators.required],
+      role: [this._staff ? this._staff?.role : "", Validators.required],
       email: [this._staff ? this._staff?.email : "", Validators.required],
       mobile: [{value: this._staff ? this._staff?.mobile : "", disabled: this._isEdit}, Validators.required],
       taxCode: [{value: this._staff ? this._staff?.taxCode : "", disabled: this._isEdit}, Validators.required]
@@ -67,10 +69,27 @@ export class StaffFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public saveStaff(): void {
-  }
+  public saveOrUpdateStaff(): void {
+    if (this._staffFormGroup.valid) {
+      const staffToSave: Staff = {
+        username: this._staffFormGroup.get("username")?.value,
+        password: this._staffFormGroup.get("password")?.value,
+        firstName: this._staffFormGroup.get("firstName")?.value,
+        lastName: this._staffFormGroup.get("lastName")?.value,
+        email: this._staffFormGroup.get("email")?.value,
+        mobile: this._staffFormGroup.get("mobile")?.value,
+        taxCode: this._staffFormGroup.get("taxCode")?.value,
+        role: this._staffFormGroup.get("role")?.value,
+      }
 
-  public updateStaff(): void {
+      this._staffService.saveOrUpdateStaff(staffToSave, this._staff?._id).subscribe(
+        res => {
+          if (res) {
+            alert("New staff member saved.");
+            this._dialogRef.close();
+          }
+        }
+      )
+    }
   }
-
 }

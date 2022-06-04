@@ -10,7 +10,27 @@ const StaffModel = new mongoose.Schema({
     type: String,
     required: true,
   },
-  staffRole: {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  mobile: {
+    type: String,
+    required: true,
+  },
+  taxCode: {
+    type: String,
+    required: true,
+  },
+  role: {
     type: String,
     enum: ['admin', 'staff'],
     default: 'staff',

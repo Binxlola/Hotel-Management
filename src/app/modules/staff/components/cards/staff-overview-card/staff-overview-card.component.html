@@ -3,6 +3,7 @@
     <mat-card-title>Staff Roster Dashboard</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <staff-table #staffTableComponent [editStaffFunction]="openStaffForm.bind(this)"></staff-table>
   </mat-card-content>
   <mat-card-actions align="end">
     <button mat-button (click)="openStaffForm(undefined)">

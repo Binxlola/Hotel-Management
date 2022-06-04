@@ -3,6 +3,7 @@ import {BookingService} from "../../../../../shared/services/booking/booking-ser
 import {MatDialog} from "@angular/material/dialog";
 import {Required} from "../../../../../decorators/required-input.decorator";
 import {Room} from "../../../../../shared/interfaces";
+import {AuthService} from "../../../../authentication/services/authentican.service";
 
 @Component({
   selector: 'rooms-table',
@@ -12,13 +13,27 @@ import {Room} from "../../../../../shared/interfaces";
 export class RoomsTableComponent implements OnInit {
 
   @Input() @Required
-  editRoomFunction!: ((room: Room) => void);
+  public editRoomFunction!: ((room: Room) => void);
+  private readonly _displayedColumns: string[] = ['type', 'num_available', 'base_price'];
+  private readonly _adminOnlyColumns: string[] = ["edit_action", "remove_action"];
+
+  constructor(private _bookingService: BookingService, private _bookingDialog: MatDialog, private _authService: AuthService) {
+    this.updateRooms();
+    if (this.isAdmin) this._displayedColumns = [...this._displayedColumns, ...this._adminOnlyColumns];
+  }
+
   private _rooms: Room[] = [];
 
-  displayedColumns: string[] = ['type', 'num_available', 'base_price', "edit_action", "remove_action"];
+  get rooms(): Room[] {
+    return this._rooms;
+  }
 
-  constructor(private _bookingService: BookingService, private _bookingDialog: MatDialog) {
-    this.updateRooms();
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
+  }
+
+  get displayedColumns(): string[] {
+    return this._displayedColumns;
   }
 
   ngOnInit(): void {
@@ -33,11 +48,6 @@ export class RoomsTableComponent implements OnInit {
     this._bookingService.deleteRoom(id).subscribe(
       res => this.updateRooms()
     )
-  }
-
-  //    ==== GETTERS && SETTERS ====
-  get rooms(): Room[] {
-    return this._rooms;
   }
 
 }

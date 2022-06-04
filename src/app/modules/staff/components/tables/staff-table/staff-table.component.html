@@ -1,0 +1,35 @@
+<div id="staff-table-container">
+  <table mat-table [dataSource]="this.staff" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th class="table-data" mat-header-cell *matHeaderCellDef> Name </th>
+      <td class="table-data" mat-cell *matCellDef="let staff"> {{staff.firstName + " " + staff.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th class="table-data" mat-header-cell *matHeaderCellDef> Role </th>
+      <td class="table-data" mat-cell *matCellDef="let staff">{{staff.role}}</td>
+    </ng-container>
+
+    <ng-container *ngIf="this.isAdmin" matColumnDef="edit_action">
+      <th class="table-action" mat-header-cell *matHeaderCellDef></th>
+      <td class="table-action" mat-cell *matCellDef="let staff">
+        <button mat-button (click)="this.editStaffFunction(staff)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="this.isAdmin" matColumnDef="remove_action">
+      <th class="table-action" mat-header-cell *matHeaderCellDef></th>
+      <td class="table-action" mat-cell *matCellDef="let staff">
+        <button mat-button (click)="this.deleteStaff(staff._id)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

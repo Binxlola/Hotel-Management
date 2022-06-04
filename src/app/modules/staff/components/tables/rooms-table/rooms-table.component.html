@@ -16,7 +16,7 @@
       <td class="table-data" mat-cell *matCellDef="let room">${{room.base_price}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="edit_action">
+    <ng-container *ngIf="isAdmin" matColumnDef="edit_action">
       <th class="table-action" mat-header-cell *matHeaderCellDef></th>
       <td class="table-action" mat-cell *matCellDef="let room">
         <button mat-button (click)="editRoomFunction(room)">
@@ -25,7 +25,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="remove_action">
+    <ng-container *ngIf="this.isAdmin" matColumnDef="remove_action">
       <th class="table-action" mat-header-cell *matHeaderCellDef></th>
       <td class="table-action" mat-cell *matCellDef="let room">
         <button mat-button (click)="deleteRoom(room._id)">

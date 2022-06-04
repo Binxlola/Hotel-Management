@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, lastValueFrom, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
-import {Billable, BillableCategory, BillableGroup, Customer, Room} from "../../../../shared/interfaces";
+import {Billable, BillableCategory, BillableGroup, Customer, Room, Staff} from "../../../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,30 @@ export class StaffService {
       this.http.get<Customer[]>(`${this.USERS_URL}/all-customers`).pipe(
         catchError(this.handleError)
       )
+    );
+
+  /**
+   * Queries the backend API to retrieve all existing customers
+   */
+  public getAllStaff = async (): Promise<Staff[]> =>
+    await lastValueFrom(
+      this.http.get<Staff[]>(`${this.STAFF_URL}/all-staff`).pipe(
+        catchError(this.handleError)
+      )
+    );
+
+  /**
+   * Post a staff document ID to the backend API for deletion.
+   * Will return a boolean representing the process status
+   * @param staffID The document ID of the staff that is being deleted
+   */
+  public deleteStaff = (staffID: string): Observable<boolean> =>
+    this.http.post<boolean>(`${this.STAFF_URL}/delete-staff`, {id: staffID}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
     );
 
   /**
@@ -107,6 +131,15 @@ export class StaffService {
       this.http.get<String[]>(`${this.STAFF_URL}/all-staff-roles`).pipe(
         catchError(this.handleError)
       )
+    );
+
+  public saveOrUpdateStaff = (staff: Staff, staffID: string | undefined): Observable<boolean> =>
+    this.http.post<boolean>(`${this.STAFF_URL}/save-update-staff`, {staff, staffID}).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
     );
 
   private handleError(error: HttpErrorResponse, caught: Observable<any>) {

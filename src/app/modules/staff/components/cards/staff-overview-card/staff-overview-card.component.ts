@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {RoomsTableComponent} from "../../tables/rooms-table/rooms-table.component";
 import {Staff} from "../../../../../shared/interfaces";
 import {StaffFormComponent} from "../../forms/staff-form/staff-form.component";
+import {StaffTableComponent} from "../../tables/staff-table/staff-table.component";
 
 @Component({
   selector: 'staff-overview-card',
@@ -11,7 +11,7 @@ import {StaffFormComponent} from "../../forms/staff-form/staff-form.component";
 })
 export class StaffOverviewCardComponent implements OnInit {
 
-  @ViewChild('roomsTableComponent') private _roomsTable: RoomsTableComponent | undefined
+  @ViewChild('staffTableComponent') private _roomsTable: StaffTableComponent | undefined
 
   constructor(private _staffDialog: MatDialog) { }
 
@@ -26,7 +26,7 @@ export class StaffOverviewCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      this._roomsTable?.updateRooms();
+      this._roomsTable?.updateStaff();
     });
   }
 

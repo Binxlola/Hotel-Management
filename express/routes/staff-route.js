@@ -2,10 +2,11 @@ import express from 'express';
 import {
   deleteBillable, deleteBillableGroup,
   getAllBillableCategories,
-  getAllBillableGroups, getStaffRolesList,
+  getAllBillableGroups, getStaff, getStaffRolesList,
   saveBillable,
-  saveBillableCategory,
+  saveBillableCategory, saveOrUpdateStaff,
 } from '../services/staff-service.js';
+import {getCustomers} from "../services/customer-service.js";
 
 // Create Router
 const router = express.Router();
@@ -50,6 +51,18 @@ router.get('/all-staff-roles', (req, res) => {
   getStaffRolesList()
     .then((roles) => res.json(roles))
     .catch(() => res.status(404).json({ error: 'There was an error retrieving the array of staff roles' }));
+});
+
+router.get('/all-staff', (req, res) => {
+  getStaff()
+    .then((staff) => res.json(staff))
+    .catch(() => res.status(404).json({ error: 'There was an error retrieving staff' }));
+});
+
+router.post('/save-update-staff', (req, res) => {
+  saveOrUpdateStaff(req.body)
+    .then((response) => res.json(response))
+    .catch(() => res.status(500).json({ error: 'There was an error saving or updating the staff member' }));
 });
 
 export default router;
