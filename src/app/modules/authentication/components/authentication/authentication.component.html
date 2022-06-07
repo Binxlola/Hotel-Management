@@ -118,9 +118,9 @@
       <!--   LOGIN FORM COVER PANEL (LEFT) - Entire panel is rendered based on isCustomer flag   -->
       <div *ngIf="this.isCustomer" class="panel left-panel">
         <div class="content">
-          <h2>Member of Brand?</h2>
+          <h2>History</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor. Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id turpis in dui lacinia euismod dignissim ut risus.
+            This hotel opened in 2021 with an exceptional design intended to provide the highest level of client satisfaction. Enhance the experience by including supplementary amenties in your room. We provide a location where you may unwind, rest, and take in the scenery and enjoy a heated rooftop infinity pool. Register immediately and reserve a room at our 5-star hotel.
           </p>
           <button mat-flat-button id="sign-in-toggle" (click)="toggleMode(false)">Sign in</button>
         </div>
@@ -138,17 +138,12 @@
       -->
       <div class="panel right-panel">
         <div class="content">
-          <h2>{{this.isCustomer ?  "New to Brand?" : "Company Policy"}}</h2>
+          <h2>{{this.isCustomer ?  "Welcome" : "Company Policy"}}</h2>
           <p>
             {{
             this.isCustomer ?
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, " +
-              "quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus " +
-              "vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. " +
-              "Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum" +
-              " lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor." +
-              " Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id" +
-              " turpis in dui lacinia euismod dignissim ut risus."
+              "This hotel is luxurious, modern, and provides a complete experience for our"+
+              "guests. We treat our visitors with the highest courtesy, and we really hope that they enjoy a memorable stay at our hotel"
             :
               "We value our employees and customers and endeavour to provide excellent service."+
               " Our mission is to provide secure and luxurious rooms while also delivering excellent customer service."
