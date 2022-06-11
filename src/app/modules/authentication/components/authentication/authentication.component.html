@@ -23,7 +23,7 @@
           <input matInput formControlName="password" type="password">
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
-        <button mat-flat-button type="submit" value="login">Sign in</button>
+        <button mat-flat-button type="submit" value="login">Sign in</button><br>
         <p *ngIf="this.isCustomer" class="social-text">Or sign in with social platform</p>
         <div *ngIf="this.isCustomer" class="social-media">
           <a href="#" class="social-icon">
@@ -47,42 +47,41 @@
               </button>
             </a>
         </div>
+        <div class="d-flex flex-column justify-content-center align-items-center" [ngClass]="this.isCustomer ? 'mt-5' : 'mt-1'">
+          <a *ngIf="this.isCustomer" class="decorated-link" (click)="resetPassword()">Reset password</a>
+          <a class="decorated-link"> Continue as guest</a>
+        </div>
         <div #signInError class="error-box"></div>
       </form>
 
 
-      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->]
+      <!--   REGISTRATION FORM - Entire form is rendered based on isCustomer flag   -->
       <!--CB line 63-71 -->
 
       <form *ngIf="this.isCustomer" class="sign-up-form" [formGroup]="signupForm" (ngSubmit)="signup($event)">
         <h2 class="title">Sign up</h2>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-<!--          <input matInput> -->
           <input matInput type="text" formControlName="username">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>First name</mat-label>
-          <!--          <input matInput> -->
           <input matInput type="text" formControlName="first_name">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Last name</mat-label>
-          <!--          <input matInput> -->
           <input matInput type="text" formControlName="last_name">
           <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-<!--          <input matInput type="password">-->
-          <input matInput type="text" formControlName="password">
+          <input matInput type="password" formControlName="password">
           <mat-icon matPrefix>lock</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-<!--          <input matInput>-->
           <input matInput type="text" formControlName="email">
           <mat-icon matPrefix>email</mat-icon>
         </mat-form-field>
@@ -119,9 +118,9 @@
       <!--   LOGIN FORM COVER PANEL (LEFT) - Entire panel is rendered based on isCustomer flag   -->
       <div *ngIf="this.isCustomer" class="panel left-panel">
         <div class="content">
-          <h2>Member of Brand?</h2>
+          <h2>History</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor. Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id turpis in dui lacinia euismod dignissim ut risus.
+            This hotel opened in 2021 with an exceptional design intended to provide the highest level of client satisfaction. Enhance the experience by including supplementary amenties in your room. We provide a location where you may unwind, rest, and take in the scenery and enjoy a heated rooftop infinity pool. Register immediately and reserve a room at our 5-star hotel.
           </p>
           <button mat-flat-button id="sign-in-toggle" (click)="toggleMode(false)">Sign in</button>
         </div>
@@ -139,17 +138,12 @@
       -->
       <div class="panel right-panel">
         <div class="content">
-          <h2>{{this.isCustomer ?  "New to Brand?" : "Company Policy"}}</h2>
+          <h2>{{this.isCustomer ?  "Welcome" : "Company Policy"}}</h2>
           <p>
             {{
             this.isCustomer ?
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida quam non ex iaculis, " +
-              "quis semper nulla hendrerit. Sed id ultrices metus. Ut non dui leo. Nulla molestie, eros ut cursus " +
-              "vulputate, libero turpis molestie erat, sit amet varius odio sem pharetra mauris. Sed ac vulputate nulla. " +
-              "Ut sit amet mollis lorem. Vivamus arcu arcu, porttitor ac ornare ac, facilisis quis odio. Curabitur fermentum" +
-              " lectus nec vestibulum euismod. Vestibulum eleifend nec nulla vel accumsan. Sed sollicitudin maximus auctor." +
-              " Morbi congue lectus quis est iaculis, quis iaculis lorem lacinia. Vivamus sit amet risus turpis. Nulla id" +
-              " turpis in dui lacinia euismod dignissim ut risus."
+              "This hotel is luxurious, modern, and provides a complete experience for our"+
+              "guests. We treat our visitors with the highest courtesy, and we really hope that they enjoy a memorable stay at our hotel"
             :
               "We value our employees and customers and endeavour to provide excellent service."+
               " Our mission is to provide secure and luxurious rooms while also delivering excellent customer service."

@@ -57,7 +57,11 @@ staff {
   display: flex;
   align-items: start;
   justify-content: start;
-  background-color: var(--accent);
+  background-image: url("/assets/images/shanghai.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .mat-dialog-container {
@@ -68,6 +72,30 @@ staff {
 
 mat-form-field {
   color: white;
+}
+
+.table-action {
+  max-width: 50px;
+}
+.table-data{
+  min-width: 100px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--glass-dark-high);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--customer-ternary);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--customer-primary);
 }
 
 /*::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{*/

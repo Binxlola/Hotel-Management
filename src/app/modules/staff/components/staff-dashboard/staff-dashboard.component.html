@@ -1,5 +1,22 @@
-<mat-grid-list cols="2" rowHeight="1:1" gutterSize="5">
-  <mat-grid-tile>
-    <room-overview-card></room-overview-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="container-fluid h-100">
+  <div class="row">
+    <div class="col">
+      <div class="row my-3">
+        <div class="col col-md-6">
+          <room-overview-card></room-overview-card>
+        </div>
+        <div class="col col-md-6">
+          <staff-overview-card></staff-overview-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-lg-12">
+          <bookings-card></bookings-card>
+        </div>
+      </div>
+    </div>
+    <div class="col col-md-5 mt-3">
+      <billable-overview-card></billable-overview-card>
+    </div>
+  </div>
+</div>

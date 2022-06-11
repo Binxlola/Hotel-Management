@@ -1,0 +1,40 @@
+<div id="rooms-table-container">
+  <table mat-table [dataSource]="this.rooms" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="type">
+      <th class="table-data" mat-header-cell *matHeaderCellDef> Type </th>
+      <td class="table-data" mat-cell *matCellDef="let room"> {{room.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="num_available">
+      <th class="table-data" mat-header-cell *matHeaderCellDef> available </th>
+      <td class="table-data" mat-cell *matCellDef="let room">{{room.num_available}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="base_price">
+      <th class="table-data" mat-header-cell *matHeaderCellDef> base price </th>
+      <td class="table-data" mat-cell *matCellDef="let room">${{room.base_price}}</td>
+    </ng-container>
+
+    <ng-container *ngIf="isAdmin" matColumnDef="edit_action">
+      <th class="table-action" mat-header-cell *matHeaderCellDef></th>
+      <td class="table-action" mat-cell *matCellDef="let room">
+        <button mat-button (click)="editRoomFunction(room)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="this.isAdmin" matColumnDef="remove_action">
+      <th class="table-action" mat-header-cell *matHeaderCellDef></th>
+      <td class="table-action" mat-cell *matCellDef="let room">
+        <button mat-button (click)="deleteRoom(room._id)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

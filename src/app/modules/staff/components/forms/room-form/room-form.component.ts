@@ -1,8 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DialogData} from "../../../customer/components/booking-management/booking-form/booking-form.component";
-import {BookingService, Room} from "../../../../shared/services/booking/booking-service.service";
+import {DialogData} from "../../../../customer/components/booking-management/booking-form/booking-form.component";
+import {BookingService} from "../../../../../shared/services/booking/booking-service.service";
+import {Room} from "../../../../../shared/interfaces";
 
 @Component({
   selector: 'room-form',
@@ -24,7 +25,7 @@ export class RoomFormComponent {
     this._room = this._data.room;
 
     // Room data was passed in, so we are updating an existing room
-    if(this._room) this._isEdit = true;
+    if (this._room) this._isEdit = true;
 
     this._roomFormGroup = this.fb.group({
       roomType: [{value: this._room ? this._room?.type : "", disabled: this._isEdit}, Validators.required],
@@ -41,12 +42,24 @@ export class RoomFormComponent {
     })
   }
 
+  get room(): Room | undefined {
+    return this._room;
+  }
+
+  get roomFormGroup(): FormGroup {
+    return this._roomFormGroup
+  }
+
+  get dialogRef(): MatDialogRef<RoomFormComponent> {
+    return this._dialogRef;
+  }
+
   /**
    * Take the room form data and create a new room object to be posted to the backed
    * for saving. The post only happens once the room form group is valid.
    */
   public createRoom(): void {
-    if(this._roomFormGroup.valid) {
+    if (this._roomFormGroup.valid) {
       const roomToSave: Room = {
         type: this._roomFormGroup.get("roomType")?.value,
         num_available: this._roomFormGroup.get("numRooms")?.value,
@@ -66,7 +79,7 @@ export class RoomFormComponent {
         res => {
 
           // If the response was true (meaning room was created)
-          if(res) {
+          if (res) {
             alert("Room Created");
             this._dialogRef.close();
           }
@@ -80,7 +93,7 @@ export class RoomFormComponent {
    * for saving. The post only happens once the room form group is valid.
    */
   public updateRoom(): void {
-    if(this._roomFormGroup.valid) {
+    if (this._roomFormGroup.valid) {
       const roomToUpdate: Room = {
         _id: this._room?._id,
         type: this._roomFormGroup.get("roomType")?.value,
@@ -99,25 +112,11 @@ export class RoomFormComponent {
 
       this._bookingService.updateRoom(roomToUpdate).subscribe(
         res => {
-          alert(res ? "Update was completed": "Update was not completed");
+          alert(res ? "Update was completed" : "Update was not completed");
           this._dialogRef.close();
         }
       )
     }
-  }
-
-  //  ==== GETTERS && SETTERS ====
-
-  get room(): Room | undefined {
-    return this._room;
-  }
-
-  get roomFormGroup(): FormGroup {
-    return this._roomFormGroup
-  }
-
-  get dialogRef(): MatDialogRef<RoomFormComponent> {
-    return this._dialogRef;
   }
 
 

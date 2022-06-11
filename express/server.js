@@ -8,6 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import authenticationRouter from './routes/authentication-route.js';
 import bookingRouter from './routes/booking-route.js';
+import customerRouter from './routes/customer-route.js';
+import staffRouter from './routes/staff-route.js';
 
 // Create app and set distribution path
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +24,8 @@ app.use(express.static(distDir));
 // Add server routes
 app.use('/authentication', authenticationRouter);
 app.use('/booking', bookingRouter);
+app.use('/staff', staffRouter);
+app.use('/customer', customerRouter);
 
 // Make connection to DB
 mongoose.connect('mongodb+srv://admin:admin@cluster0.wnjia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
@@ -42,6 +46,4 @@ const server = app.listen(process.env.PORT || 8080, () => {
   console.log('App now running on port', port);
 });
 
-app.get('/api/status', (req, res) => {
-  res.status(200).json({ status: 'UP' });
-});
+

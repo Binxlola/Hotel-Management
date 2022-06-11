@@ -1,0 +1,12 @@
+#bookings-table-container {
+  min-width: 200px;
+  min-height: 200px;
+  max-height: 100%;
+  display: flex;
+}
+
+table {
+  width: 100%;
+  align-self: start;
+  overflow-y: scroll;
+}

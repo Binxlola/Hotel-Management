@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
@@ -13,14 +12,22 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
+import { BookingsTableComponent} from "./shared/components/bookings-table/bookings-table.component";
 import { GuestLandingComponent } from './guest/guest-landing/guest-landing.component';
+import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
+import {MatTableModule} from "@angular/material/table";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    GuestLandingComponent
+    GuestLandingComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,8 +42,17 @@ import { GuestLandingComponent } from './guest/guest-landing/guest-landing.compo
     MatButtonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatTableModule,
+    //FormsModule
+
   ],
   providers: [],
+  exports: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

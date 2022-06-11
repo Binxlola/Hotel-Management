@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>{{this.staff ? "Editing details for" + staff.firstName + " " +staff.lastName : "Save new staff"}}</h1>
+<div mat-dialog-content>
+  <form id="create-room-form" [formGroup]="staffFormGroup">
+    <mat-grid-list cols="2" rowHeight="3:1" gutterSize="5">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>username</mat-label>
+          <input matInput type="text" formControlName="username"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>password</mat-label>
+          <input matInput type="text" formControlName="password"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>First name</mat-label>
+          <input matInput type="text" formControlName="firstName"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Last name</mat-label>
+          <input matInput type="text" formControlName="lastName"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let role of staffRoles" [value]="role">
+              {{role}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" formControlName="email"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Mobile</mat-label>
+          <input matInput type="text" formControlName="mobile"/>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Tax code</mat-label>
+          <input matInput type="text" formControlName="taxCode"/>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between align-items-center">
+  <button mat-button (click)="dialogRef.close()">Close</button>
+  <button mat-button (click)="this.saveOrUpdateStaff()">Submit</button>
+</div>

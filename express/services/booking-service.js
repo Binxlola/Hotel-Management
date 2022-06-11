@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import Room from '../models/room.js';
 import Booking from '../models/booking.js';
-import {sendBookingCancellation, sendBookingConfirmation} from './utility-service.js';
+import { sendBookingCancellation, sendBookingConfirmation } from './utility-service.js';
 import Customer from '../models/customer.js';
 
 async function saveRoom(room) {
@@ -83,8 +83,12 @@ async function saveBooking(booking) {
   }).save();
 
   if (newBooking) {
-    const user = await Customer.findById(booking.user);
-    sendBookingConfirmation(user.email, newBooking.uuid);
+    try {
+      const user = await Customer.findById(booking.user);
+      sendBookingConfirmation(user.email, newBooking.uuid);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return newBooking;

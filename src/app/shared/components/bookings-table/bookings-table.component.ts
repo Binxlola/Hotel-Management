@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import {Booking, BookingService} from "../../../../../shared/services/booking/booking-service.service";
+import {BookingService} from "../../services/booking/booking-service.service";
 import {DatePipe} from "@angular/common";
+import {Booking} from "../../interfaces";
 
 @Component({
-  selector: 'booking-history',
-  templateUrl: './booking-history.component.html',
-  styleUrls: ['./booking-history.component.css']
+  selector: 'bookings-table',
+  templateUrl: './bookings-table.component.html',
+  styleUrls: ['./bookings-table.component.css']
 })
-export class BookingHistoryComponent {
+export class BookingsTableComponent {
 
   private _bookings: Booking[] = [];
   private _isLoadingResults = true;
@@ -19,7 +20,7 @@ export class BookingHistoryComponent {
     this.updateBookings();
   }
 
-  private updateBookings(): void {
+  public updateBookings(): void {
     this._bookingService.getAllBookings()
       .then(bookings => {
           this._bookings = [...bookings];

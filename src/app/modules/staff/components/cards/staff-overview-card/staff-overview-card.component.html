@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Staff Roster Dashboard</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <staff-table #staffTableComponent [editStaffFunction]="openStaffForm.bind(this)"></staff-table>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="openStaffForm(undefined)">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+

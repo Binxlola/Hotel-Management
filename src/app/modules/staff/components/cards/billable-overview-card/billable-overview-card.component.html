@@ -1,0 +1,79 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Billable Overview</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="d-flex flex-column justify-content-between h-100">
+
+    <mat-accordion id="billable-groups" multi="false" *ngIf="billableGroups.length > 0; else noData">
+      <mat-expansion-panel *ngFor="let group of billableGroups" [disabled]="group.items.length < 1">
+        <mat-expansion-panel-header class="text-dark">
+          <mat-panel-title>{{group.category.name}}</mat-panel-title>
+          <mat-panel-description>
+            <div *ngIf="group.items.length < 1" class="pe-3">No items for category</div>
+            <button mat-icon-button matTooltip="Delete category and all billable items in category" matTooltipClass="bg-danger" (click)="deleteBillableGroup(group)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-chip-list>
+          <mat-chip *ngFor="let billable of group.items" color="warn" selected (removed)="deleteBillable(billable)">{{billable.name}}: ${{billable.cost}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <ng-template #noData>
+      <h3 class="text-center">There is no billable data</h3>
+    </ng-template>
+
+
+    <div class="d-flex flex-column">
+      <div id="new-category-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-1 rounded">
+        <h4>Add new category</h4>
+        <mat-form-field matTooltip="Enter name to create new category" matTooltipClass="bg-danger" [matTooltipDisabled]="newCategoryControl.valid" appearance="outline">
+          <mat-label>New Category</mat-label>
+          <input type="text"
+                 [formControl]="newCategoryControl"
+                 matInput>
+          <button mat-icon-button matSuffix (click)="saveNewCategory()" [disabled]="newCategoryControl.invalid">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div id="new-billable-wrapper" class="d-flex flex-column justify-content-start shadow-lg p-3 mb-4 rounded">
+        <h4>Add new billable</h4>
+        <form [formGroup]="billableDetails" class="d-flex flex-row justify-content-between align-items-center">
+          <mat-form-field [classList]="" matTooltip="Select a category for billable" matTooltipClass="bg-danger"
+                          [matTooltipDisabled]="categoryControl.valid" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input type="text"
+                   matInput
+                   formControlName="category"
+                   [matAutocomplete]="customerAuto">
+            <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #customerAuto="matAutocomplete"
+                              (optionSelected)='selectOption($event)'>
+              <mat-option *ngFor="let option of filteredCategoryOptions | async" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="name"/>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cost per</mat-label>
+            <input type="text" matInput formControlName="cost"/>
+            <button mat-icon-button matSuffix (click)="saveNewBillable()" [disabled]="billableDetails.invalid">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

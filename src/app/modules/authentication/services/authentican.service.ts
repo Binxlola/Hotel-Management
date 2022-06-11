@@ -3,24 +3,17 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, mapTo, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
-
-export interface Token {
-  token: string,
-  expiresIn: number
-}
-
-export interface User {
-  _id: string,
-  jwt: Token
-}
+import {LoggedInUser} from "../../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private _user: LoggedInUser | undefined;
+  private _isAdmin: boolean = false;
+
   private readonly TOKEN_KEY = "Token";
-  private _user: User | undefined;
   private readonly REFRESH_TOKEN: string = 'REFRESH_TOKEN';
   private readonly AUTHENTICATION_URL: string = `${environment.API_URL}/authentication`;
 
@@ -40,8 +33,8 @@ export class AuthService {
     redirectPath: string,
     callback: ((error: HttpErrorResponse, view: ElementRef) => void),
     view: ElementRef): Observable<boolean> =>
-    this.http.post<User>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
-      tap((response: User) => this.logUserIn(response, redirectPath)),
+    this.http.post<LoggedInUser>(`${this.AUTHENTICATION_URL}/login`, user).pipe(
+      tap((response: LoggedInUser) => this.logUserIn(response, redirectPath)),
       mapTo(true),
       catchError(error => {
         callback(error, view);
@@ -63,8 +56,8 @@ export class AuthService {
     redirectPath: string,
     callback: OmitThisParameter<(error: HttpErrorResponse, view: ElementRef) => void>,
     view: ElementRef): Observable<boolean> =>
-    this.http.post<User>(`${this.AUTHENTICATION_URL}/signup`, user).pipe(
-      tap((response: User) => this.logUserIn(response, redirectPath)),
+    this.http.post<LoggedInUser>(`${this.AUTHENTICATION_URL}/signup`, user).pipe(
+      tap((response: LoggedInUser) => this.logUserIn(response, redirectPath)),
       mapTo(true),
       catchError(error => {
         callback(error, view);
@@ -72,8 +65,21 @@ export class AuthService {
       })
     );
 
-  private logUserIn(user: User, redirectPath: string): void{
+  // post request with body with object as username (this calls method in backend)
+  public resetPassword = (
+    data: { value: string, resetID: string | null, isNewReset: boolean}
+  ): Observable<boolean> =>
+    this.http.post<void> (`${this.AUTHENTICATION_URL}/password-reset`, data).pipe(
+      mapTo(true),
+      catchError((error, caught) => {
+        this.handleError(error, caught);
+        return of(false);
+      })
+    );
+
+  private logUserIn(user: LoggedInUser, redirectPath: string): void{
     this._user = user;
+    this._isAdmin = user.role === 'admin';
     localStorage.setItem(this.TOKEN_KEY, user.jwt.token);
     this.redirectTo(redirectPath);
   }
@@ -81,11 +87,11 @@ export class AuthService {
   /**
    * It removes username and password from the webpage
    */
-  public logout() {
+  public logout(redirectPath: string) {
     this._user = undefined;
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.REFRESH_TOKEN);
-    this.redirectTo("/login");
+    this.redirectTo(redirectPath);
     // return this.http.post<any>(`${this.AUTHENTICATION_URL}/logout`, {
     //   'refreshToken': this.getRefreshToken()
     // }).pipe(
@@ -130,7 +136,11 @@ export class AuthService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-  get user(): User | undefined {
+  get user(): LoggedInUser | undefined {
     return this._user;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
   }
 }

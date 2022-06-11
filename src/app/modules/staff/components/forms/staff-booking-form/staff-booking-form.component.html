@@ -1,0 +1,113 @@
+<h1 mat-dialog-title>Booking for {{customer.username}}</h1>
+<div mat-dialog-content>
+
+  <!--   Booking Details Form   -->
+  <form [formGroup]="bookingDetails">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <mat-form-field matTooltip="Select a room type for booking" matTooltipClass="bg-danger"
+                          [matTooltipDisabled]="roomControl.valid" appearance="outline">
+            <mat-label>Room</mat-label>
+            <input type="text"
+                   matInput
+                   formControlName="room"
+                   [matAutocomplete]="roomAuto">
+            <mat-autocomplete [displayWith]="getOptionDisplay" autoActiveFirstOption #roomAuto="matAutocomplete"
+                              (optionSelected)='selectOption($event)'>
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.type}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Reservation name</mat-label>
+            <input matInput type="text" formControlName="resName"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Adults</mat-label>
+            <mat-select formControlName="numAdults">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let num of numAdults" [value]="num">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Children</mat-label>
+            <mat-select formControlName="numChildren">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let num of numChildren" [value]="num">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Check-in Time</mat-label>
+            <input matInput type="time" min="{{selectedRoom !== undefined ? selectedRoom.minCheckIn : ''}}"
+                   max="{{selectedRoom !== undefined ? selectedRoom.maxCheckIn : ''}}"
+                   step="{{selectedRoom !== undefined ? selectedRoom.checkInOutInterval * 60 : 0}}"
+                   formControlName="inTime"/>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Check-out Time</mat-label>
+            <input matInput type="time" min="{{selectedRoom !== undefined ? selectedRoom.minCheckOut : ''}}"
+                   max="{{selectedRoom !== undefined ? selectedRoom.maxCheckOut : ''}}"
+                   step="{{selectedRoom !== undefined ? selectedRoom.checkInOutInterval * 60 : 0}}"
+                   formControlName="outTime"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" hideRequiredMarker="true">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate formControlName="startDate" placeholder="Start date">
+              <input matEndDate formControlName="endDate" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+            <mat-error *ngIf="bookingDetails.controls['startDate'].hasError('matStartDateInvalid')">Invalid start date
+            </mat-error>
+            <mat-error *ngIf="bookingDetails.controls['endDate'].hasError('matEndDateInvalid')">Invalid end date
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Additional comments</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="comments"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between align-items-center">
+  <button mat-button (click)="dialogRef.close()">Close</button>
+  <button mat-button (click)="makeBooking()" [disabled]="bookingDetails.invalid">Submit</button>
+</div>

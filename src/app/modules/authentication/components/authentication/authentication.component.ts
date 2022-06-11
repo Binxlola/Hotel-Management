@@ -1,9 +1,11 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {faFacebook, faTwitter, faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons";
 import {AuthService} from "../../services/authentican.service";
-import {FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ResetPasswordComponent} from "../reset-password/reset-password.component";
 
 @Component({
   selector: 'app-authentication',
@@ -13,6 +15,7 @@ import {Router} from "@angular/router";
 export class AuthenticationComponent implements OnInit {
 
   public readonly _isCustomer: boolean;
+  private _resetID: string | null = null;
 
   // loginFormGroup requires username and password
   private _loginFormGroup: FormGroup = this.fb.group({
@@ -43,15 +46,32 @@ export class AuthenticationComponent implements OnInit {
   @ViewChild('signUpError', {static: false} ) public signUpError!: ElementRef;
   @ViewChild('signInError', {static: false}) public signInError!: ElementRef;
 
-  constructor(private _router: Router, private _authenticationService: AuthService, private fb: FormBuilder, private _renderer : Renderer2){
-    this._isCustomer = this._router.url === "/login";
-
+  constructor(private _matDialog: MatDialog,
+              private _router: Router,
+              private _authenticationService: AuthService, private fb: FormBuilder,
+              private _renderer : Renderer2,
+              private _route: ActivatedRoute ){
+    this._isCustomer = this._router.url !== "/staff-login";
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._route.paramMap.subscribe(params => {
+      this._resetID = params.get('id');
+    });
+
+    if (this._resetID) this.resetPassword();
+  }
 
   toggleMode(toggleSignup: boolean): void {
     this.signupMode = toggleSignup;
+  }
+//making method that is called when dialog is closed
+  public resetPassword(): void {
+    const dialogRef = this._matDialog.open(ResetPasswordComponent, {
+      disableClose: false,
+      hasBackdrop: true,
+      data: {id: this._resetID},
+    });
   }
 
   /**

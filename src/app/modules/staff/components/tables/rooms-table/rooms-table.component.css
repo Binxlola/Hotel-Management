@@ -10,17 +10,3 @@ table {
   align-self: start;
   overflow-y: scroll;
 }
-
-th {
-  min-width: 100px;
-}
-
-/* Column Widths */
-.mat-column-number,
-.mat-column-state {
-  max-width: 64px;
-}
-
-.mat-column-created {
-  max-width: 124px;
-}
